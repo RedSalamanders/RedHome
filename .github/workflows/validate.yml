@@ -1,0 +1,24 @@
+name: Validate RedHome
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate skills, pointers, and wiki
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout RedHome
+        uses: actions/checkout@v4
+
+      - name: Run validate.ps1
+        shell: pwsh
+        run: ./validate.ps1
