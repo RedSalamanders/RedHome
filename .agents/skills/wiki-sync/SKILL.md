@@ -1,25 +1,21 @@
 ---
 name: wiki-sync
-description: Audit and update RedHome wiki pages from sibling AGENTS.md, Specs/README.md, capabilities.json, lock manifests, and active WIP plan indexes.
+description: Reconcile RedHome wiki pages against sibling repositories and capture durable multi-repository lessons and session handoffs.
 ---
 
-# Wiki Sync
+# Wiki Sync & Session Handoff
 
-Use this skill whenever sibling architectures, domain contract tables, `DxUi` capabilities, active WIP plans, or shared build/CI policies change and `RedHome/wiki/` needs reconciliation.
+Use this skill whenever sibling architectures, domain contract tables, `DxUi` capabilities, active WIP plans, or shared policies change, or when closing out a multi-repository investigation so lasting insights compound in `RedHome/wiki/`.
 
 ## Iron Laws
 
-1. Keep `wiki/` flat-first with Title-Kebab filenames (`Ecosystem-Architecture.md`, `RedPrism.md`) and register every page in [wiki/Index.md](../../../wiki/Index.md).
+1. Keep `wiki/` flat-first with Title-Kebab filenames (`Ecosystem-Architecture.md`, `RedPrism.md`) and register every page in [wiki/Index.md](../../../wiki/Index.md); never dump dated chat logs into `wiki/`.
 2. Summarize architecture, ownership boundaries, workflows, and entrypoints; link to `../../<Project>/Specs/<Domain>/*.md` from `wiki/` instead of copying mutable C++ struct definitions or large schemas verbatim.
-3. Stamp point-in-time pin or WIP tables with `Last verified: YYYY-MM-DD` and note that machine manifests in sibling checkouts are authoritative.
+3. Never claim native qualification, ARM64 runtime execution, interactive-focus coverage, or CI completion from partial/scoped runs; distinguish `LOCALLY_VALIDATED`, `CI_PENDING`, cross-compile-only, and `HOSTED_ACCEPTED` states truthfully.
 
 ## Workflow
 
-1. Read [wiki/Index.md](../../../wiki/Index.md) and identify affected dossiers (`RedSalamander.md`, `RedXe.md`, `RedPrism.md`, `RedTilde.md`, `DxUi.md`, `Shared-CI-Engine.md`, `Dependency-And-CI-Matrix.md`, `Shared-Engineering-Policies.md`, `Ecosystem-Architecture.md`, `Glossary.md`).
-2. Read the corresponding sibling sources (`AGENTS.md`, `README.md`, `Specs/README.md`, `Specs/Plans/WIP/README.md`, `capabilities.json`, `Dependencies/*.lock.json`, `.ci/project.json`).
-3. Reconcile:
-   - Component ownership tables and plugin/module inventories.
-   - Domain specification entrypoints and local skill tables.
-   - Build, scoped-testing (`Test-Changes.ps1`), packaging, and harness-capture commands.
-   - Current API revision and pin matrix in [wiki/Dependency-And-CI-Matrix.md](../../../wiki/Dependency-And-CI-Matrix.md).
-4. Run `pwsh -NoProfile -File ./validate.ps1 -CheckSiblings` and resolve any broken links or unindexed pages.
+1. Read [wiki/Index.md](../../../wiki/Index.md) and identify affected pages (`RedSalamander.md`, `RedXe.md`, `RedPrism.md`, `RedTilde.md`, `DxUi.md`, `Shared-CI-Engine.md`, `Dependency-And-CI-Matrix.md`, `Shared-Engineering-Policies.md`, `Ecosystem-Architecture.md`, `Glossary.md`).
+2. Reconcile component ownership, plugin/module inventories, domain spec entrypoints, repo-specific skill lists, commands, and stamped (`Last verified: YYYY-MM-DD`) pin snapshots against sibling `AGENTS.md`, `Specs/README.md`, `capabilities.json`, and lock files.
+3. Run `pwsh -NoProfile -File ./validate.ps1 -CheckSiblings` in `RedHome` and fix any broken links or unindexed pages.
+4. When ending a multi-repo session, emit a concise handoff naming touched repos/branches/SHAs, exact verified commands and receipts, and remaining qualification gates.

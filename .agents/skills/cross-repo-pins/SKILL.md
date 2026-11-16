@@ -1,23 +1,26 @@
 ---
 name: cross-repo-pins
-description: Plan, audit, or execute safe dependency pin updates for DxUi, RedMonitor, and the shared .ci-engine across producer and consumer repositories.
+description: Inspect sibling checkout health and coordinate DxUi, RedMonitor, and shared .ci-engine pin updates across producer and consumer repositories.
 ---
 
-# Cross-Repo Pins
+# Cross-Repo Pins & Workspace Health
 
-Use this skill when coordinating a `DxUi` pin bump, a `RedMonitor` client header update, a `RedSalamanders/.github` shared-engine rollout, or local `.ci-engine` synchronization.
+Use this skill at session start to check sibling checkout health, diagnose `.ci-engine` or `DxUi.lock.json` mismatches, or plan and execute dependency pin waves across RedSalamanders repositories.
 
 ## Iron Laws
 
-1. Producer qualification precedes consumer adoption: never bump a consumer's `DxUi.lock.json` or `.ci/project.json` to an unqualified or dirty producer commit.
-2. Never mutate a developer's sibling producer checkout (`../DxUi` or `../RedSalamanders/.github`) while restoring or testing a consumer.
-3. Even within the same numeric `DxUi` `apiRevision`, C++ layout changes require a full consumer rebuild (`build.ps1 -Rebuild`) across configurations. Crossing an API revision (for example API 4 to API 5) requires reading `../DxUi/CHANGELOG.md`, `../DxUi/Changes/`, and `../DxUi/docs/upgrade.md`, adapting the consumer host (such as installing the API-5 failure host), and updating `apiRevision` in `Dependencies/DxUi.lock.json`.
+1. Diagnostics are strictly read-only: never run `git reset`, `git checkout`, `git clean`, `restore-dxui.ps1`, or `Update-ProjectPin.ps1` until the user authorizes modifying a target checkout.
+2. Producer qualification precedes consumer adoption: never bump a consumer's `DxUi.lock.json` or `.ci/project.json` to an unqualified or dirty producer commit, and never mutate a developer's sibling producer checkout (`../DxUi` or `../RedSalamanders/.github`) during consumer restores.
+3. Even within the same numeric `DxUi` `apiRevision`, C++ layout changes require a full consumer rebuild (`build.ps1 -Rebuild`) across configurations. Crossing an API revision (such as API 4 to API 5) requires reading `../DxUi/CHANGELOG.md`, `../DxUi/Changes/`, and `../DxUi/docs/upgrade.md`, installing the consumer failure host, and updating `apiRevision` in `Dependencies/DxUi.lock.json`.
 
 ## Workflow
 
-1. Read [wiki/Dependency-And-CI-Matrix.md](../../../wiki/Dependency-And-CI-Matrix.md) and run `./Tools/Get-WorkspaceStatus.ps1`.
-2. Identify the pin surface:
-   - **DxUi (`Dependencies/DxUi.lock.json`)**: Verify `../DxUi` commit is green across required configurations. In each target consumer, read its `consumer-dxui` skill and `Specs/Core/Core_DxUiIntegration.md`, update `Dependencies/DxUi.lock.json` on a feature branch, add a `Changes/` fragment, rebuild and run x64 `Debug`, `Release`, and `ASan Debug` tests plus ARM64 builds.
-   - **Shared CI Engine (`.ci/project.json` + `.github/workflows/*.yml`)**: From a clean `../RedSalamanders/.github` checkout at the reviewed commit, run `./Tools/Update-ProjectPin.ps1 -Root ../<Project> -EngineRef <40-hex-sha>` so `.ci/project.json` and workflow `@SHA` pins move together. Then sync `../<Project>/.ci-engine` (`git -C .ci-engine fetch` + `checkout --detach <sha>` after verifying `git status --porcelain` is clean) and run compiler-free static adapter checks.
-   - **RedMonitor (`Dependencies/RedMonitor.lock.json`)**: Use the consumer's `Verify-RedMonitorClient.ps1` / `Update-RedMonitorClient.ps1` helper so `ThirdParty/RedMonitor/include/RedMonitor/Client.h`, `LICENSE.txt`, and SHA-256 hashes stay aligned.
-3. Refresh [wiki/Dependency-And-CI-Matrix.md](../../../wiki/Dependency-And-CI-Matrix.md) once consumer branches merge.
+1. **Inspect Workspace Health (Read-Only)**:
+   - Run `pwsh -NoProfile -File ./Tools/Get-WorkspaceStatus.ps1` from `RedHome` and consult [wiki/Dependency-And-CI-Matrix.md](../../../wiki/Dependency-And-CI-Matrix.md).
+   - Report branch, `HEAD` SHA, dirty state, `.ci/project.json` `engine.ref` vs `<repo>/.ci-engine` (`OK`, `MISSING`, `MISMATCH`, `DIRTY`), `DxUi.lock.json`, and `RedMonitor.lock.json`, plus any unexpected drive-root folders.
+2. **Execute Pin Updates Safely**:
+   - **Local `.ci-engine` sync**: Verify `git -C ../<Project>/.ci-engine status --porcelain --untracked-files=all` is clean (preserve dirty local work), then `fetch` and `checkout --detach` the exact `.ci/project.json` `engine.ref`.
+   - **Shared CI Engine bump**: From a clean `../RedSalamanders/.github` checkout at the reviewed SHA, run `./Tools/Update-ProjectPin.ps1 -Root ../<Project> -EngineRef <40-hex-sha>` so `.ci/project.json` and workflow `@SHA` callers move together, sync `<repo>/.ci-engine`, and run compiler-free static checks.
+   - **`DxUi` pin bump**: Read the target consumer's `consumer-dxui` skill (where present) and `Specs/Core/Core_DxUiIntegration.md`, update `Dependencies/DxUi.lock.json` on a feature branch, add one `Changes/` fragment, rebuild, and qualify x64 `Debug`, `Release`, `ASan Debug` plus ARM64 builds.
+   - **`RedMonitor` client bump**: Use the consumer's `Verify-RedMonitorClient.ps1` / `Update-RedMonitorClient.ps1` helper so `ThirdParty/RedMonitor/include/RedMonitor/Client.h`, `LICENSE.txt`, and SHA-256 hashes stay aligned.
+3. Refresh [wiki/Dependency-And-CI-Matrix.md](../../../wiki/Dependency-And-CI-Matrix.md) after consumer branches merge.

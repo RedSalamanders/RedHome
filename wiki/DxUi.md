@@ -17,7 +17,7 @@ Canonical home of shared DirectX UI controls and rich Markdown/text layout for R
 
 ## Repository-Specific Rules & Skills
 
-- **Skills (`../../DxUi/.agents/skills/`)**: `build-dxui`, `control-development`, `embedded-rendering`, `win32-host`, `input-accessibility`, `performance-resources`, `modern-cpp-wil`, `spec-workflow`, `consumer-integration`.
+- **Skills (`../../DxUi/.agents/skills/`)**: Repo-specific skills `build-dxui`, `control-development`, `embedded-rendering`, `win32-host`, `input-accessibility`, `consumer-integration` (shared skills `performance-resources`, `modern-cpp-windows`, `spec-workflow` live in `RedHome/.agents/skills/`).
 - **New Control Checklist**: Requires `ControlCatalog` entry, interaction tests, populated gallery tile (`gallery.ps1 -PublishDocs`), `docs/controls.md` entry, and `Specs/UI/UI_DesignSystem.md` guideline + preview.
 - **Paired Complex-UI Performance**: Every `test.ps1` run reports complex-UI (83-control) FPS and memory; changes require paired before/after baseline comparison.
 - **No Hosted Public Release**: `DxUi` has no public GitHub Release or Winget workflow; qualified SDK ZIPs (verified with clean extracted-SDK consumer builds, license closure, and LNK4099 PDB-isolation negative controls) remain internal CI artifacts.

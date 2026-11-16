@@ -21,13 +21,18 @@ All sibling repositories live beside `RedHome` (`..`):
 - [wiki/Ecosystem-Architecture.md](wiki/Ecosystem-Architecture.md) — Graphics, UI-host, plugin-ABI, and settings comparison across apps.
 - [wiki/Glossary.md](wiki/Glossary.md) — Canonical RedSalamanders vocabulary.
 
-## Skills
+## Shared Skills
 
-- [workspace-doctor](.agents/skills/workspace-doctor/SKILL.md) — Read-only sibling checkout, lock, and `.ci-engine` health check.
-- [wiki-sync](.agents/skills/wiki-sync/SKILL.md) — Reconcile `wiki/` pages with sibling `Specs/`, locks, and WIP indexes.
-- [cross-repo-pins](.agents/skills/cross-repo-pins/SKILL.md) — Coordinate `DxUi`, `RedMonitor`, and `.ci-engine` pin waves safely.
+- [cross-repo-pins](.agents/skills/cross-repo-pins/SKILL.md) — Read-only sibling checkout diagnostics and `DxUi`, `RedMonitor`, and `.ci-engine` pin waves.
+- [wiki-sync](.agents/skills/wiki-sync/SKILL.md) — Reconcile `wiki/` pages with sibling repos and produce clean multi-repo session handoffs.
 - [grill-cross-repo](.agents/skills/grill-cross-repo/SKILL.md) — Stress-test cross-repo proposals against `wiki/` and owning domain specs.
-- [to-project-wip](.agents/skills/to-project-wip/SKILL.md) — Decompose cross-repo designs into producer-first sibling `Specs/Plans/WIP/` plans.
-- [handoff-note](.agents/skills/handoff-note/SKILL.md) — Capture durable cross-repo lessons in `wiki/` and produce a clean handoff.
+- [improve](.agents/skills/improve/SKILL.md) — Audit codebases or instruction ecosystems and produce evidence-backed findings and handoff plans.
+- [spec-workflow](.agents/skills/spec-workflow/SKILL.md) — Maintain normative domain contracts and sequence single-repo or cross-repo `WIP -> Done` plans.
+- [modern-cpp-windows](.agents/skills/modern-cpp-windows/SKILL.md) — C++23 `stdcpplatest`, `/Wall` zero-warning rules, Win32 header ordering, `HRESULT`, and ABI exception boundaries.
+- [wil-raii](.agents/skills/wil-raii/SKILL.md) — WIL RAII ownership for COM interfaces, `HWND`s, GDI/D2D scopes, and `scope_exit` cleanup.
+- [yyjson](.agents/skills/yyjson/SKILL.md) — Safe `yyjson` document lifetimes, mutable string copying (`*_strcpy`/`*_strncpy`), and validation.
+- [localization](.agents/skills/localization/SKILL.md) — UTF-8 `.rc` `STRINGTABLE`/`MENU` resources, positional `{0}` placeholders, and UIA accessible names.
+- [performance-resources](.agents/skills/performance-resources/SKILL.md) — Zero steady-state hot-path allocations, bounded storage, event-blocked idle states, and paired baselines.
+- [d3d11-win32-host](.agents/skills/d3d11-win32-host/SKILL.md) — Real-time Win32 windowing, per-monitor D3D11 device selection, flip swap chains, occlusion, WARP, and device loss.
 
 Validate `RedHome` edits with `pwsh -NoProfile -File .\validate.ps1 -CheckSiblings`.
