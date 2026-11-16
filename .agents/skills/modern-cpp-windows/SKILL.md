@@ -1,15 +1,15 @@
 ---
 name: modern-cpp-windows
-description: Apply RedSalamanders C++23, Unicode, /Wall zero-warning, header-hygiene, HRESULT, and failure-handling conventions across native Windows code.
+description: Apply RedSalamanders C++23, Unicode, repository warning profiles, header-hygiene, HRESULT, and failure-handling conventions across native Windows code.
 ---
 
-# Modern C++ for Windows (`stdcpplatest` + `/Wall`)
+# Modern C++ for Windows (`stdcpplatest`)
 
 Applies across `DxUi`, `RedSalamander`, `RedXe`, `RedPrism`, `RedTilde`, and `RedMonitor`. Always check the target repository's `AGENTS.md` for repo-specific boundary exceptions.
 
 ## Compiler, Warnings & Formatting
 
-- Compile as UTF-8 source (`/utf-8`) targeting wide-character Unicode Win32 APIs in `stdcpplatest` mode with `/Wall`, `/permissive-`, `/sdl`, and `/WX` **disabled**; build acceptance rejects any warning or error.
+- Compile as UTF-8 source (`/utf-8`) targeting wide-character Unicode Win32 APIs in `stdcpplatest` mode with `/permissive-` and `/sdl`. Follow the target repository's warning profile: `RedSalamander`, `RedXe`, `RedPrism`, `RedTilde`, and `DxUi` use `/Wall` with `/WX` disabled and zero-warning acceptance; `RedMonitor` currently uses `/W4 /WX`. See the [shared policy summary](../../../wiki/Shared-Engineering-Policies.md) and the target's build manifests before changing flags.
 - Fix actionable warnings in first-party code (`static_cast`, explicit signed/unsigned narrowing guards, deleted special members when subclassing non-copyable types (`C4625`/`C4626`/`C5026`/`C5027`), removing unused parameters/locals). Reserve narrow `#pragma warning(push)` suppressions for third-party/SDK headers with an inline reason.
 - Naming: `PascalCase` types and public methods, `camelCase` locals/private helpers, `_member` fields, `kConstantName` constants. One variable declaration per line. Run `.\format.ps1 -Check` where provided.
 

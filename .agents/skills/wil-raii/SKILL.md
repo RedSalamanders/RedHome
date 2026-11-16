@@ -9,7 +9,7 @@ All RedSalamanders C++ code owns Windows and COM resources exclusively through W
 
 ## Scoped Header Inclusion
 
-Isolate vendor warnings locally so first-party translation units pass `/Wall` zero-warning validation (`/WX` remains disabled):
+Isolate vendor warnings locally according to the target repository's warning profile so first-party diagnostics remain visible (see the [shared policy summary](../../../wiki/Shared-Engineering-Policies.md)):
 
 ```cpp
 #pragma warning(push)

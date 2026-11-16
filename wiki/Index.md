@@ -7,7 +7,7 @@ Welcome to the `RedHome` LLM Wiki—the cross-repository navigation map, archite
 ## Cross-Cutting Maps
 
 - [Ecosystem-Architecture.md](Ecosystem-Architecture.md) — Side-by-side comparison of UI hosting, Direct3D/Direct2D pipelines, plugin ABIs, threading, and settings across all products.
-- [Shared-Engineering-Policies.md](Shared-Engineering-Policies.md) — Organization-wide C++/WIL rules, `/Wall` native build policy, `Changes/` fragments, scoped testing (`Test-Changes.ps1`), harness captures, and drive-root output policy.
+- [Shared-Engineering-Policies.md](Shared-Engineering-Policies.md) — Shared C++/WIL rules, native compiler profiles and repository exceptions, `Changes/` fragments, scoped testing (`Test-Changes.ps1`), harness captures, and drive-root output policy.
 - [Dependency-And-CI-Matrix.md](Dependency-And-CI-Matrix.md) — Producer/consumer dependency graph (`DxUi.lock.json`, `RedMonitor.lock.json`, `.ci/project.json`, `.ci-engine`) and pin-wave runbook.
 - [Glossary.md](Glossary.md) — Shared RedSalamanders terminology (`EmbeddedHost`, `WindowHost`, `ACP`, `ci-state`, desktop lease, short 16-hex fingerprints, etc.).
 

@@ -8,7 +8,7 @@
 Dual-pane DirectX/Direct2D/DirectWrite Windows file manager inspired by Open Salamander (~21 core native projects + ~90 localization satellite DLL projects):
 
 - **`RedSalamander/`**: `FolderWindow` (dual-pane shell), `FolderView` (~10 `.cpp` units for DirectX list rendering, selection, drag-drop), Command Palette, Preferences dialog, modeless Find Files & Directories, and `SelfTest\` suites.
-- **`Common/` & `Common/PlugInterfaces/`**: Shared helpers (`Core_SharedHelpers.md`), registry-backed `SettingsStore`, `IconCache` (STA init on UI thread; MTA required on worker threads), token-registered cross-thread `PostMessagePayload` / `TakeMessagePayload`, and COM-style plugin interfaces (`RedSalamanderCreate`: `IFileSystem`, `IViewer`, `IHost`).
+- **`Common/` & `Common/PlugInterfaces/`**: Shared helpers (`Core_SharedHelpers.md`), [JSON/JSON5 `SettingsStore`](../../RedSalamander/Specs/Core/Core_SettingsStore.md) under `%LOCALAPPDATA%\RedSalamander\Settings` (read/write through `yyjson`), `IconCache` (STA init on UI thread; MTA required on worker threads), token-registered cross-thread `PostMessagePayload` / `TakeMessagePayload`, and COM-style plugin interfaces (`RedSalamanderCreate`: `IFileSystem`, `IViewer`, `IHost`).
 - **`Plugins/`**:
   - **VFS**: `FileSystem` (local/NTFS), `FileSystem7z`, `FileSystemCurl` (FTP/SFTP/SCP/IMAP), `FileSystemS3`, `FileSystemGoogleDrive`, `FileSystemMicrosoftDrive`, `FileSystemMtp` (MTA WPD workers, read-only default), `FileSystemDummy`.
   - **Terminal**: `Terminal` (embedded & floating sessions).
