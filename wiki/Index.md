@@ -17,6 +17,7 @@ Welcome to the `RedHome` LLM Wiki—the cross-repository navigation map, archite
 - [RedXe.md](RedXe.md) — `../RedXe` (`v1.0`): Win32 + Direct3D 11 XENEON EDGE dashboard, GPU/window widgets, `AVControl`, `Logicon` HID++ service, and `zoom.action.dll`.
 - [RedPrism.md](RedPrism.md) — `../RedPrism` (`v0.1`): Win32 + Direct3D 11 + HLSL raster image editor, sparse rasters, `.prism` format-7 store, CPU/GPU kernels, and numeric goldens.
 - [RedTilde.md](RedTilde.md) — `../RedTilde` (`v0.1`): Native Markdown writing app (Compose/Source/Split), atomic/hardlink-safe Unicode storage, bounded Mermaid diagrams, and native LaTeX math.
+- [RedMonitor.md](RedMonitor.md) — `../RedMonitor` (`v0.1`): Standalone ETW/TraceLogging diagnostics viewer (`DxUi` + D2D/D3D11) and single-header `Client.h` producer SDK.
 
 ## Shared Producers & Infrastructure
 

@@ -88,6 +88,8 @@ $rows = foreach ($t in $targets) {
     if (Test-Path -LiteralPath $rmLockPath -PathType Leaf) {
         $rm = Get-Content -LiteralPath $rmLockPath -Raw | ConvertFrom-Json
         $rmStatus = "API$($rm.apiRevision)@$(([string]$rm.commit).Substring(0, 8))"
+    } elseif ($t.Name -ceq 'RedMonitor') {
+        $rmStatus = 'Producer(API1)'
     }
 
     [pscustomobject]@{

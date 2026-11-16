@@ -11,6 +11,7 @@ Last verified: `2026-11-16` (run `./Tools/Get-WorkspaceStatus.ps1` from `RedHome
 | [../RedXe](RedXe.md) | `application` | `07bc6f1e56804390bd5b2ecfdd4027fac2493049` | API `4` @ `f2e328a0a26a…` | API `1` @ `9ebea6577fe9…` |
 | [../RedPrism](RedPrism.md) | `application` | `07bc6f1e56804390bd5b2ecfdd4027fac2493049` | API `4` @ `f2e328a0a26a…` | API `1` @ `9ebea6577fe9…` |
 | [../RedTilde](RedTilde.md) | `application` | `07bc6f1e56804390bd5b2ecfdd4027fac2493049` | API `5` @ `21fae0dc6600…` | API `1` @ `9ebea6577fe9…` |
+| [../RedMonitor](RedMonitor.md) | `application` | `d6a33c5b8aa009e04653704c648d7ad87be94fcc` | API `4` @ `f2e328a0a26a…` | *(Producer — API rev 1)* |
 
 ## Why `DxUi` and `.ci-engine` Sync Differently
 
