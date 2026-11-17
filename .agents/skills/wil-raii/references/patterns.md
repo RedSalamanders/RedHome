@@ -9,9 +9,10 @@ Rules live in [SKILL.md](../SKILL.md). Every Windows resource uses an RAII wrapp
 | HICON | `wil::unique_hicon` |
 | HWND | `wil::unique_hwnd` |
 | HBITMAP | `wil::unique_hbitmap` |
-| HFONT | `wil::unique_any<HFONT, decltype(&::DeleteObject), ::DeleteObject>` |
-| HBRUSH | `wil::unique_any<HBRUSH, decltype(&::DeleteObject), ::DeleteObject>` |
-| HPEN | `wil::unique_any<HPEN, decltype(&::DeleteObject), ::DeleteObject>` |
+| HFONT | `wil::unique_hfont` (WIL's typedef for `wil::unique_any<HFONT, decltype(&::DeleteObject), ::DeleteObject>`, which older code spells out) |
+| HBRUSH | `wil::unique_hbrush` |
+| HPEN | `wil::unique_hpen` |
+| HMENU | `wil::unique_hmenu`, for a menu this code created or loaded |
 | HDC | `wil::unique_hdc` |
 | Paint | `wil::unique_hdc_paint` with `wil::BeginPaint(hwnd, &ps)` |
 | COM | `wil::com_ptr_nothrow<T>` in `noexcept` / `HRESULT` code; `wil::com_ptr<T>` only where WIL exceptions are intentional |
@@ -23,7 +24,7 @@ class MyWindow
 {
     wil::unique_hicon _icon;
     wil::unique_hwnd _tooltip;
-    wil::unique_any<HFONT, decltype(&::DeleteObject), ::DeleteObject> _font;
+    wil::unique_hfont _font;
 };
 ```
 
@@ -124,7 +125,17 @@ HWND hwnd = _hWnd.release();
 DestroyWindow(hwnd);
 ```
 
-## Menu Cleanup with scope_exit
+## Menu Cleanup
+
+Own a menu this code created with `wil::unique_hmenu`. Do not adopt a submenu from `GetSubMenu` or a menu already attached to a window; its parent destroys it.
+
+```cpp
+wil::unique_hmenu menu(CreatePopupMenu());
+// Use menu.get()...
+// Automatic DestroyMenu on scope exit
+```
+
+Older code reaches the same result with `wil::scope_exit`:
 
 ```cpp
 HMENU menu = CreatePopupMenu();

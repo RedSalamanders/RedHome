@@ -33,12 +33,13 @@ Isolate vendor warnings locally according to the target repository's warning pro
   - `HICON` -> `wil::unique_hicon` (`LoadImageW` without `LR_SHARED` transfers ownership; `LoadIconW` returns a shared handle and must not be adopted)
   - `HBITMAP` -> `wil::unique_hbitmap`
   - `HDC` -> `wil::unique_hdc` or `wil::unique_hdc_paint` (`wil::BeginPaint(hwnd, &ps)`)
-  - `HFONT` / `HBRUSH` / `HPEN` -> `wil::unique_any<HFONT, decltype(&::DeleteObject), ::DeleteObject>` and `auto old = wil::SelectObject(hdc, brush.get());`
+  - `HFONT` / `HBRUSH` / `HPEN` -> `wil::unique_hfont` / `wil::unique_hbrush` / `wil::unique_hpen`. These are WIL's typedefs for `wil::unique_any<HFONT, decltype(&::DeleteObject), ::DeleteObject>` and its siblings, which older code spells out. Select with `auto old = wil::SelectObject(hdc, brush.get());`
+  - `HMENU` -> `wil::unique_hmenu` for a menu this code created or loaded (`CreatePopupMenu`, `LoadMenuW`). Never adopt a submenu returned by `GetSubMenu` or a menu already attached to a window; its parent destroys it.
   - Use the matching WIL wrapper for any other owned Windows resource.
 - **Destroying owned `HWND`s (`wil::unique_hwnd`)**:
   - Destroy via `_hWnd.reset()`—never `DestroyWindow(_hWnd.get())` (double-destroy bug).
   - Use `_hWnd.release()` only for a documented ownership transfer or inside `WM_NCDESTROY` when Windows is already destroying the handle.
-- **Scoped cleanup without a dedicated wrapper (`HMENU`, D2D `EndDraw`)**:
+- **Scoped cleanup without a dedicated wrapper (D2D `EndDraw` and other paired begin/end calls)**:
   - Bind `wil::scope_exit` immediately after acquisition so partial initialization and early returns clean up unconditionally:
     ```cpp
     HRESULT hr = S_OK;

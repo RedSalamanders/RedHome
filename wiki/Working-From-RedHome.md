@@ -26,7 +26,7 @@ The entry points that still differ between repositories:
 | --- | --- | --- | --- |
 | `RedSalamander` | `.\Tools\Get-SpecInventory.ps1 -FailOnFindings`, `.\Tools\Get-ToolInventory.ps1 -Validate` | `.\format-all.ps1` (formats in place; `-WhatIf` previews) | [RedSalamander.md](RedSalamander.md) |
 | `RedXe` | `.\validate-skills.ps1` | `.\format.ps1` (formats in place) | [RedXe.md](RedXe.md) |
-| `RedPrism` | `.\validate-skills.ps1` | `.\format.ps1 -Check` | [RedPrism.md](RedPrism.md) |
+| `RedPrism` | `.\validate.ps1` (runs `validate-skills.ps1`, the native test-name inventory, a PowerShell syntax check, and the tooling tests) | `.\format.ps1 -Check` | [RedPrism.md](RedPrism.md) |
 | `RedTilde` | `.\validate.ps1` | `.\format.ps1 -Check` | [RedTilde.md](RedTilde.md) |
 | `RedMonitor` | `.\validate.ps1` | `.\format.ps1 -Check` | [RedMonitor.md](RedMonitor.md) |
 | `DxUi` | `.\validate.ps1` (also `validate-skills.ps1`, `validate-specs.ps1`) | `.\format.ps1 -Check` | [DxUi.md](DxUi.md) |

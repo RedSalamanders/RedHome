@@ -4,6 +4,8 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). These are the
 
 Each step has the same shape: look, archive, delete, check. Stop at the first surprise.
 
+**State at the review of 2026-11-17 (21:45 CET), read from the clones on the Windows host.** Steps 1, 2, 5, and 7 show as done: the engine clone is at `a094b2e`, every clone has only live remote-tracking refs and no extra worktree, and no engine notice is open. The local branches of step 6 are gone except `RedSalamander` `master`. The archive of step 4 was not found: `D:\Archive` does not exist. Before anything else, either record where the bundles are, or recover the experiment branches. Their commits are still in the object stores: `git fsck --no-reflogs` reports 23 dangling branch tips in `RedTilde`, 22 of them committed between 2026-10-24 and 2026-10-29, and 24 in `DxUi`, 8 of them between 2026-10-25 and 2026-10-27. They stay only until git prunes them, and they are already older than git's two-week grace period, so do not run `git gc` in those clones first. To keep them, give each tip a ref (`git update-ref refs/rescue/<n> <sha>`) and then bundle those refs as in step 4. Step 3 is open for three repositories, not two: the engine repository also has automatic deletion off. `RedSalamander` `master` still needs step 4 before step 6.
+
 ```powershell
 $repos = [ordered]@{
     RedHome       = 'D:\RedHome'

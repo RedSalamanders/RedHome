@@ -13,7 +13,7 @@ This page summarizes shared engineering policies and current repository exceptio
 
 ## 2. Ownership, Exceptions & Failure Policy
 - **WIL RAII Mandatory**: Own all Windows handles and COM pointers via `wil::unique_*` and `wil::com_ptr_nothrow<T>` / `wil::com_ptr<T>`. Never call manual `Release()`, `DestroyWindow()`, or `AddRef() + attach()`. Reset `wil::unique_hwnd` via `.reset()`.
-- **No `catch (...)` and No Cross-Boundary Exceptions**: Never let C++ exceptions escape `wWinMain`, `WndProc`, or COM/plugin callbacks. `DxUi` API 5 and its consumers treat expected refusal via checked `HRESULT`/status results and route unexpected C++ exceptions (including `std::bad_alloc`, except explicitly bounded worker boundaries like `RedPrism`'s `JobScheduler`) to host-owned local minidump diagnostics + termination.
+- **No `catch (...)` and No Cross-Boundary Exceptions**: Never let C++ exceptions escape `wWinMain`, `WndProc`, or COM/plugin callbacks. The unexpected-exception policy follows the `DxUi` API revision a repository consumes: `DxUi` API 5 and its API 5 consumers (`RedTilde` today) treat expected refusal via checked `HRESULT`/status results and route unexpected C++ exceptions (including `std::bad_alloc` outside explicitly bounded job runners) to host-owned local minidump diagnostics + termination. API 4 consumers follow their own `AGENTS.md`; `RedPrism`, for example, translates `std::bad_alloc` to `E_OUTOFMEMORY` in its `JobScheduler` worker runner. The [modern-cpp-windows](../.agents/skills/modern-cpp-windows/SKILL.md) skill lists each repository's rule and the common target.
 - **Crash Dumps Stay Local**: Minidumps (`%LOCALAPPDATA%\<App>\Crashes`) are never uploaded automatically; telemetry is absent.
 
 ## 3. Localization & Chrome Strings
