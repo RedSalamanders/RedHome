@@ -7,7 +7,7 @@ Last verified: `2026-11-16` (run `./Tools/Get-WorkspaceStatus.ps1` from `RedHome
 | Repository (from `RedHome`) | Kind | `.ci/project.json` `engine.ref` | `Dependencies/DxUi.lock.json` | `Dependencies/RedMonitor.lock.json` |
 | --- | --- | --- | --- | --- |
 | [../DxUi](DxUi.md) | `sdk` | `766fd7e01aeef2e77ba18df83b9928516155014e` | *(Producer — API rev 5)* | *(None)* |
-| [../RedSalamander](RedSalamander.md) | `application` | `a094b2ea66fc6fd7a8933488a71dacda262903a4` | API `4` @ `4cdf1ce52c77…` | API `1` @ `9ebea6577fe9…` |
+| [../RedSalamander](RedSalamander.md) | `application` | `a094b2ea66fc6fd7a8933488a71dacda262903a4` | API `4` @ `7fb2ab718520…` | API `1` @ `9ebea6577fe9…` |
 | [../RedXe](RedXe.md) | `application` | `07bc6f1e56804390bd5b2ecfdd4027fac2493049` | API `4` @ `f2e328a0a26a…` | API `1` @ `9ebea6577fe9…` |
 | [../RedPrism](RedPrism.md) | `application` | `07bc6f1e56804390bd5b2ecfdd4027fac2493049` | API `4` @ `f2e328a0a26a…` | API `1` @ `9ebea6577fe9…` |
 | [../RedTilde](RedTilde.md) | `application` | `07bc6f1e56804390bd5b2ecfdd4027fac2493049` | API `5` @ `21fae0dc6600…` | API `1` @ `9ebea6577fe9…` |

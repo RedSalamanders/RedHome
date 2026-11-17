@@ -17,7 +17,7 @@ All sibling repositories live beside `RedHome` (`..`):
 ## Shared Docs
 
 - [wiki/Index.md](wiki/Index.md) — Cross-project wiki hub (synthesizes and routes; never overrides a repo's `Specs/` or lock files).
-- [wiki/Shared-Engineering-Policies.md](wiki/Shared-Engineering-Policies.md) — Shared WIL/C++ rules, `/Wall` native build policy, `Changes/` fragments, scoped testing, desktop-focus lease, and drive-root output policy.
+- [wiki/Shared-Engineering-Policies.md](wiki/Shared-Engineering-Policies.md) — Shared WIL/C++ rules, native compiler profiles and repository exceptions, `Changes/` fragments, scoped testing, desktop-focus lease, and drive-root output policy.
 - [wiki/Ecosystem-Architecture.md](wiki/Ecosystem-Architecture.md) — Graphics, UI-host, plugin-ABI, and settings comparison across apps.
 - [wiki/Glossary.md](wiki/Glossary.md) — Canonical RedSalamanders vocabulary.
 
@@ -28,7 +28,7 @@ All sibling repositories live beside `RedHome` (`..`):
 - [grill-cross-repo](.agents/skills/grill-cross-repo/SKILL.md) — Stress-test cross-repo proposals against `wiki/` and owning domain specs.
 - [improve](.agents/skills/improve/SKILL.md) — Audit codebases or instruction ecosystems and produce evidence-backed findings and handoff plans.
 - [spec-workflow](.agents/skills/spec-workflow/SKILL.md) — Maintain normative domain contracts and sequence single-repo or cross-repo `WIP -> Done` plans.
-- [modern-cpp-windows](.agents/skills/modern-cpp-windows/SKILL.md) — C++23 `stdcpplatest`, `/Wall` zero-warning rules, Win32 header ordering, `HRESULT`, and ABI exception boundaries.
+- [modern-cpp-windows](.agents/skills/modern-cpp-windows/SKILL.md) — C++23 `stdcpplatest`, repository warning profiles, Win32 header ordering, `HRESULT`, and ABI exception boundaries.
 - [wil-raii](.agents/skills/wil-raii/SKILL.md) — WIL RAII ownership for COM interfaces, `HWND`s, GDI/D2D scopes, and `scope_exit` cleanup.
 - [yyjson](.agents/skills/yyjson/SKILL.md) — Safe `yyjson` document lifetimes, mutable string copying (`*_strcpy`/`*_strncpy`), and validation.
 - [localization](.agents/skills/localization/SKILL.md) — UTF-8 `.rc` `STRINGTABLE`/`MENU` resources, positional `{0}` placeholders, and UIA accessible names.

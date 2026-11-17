@@ -21,4 +21,4 @@ Adapted from Matt Pocock's `grill-with-docs` and `grill-me` skills for the RedSa
    - **Performance & Resources**: Zero steady-state heap allocation on composition/render paths? Event-blocked idle/hidden/occluded state (no busy polling)? Paired baseline measurement fixture identified?
    - **Accessibility, Input & Localization**: TSF/IME, keyboard navigation, UIA snapshot publication, `.rc` `STRINGTABLE` positional `{0}` placeholders, and high-DPI scaling covered?
    - **Failure & File Safety**: Checked non-throwing `HRESULT` for expected refusal vs fatal host diagnostics on unexpected C++ exceptions?
-3. Present concrete trade-offs and resolve open product decisions with the user until the cross-repo design has zero ambiguity, then hand off to `to-project-wip`.
+3. Present concrete trade-offs and resolve open product decisions with the user, then use [spec-workflow](../spec-workflow/SKILL.md) to record the agreed work in the owning repositories.

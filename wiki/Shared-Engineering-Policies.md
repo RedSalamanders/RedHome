@@ -1,11 +1,11 @@
 # Shared Engineering, Build, and Validation Policies
 
-Every RedSalamanders C++ repository enforces these common baselines (see each repo's `AGENTS.md` and `Specs/Build/Build_ConsoleAndPaths.md`):
+This page summarizes shared engineering policies and current repository exceptions. Each repository's `AGENTS.md`, domain specs, and build manifests own its active requirements.
 
 ## 1. Native Compiler & Warning Policy (`2026-10-28`)
 - **Compiler**: Visual Studio 2026 (`v145`, default MSVC `14.52.x`), Windows 11 SDK `10.0.26100`, `/std:c++latest`, `/permissive-`, `/sdl`, `/utf-8`, Unicode Win32 APIs.
-- **Warnings**: `/Wall` enabled with `/WX` disabled in all first-party profiles; build acceptance gates parse logs and **reject any warning or error** (fix actionable diagnostics rather than adding blanket suppressions).
-- **Symbols & ICF**:
+- **Warnings**: `RedSalamander`, `RedXe`, `RedPrism`, `RedTilde`, and `DxUi` use `/Wall` with `/WX` disabled; their build acceptance gates **reject any warning or error**. `RedMonitor` currently uses `/W4 /WX`, as declared in its [Directory.Build.props](../../RedMonitor/Directory.Build.props). Preserve that exception unless a separate RedMonitor change aligns and validates its profiles. Fix actionable diagnostics rather than adding blanket suppressions.
+- **Symbols & ICF (the five `/Wall` repositories)**:
   - `Debug`: `/ZI` (Edit and Continue PDB), `/OPT:NOICF`, `/MDd`.
   - `ASan Debug`: `/Zi`, real AddressSanitizer instrumentation, `/OPT:NOICF`, `/MDd`.
   - `Release`: `/Gy /GL` + `/OPT:REF /OPT:ICF /LTCG`, `/MD`.
