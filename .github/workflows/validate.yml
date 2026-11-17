@@ -63,4 +63,4 @@ jobs:
       - name: Report workspace status
         shell: pwsh
         working-directory: RedHome
-        run: ./Tools/Get-WorkspaceStatus.ps1 -Hygiene
+        run: ./Tools/Get-WorkspaceStatus.ps1 -Hygiene | Out-String -Width 200

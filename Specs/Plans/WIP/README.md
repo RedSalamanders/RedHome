@@ -1,6 +1,6 @@
 # Active work
 
-- **ACTIVE**: [RedSalamanders convergence](Convergence_2026-11-17.md) — step-by-step plan that makes `RedHome` a complete front door and moves every shared skill, script, pin, and convention across `DxUi`, `RedSalamander`, `RedXe`, `RedPrism`, `RedTilde`, `RedMonitor`, and `RedSalamanders/.github` onto one common ground. Phase 1 is delivered with the plan; later phases wait on the owner decisions it lists.
+- **ACTIVE**: [RedSalamanders convergence](Convergence_2026-11-17.md) — step-by-step plan that brings `DxUi`, `RedSalamander`, `RedXe`, `RedPrism`, `RedTilde`, `RedMonitor`, `RedSalamanders/.github`, and `RedHome` as close to each other as possible for every option and decision. Its companions are the [divergence register](Convergence_2026-11-17/DivergenceRegister.md), which gives each known difference one target, and the [cleanup runbook](Convergence_2026-11-17/CleanupRunbook.md). Phases 1 and 2 and the plugin are delivered; step 1 is open as a pull request in every product repository.
 
 `RedHome` plans cover cross-repository initiatives only. Work that belongs to one repository stays in that repository's `Specs/Plans/WIP/`, and this plan links to it instead of copying it. Add new cross-repository work to the current plan rather than opening an overlapping queue.
 

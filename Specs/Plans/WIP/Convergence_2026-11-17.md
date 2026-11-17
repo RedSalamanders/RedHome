@@ -2,12 +2,14 @@
 
 ## Metadata
 
-- **Status**: ACTIVE. Phase 1 is delivered in the same change as this plan; Phases 0 and 2 to 7 are plan only.
+- **Status**: ACTIVE. Phases 1 and 2 and the `RedHome` side of Phase 3 are delivered in `RedHome` pull request #2. Step 1 of every product repository is open as one pull request each (listed under [Pull requests](#pull-requests)). Everything else is plan only.
 - **Date**: 2026-11-17
 - **Baseline**: `RedHome` `origin/main` at `707ca84`; sibling state as recorded under [Baseline](#baseline-2026-11-17).
 - **Scope**: `RedHome`, `DxUi`, `RedSalamander`, `RedXe`, `RedPrism`, `RedTilde`, `RedMonitor`, `RedSalamanders/.github`.
+- **Governing rule**: at the end, all projects are as close as possible for every option and every decision. See [Governing rule](#governing-rule).
+- **Companions**: [DivergenceRegister.md](Convergence_2026-11-17/DivergenceRegister.md) lists every known difference with its single target. [CleanupRunbook.md](Convergence_2026-11-17/CleanupRunbook.md) holds the destructive hygiene steps, which only the owner runs.
 - **Contracts to reconcile on closeout**: [AGENTS.md](../../../AGENTS.md), [wiki/Index.md](../../../wiki/Index.md) and the pages it lists, the shared skills under `.agents/skills/`, each sibling's `AGENTS.md` and `Specs/README.md`, and the engine's [Specs/CI.md](../../../../RedSalamanders/.github/Specs/CI.md).
-- **Owner decisions**: listed under [Decisions](#decisions-for-the-owner). This plan recommends; it takes none of them.
+- **Owner's part**: merging pull requests, running the cleanup runbook, and the few [owner choices](#owner-choices) where two common end states are possible.
 
 ---
 
@@ -15,19 +17,31 @@
 
 On 2026-11-16 the shared agent skills of six repositories were consolidated into `RedHome`, following the Home Repo pattern: one repository that holds shared skills, a lean `AGENTS.md` with pointers to every sibling, and a small wiki. Each product repository kept its own skills and gained a pointer back to `../RedHome`.
 
-A review on 2026-11-17 of all eight checkouts confirmed the structure is sound and found five gaps:
+A review on 2026-11-17 of all eight checkouts confirmed the structure is sound and found six gaps:
 
 1. **Skill depth was lost.** The consolidation rewrote skills instead of moving them. 26 repository skills (about 1,480 lines) became seven shared skills of 21 to 47 lines.
-2. **Scripts and tools were not factorised.** The same PowerShell modules and scripts exist in up to six repositories, some byte-identical and some as diverging forks, and `RedHome` added one more fork.
-3. **Pins are split.** Four different shared-engine commits are in use, and Dependabot notices that bump one workflow caller at a time have already caused caller drift once.
-4. **Branch and worktree debris.** Merged branches were not deleted, two repositories carry dozens of local-only experiment branches and worktrees, and one local checkout is ten days stale.
-5. **Discovery depends on a sibling folder.** Shared skills are reachable only when `RedHome` is checked out beside the repository, and only through the `AGENTS.md` index in harnesses that do not read `.agents/skills/`.
+2. **The repositories are not the same.** The same option is set differently from one repository to the next: compiler switches, formatter style, script names and parameters, guidance files, specification layout, CI configuration. About 90 such differences are now listed.
+3. **Scripts and tools were not factorised.** The same PowerShell modules and scripts exist in up to six repositories, some byte-identical and some as diverging forks, and `RedHome` added one more fork.
+4. **Pins are split.** Four different shared-engine commits are in use, and Dependabot notices that bump one workflow caller at a time have already caused caller drift once.
+5. **Local branch and worktree debris.** Two local clones carry dozens of local-only experiment branches and worktrees, every clone keeps stale remote-tracking refs, and one local checkout is ten days stale. The GitHub side is clean.
+6. **Discovery depended on a sibling folder.** Shared skills were reachable only when `RedHome` was checked out beside the repository, and only through the `AGENTS.md` index in harnesses that do not read `.agents/skills/`.
 
 ## Goal
 
-Working from `RedHome` is at least as good as working inside each repository is today, and everything that is common to several repositories exists exactly once, in the repository that should own it.
+Every repository looks and works the same wherever the product does not force a difference, and working from `RedHome` is at least as good as working inside each repository is today. Everything that is common exists exactly once, in the repository that should own it.
 
 **Not goals**: merging the repositories into a monorepo, changing product behavior, moving normative product specs into `RedHome`, or making any build, test, or CI path depend on `RedHome`.
+
+## Governing rule
+
+The owner's rule, stated on 2026-11-17: **at the end, all projects are as close as possible for all options and decisions.** This plan applies it as follows.
+
+1. **Every difference gets one target.** [DivergenceRegister.md](Convergence_2026-11-17/DivergenceRegister.md) lists each option, rule, or file that is not the same everywhere, the single end state, the repositories that must move, and the phase that moves them.
+2. **A difference survives only when the product requires it.** Those cases are listed with their reason at the end of the register. "It has always been like this" is not a reason.
+3. **No decision is taken per repository.** A question is answered once and the answer applies to all. Where two common end states are possible, the plan names a default and the owner may pick the other; either way every repository lands on the same one.
+4. **Defaults are picked in this order**: what a producer contract already requires (`DxUi` API 5, the engine templates); then the stricter option; then what most repositories already do; then the option with fewer files.
+5. **Shared skills state one rule set.** Product-specific paths, helpers, and gates are listed as repository facts, and every rule that is not yet the same everywhere is a row in the skill's `Differences To Converge` table and in the register.
+6. **No new divergence.** A pull request that introduces a per-repository variant adds a register row with its target in the same change, or it is not merged.
 
 ## Non-breaking invariants
 
@@ -36,35 +50,37 @@ Working from `RedHome` is at least as good as working inside each repository is 
 3. **Producer before consumer, one repository per pull request.** Every pull request passes that repository's own gates and adds its own `Changes/` fragment.
 4. **Parity gate.** No step removes guidance or tooling from a repository until the replacement is reachable from that repository, in every harness the owner uses, and that reachability has been checked.
 5. **No behavior change when moving identical code.** Byte-identical files move first, behind shims that keep script names and parameters stable. Forks are reconciled only after tests pin the behavior of every variant.
-6. **Read-only first.** Diagnostics never reset, clean, or check out a sibling. Destructive git operations run on the Windows host, with the owner's agreement, after unpushed work is archived.
+6. **Read-only first.** Diagnostics never reset, clean, or check out a sibling. Destructive git operations run on the Windows host, by the owner, after unpushed work is archived.
 7. **Truthful status.** A merged change is `CI_PENDING` until `ci-state` records `succeeded`; scoped or cross-compile-only results are reported as such.
+8. **Convergence moves one way.** A step may only reduce the number of register rows or move a row closer to its target.
 
 ---
 
 ## Baseline (2026-11-17)
 
-Read from the local clones as fetched on 2026-11-17 (`RedSalamanders/.github` last fetched 2026-11-07). GitHub-side state (open pull requests, branch protection, run logs) was not available when this was written.
+Commits and pins were read from clones fetched on 2026-11-17. Branch and pull request state on GitHub was read through the GitHub API the same day. Local branch and worktree counts come from the owner's Windows clones.
 
-| Repository | `main` | Engine pin | `DxUi` | Last `ci-state` | Local / remote branches | Worktrees |
+| Repository | `main` | Engine pin | `DxUi` | Last `ci-state` | Branches on GitHub | Local branches / worktrees |
 | --- | --- | --- | --- | --- | --- | --- |
-| `RedHome` | `707ca84` | none | none | none | 2 / 2 | 0 |
-| `DxUi` | `a845d375` | `766fd7e` (engine #70) | Producer, API 5 | succeeded | 46 / 88 (32 `changelog/fold-*`) | 44 |
-| `RedSalamander` | `51574df7` | `a094b2e` (engine #86) | API 4 at `7fb2ab71` | **failed**, third consecutive admission (run `43985619531`) | 3 / 23 | 0 |
-| `RedXe` | `58931a1` | `07bc6f1` (engine #83) | API 4 at `f2e328a0` | succeeded | 2 / 12 (5 engine notices) | 0 |
-| `RedPrism` | `18eef4ff` | `07bc6f1` (engine #83) | API 4 at `f2e328a0` | succeeded | 3 / 11 (5 engine notices) | 0 |
-| `RedTilde` | `9adf318` | `07bc6f1` (engine #83) | API 5 at `21fae0dc` | succeeded | 45 / 66 (28 `changelog/fold-*`, 5 engine notices) | 48 |
-| `RedMonitor` | `2976072` | `d6a33c5` (engine #82) | API 4 at `f2e328a0` | succeeded | 2 / 27 (5 engine notices) | 0 |
-| `RedSalamanders/.github` | local `570351e` (engine #16); newest known `main` is `a094b2e` (engine #86) | n/a | n/a | n/a | 2 / 16 | 11 |
+| `RedHome` | `707ca84` | none | none | none | 2 | 2 / 0 |
+| `DxUi` | `a845d375` | `766fd7e` (engine #70) | Producer, API 5 | succeeded | 4 (`main`, `ci-state`, 2 unmerged work branches) | 46 / 44 |
+| `RedSalamander` | `51574df7` | `a094b2e` (engine #86) | API 4 at `7fb2ab71` | **failed** (run `43985619531`, see CV-0-07) | 2 | 3 / 0 |
+| `RedXe` | `58931a1` | `07bc6f1` (engine #83) | API 4 at `f2e328a0` | succeeded | 7 (5 engine notices) | 2 / 0 |
+| `RedPrism` | `18eef4ff` | `07bc6f1` (engine #83) | API 4 at `f2e328a0` | succeeded | 7 (5 engine notices) | 3 / 0 |
+| `RedTilde` | `9adf318` | `07bc6f1` (engine #83) | API 5 at `21fae0dc` | succeeded | 7 (5 engine notices) | 45 / 48 |
+| `RedMonitor` | `2976072` | `d6a33c5` (engine #82) | API 4 at `f2e328a0` | succeeded | 7 (5 engine notices) | 2 / 0 |
+| `RedSalamanders/.github` | `a094b2e` (engine #86); the owner's local clone is at `570351e` (engine #16) | n/a | n/a | n/a | 3 | 2 / 11 |
 
 Engine history is linear across the pins: `766fd7e` < `d6a33c5` < `07bc6f1` < `a094b2e`.
 
 Facts behind the gaps:
 
-- **Merged leftovers**: `chore/prune-shared-skills-to-redhome` exists locally and on the remote in all six code repositories; `ej/redhome-guidance-corrections-20261116` in `RedHome`; `ej/manual-x64-qualification-20261107` locally in the engine checkout.
+- **GitHub is clean.** No merged pull request head branch still exists in any repository. "Automatically delete head branches" is on in `DxUi`, `RedSalamander`, `RedXe`, `RedPrism`, and `RedTilde`, and off in `RedHome` and `RedMonitor`.
+- **The local clones are not.** They keep remote-tracking refs for branches GitHub deleted long ago (88 in `DxUi`, 66 in `RedTilde`, 27 in `RedMonitor`, 23 in `RedSalamander`), merged local branches such as `chore/prune-shared-skills-to-redhome`, and the worktree registrations in the table.
 - **Local-only experiment branches** (never pushed, not merged): 29 in `RedTilde` (2026-10-23 to 2026-10-29) and 6 in `DxUi` (2026-10-25 to 2026-10-27).
-- **`RedSalamander` `master`** is not an ancestor of `main` and holds 3,102 commits that `main` does not.
-- **Engine notices**: 20 Dependabot branches in `RedMonitor`, `RedPrism`, `RedTilde`, and `RedXe` each bump one workflow caller to `a094b2e`. `DxUi` merged four such bumps on 2026-11-16 (#257 to #260) and had to reconcile its callers with `.ci/project.json` the next day (#262). The `ignore` rule in `.github/dependabot.yml` names `RedSalamanders/.github`, which does not match the reusable-workflow dependency names (`RedSalamanders/.github/.github/workflows/<file>.yml`).
-- **Stale references**: `RedSalamander` `Specs/Plans/WIP/Core_HResultStatusFormattingCleanup_2026-06-19.md` and `RedPrism` `Specs/Plans/WIP/AsyncDocumentSizing_2026-09-30.md` still cite skill paths that the consolidation deleted.
+- **`RedSalamander` `master`** exists only in the local clone. It is not an ancestor of `main` and holds 3,102 commits that `main` does not.
+- **Engine notices**: 20 open Dependabot pull requests in `RedMonitor`, `RedPrism`, `RedTilde`, and `RedXe` each bump one workflow caller to `a094b2e`. `DxUi` merged four such bumps on 2026-11-16 (#257 to #260) and had to reconcile its callers with `.ci/project.json` the next day (#262). The `ignore` rule in `.github/dependabot.yml` names `RedSalamanders/.github`, which does not match the reusable-workflow dependency names (`RedSalamanders/.github/.github/workflows/<file>.yml`).
+- **Stale references**: `RedSalamander` `Specs/Plans/WIP/Core_HResultStatusFormattingCleanup_2026-06-19.md` and `RedPrism` `Specs/Plans/WIP/AsyncDocumentSizing_2026-09-30.md` cite skill paths that the consolidation deleted.
 
 ## What is common today
 
@@ -115,82 +131,89 @@ The workflow callers are the model to follow: one implementation in the engine, 
 
 Order and dependencies: Phase 0 and Phase 1 first. Phases 2, 3, and 4 can then run in parallel. Phase 5 needs Phase 4, because engine-hosted tooling requires every repository on one engine. Phase 6 builds on 5. Phase 7 closes the plan.
 
-Step identifiers are `CV-<phase>-<nn>`. Check a box only when its gate has passed.
+Step identifiers are `CV-<phase>-<nn>`. A box is checked only when its gate has passed. "Delivered" means the change is in the named pull request; it takes effect when the owner merges it.
 
 ### Phase 0: clean baseline (hygiene, no content change)
 
-- [ ] **CV-0-01** Fetch and fast-forward `../RedSalamanders/.github` (about 70 engine pull requests behind), so engine docs read from `RedHome` are current. Gate: `git -C ../RedSalamanders/.github status -sb` shows `main` level with `origin/main`.
-- [ ] **CV-0-02** Delete merged head branches, locally and on the remote: `chore/prune-shared-skills-to-redhome` in all six code repositories, `ej/redhome-guidance-corrections-20261116` in `RedHome`, `ej/manual-x64-qualification-20261107` in the engine checkout, and every merged `changelog/fold-*` branch (the remotes hold 32 in `DxUi`, 28 in `RedTilde`, and 1 to 2 elsewhere). Squash merges are invisible to `git branch --merged`; confirm with `gh pr list --state merged --json headRefName` before deleting.
-- [ ] **CV-0-03** Turn on "Automatically delete head branches" in every repository (decision D10) so CV-0-02 does not recur.
-- [ ] **CV-0-04** Archive, then remove, the local-only experiment branches (29 in `RedTilde`, 6 in `DxUi`). Per decision D10 either push each as `archive/<name>` or write one `git bundle` per repository into the repository's `.build/`, verify the bundle, then delete the branch.
-- [ ] **CV-0-05** Remove finished worktrees from the Windows host (`RedTilde` 48 registrations, `DxUi` 44, engine checkout 11). Never prune from WSL or a sandbox: the Windows paths are invisible there and every worktree looks `prunable`.
-- [ ] **CV-0-06** Decide the fate of `RedSalamander` `master` (decision D10): archive tag and delete, or keep with a note in that repository's `AGENTS.md`.
-- [ ] **CV-0-07** Triage `RedSalamander` `main`: three consecutive native admissions have failed since 2026-11-13, the latest for the merge of the skill consolidation (run `43985619531`). Gate for every later step that merges into `RedSalamander`: `ci-state` is `succeeded`, or the failure is understood and recorded as unrelated.
-- [ ] **CV-0-08** Repair the stale skill paths in the two active plans named in the baseline, pointing them at the `RedHome` skill and its parity reference. One small pull request per repository.
-- [ ] **CV-0-09** `RedXe` `Tests/BuildProcessTests/ScopedTesting.Tests.ps1` still names `.agents/skills/yyjson/agents/openai.yaml`. Confirm it is only a path-classification sample; replace it with an existing path if the test reads the file.
+Nothing in this phase has been deleted. Every destructive step is written out in [CleanupRunbook.md](Convergence_2026-11-17/CleanupRunbook.md) for the owner to run on the Windows host.
 
-### Phase 1: RedHome is a complete front door (delivered with this plan)
+- [ ] **CV-0-01** Fast-forward the local `RedSalamanders/.github` clone (about 70 engine pull requests behind), so engine docs read from `RedHome` are current. Runbook step 1.
+- [ ] **CV-0-02** Prune stale remote-tracking refs and delete merged local branches in every clone. GitHub needs no cleanup: no merged head branch remains there. Runbook steps 2 and 6.
+- [ ] **CV-0-03** Turn on "Automatically delete head branches" in `RedHome` and `RedMonitor`, the two repositories where it is off. Runbook step 3.
+- [ ] **CV-0-04** Archive, then remove, the local-only experiment branches (29 in `RedTilde`, 6 in `DxUi`): one verified `git bundle` per repository, then delete. Runbook steps 4 and 6.
+- [ ] **CV-0-05** Remove finished worktrees on the Windows host (`RedTilde` 48 registrations, `DxUi` 44, engine clone 11). Never prune from WSL or a sandbox: the Windows paths are invisible there and every worktree looks `prunable`. Runbook step 5.
+- [ ] **CV-0-06** `RedSalamander` local `master`: bundle it, then delete it, so the clone has the same single long-lived branch as every other repository. Runbook steps 4 and 6.
+- [x] **CV-0-07** Triage `RedSalamander` `main`. Result: the failure is not caused by the skill consolidation. In run `43985619531` (commit `91d5319b`) the x64 regression job passed and the ARM64 job failed in "Run actual regression tests and Release assertion probe": `Tools/Run-AllTests.ps1` exited 1, and the hosted desktop boundary reported "A foreign foreground change must not be replaced by the hosted fixture" while Windows Terminal owned the foreground. Seven of the eight `Qualify main Release` runs since 2026-11-11 failed, on different commits, in the regression jobs. The fix belongs to `RedSalamander`'s own test plan. Until `ci-state` records `succeeded`, pull requests into `RedSalamander` from this plan stay limited to paths that its CI treats as prose.
+- [x] **CV-0-08** Repair the stale skill paths in the two active plans named in the baseline. Delivered in the step 1 pull requests for `RedSalamander` (#228) and `RedPrism` (#32).
+- [x] **CV-0-09** `RedXe` `Tests/BuildProcessTests/ScopedTesting.Tests.ps1` names `.agents/skills/yyjson/agents/openai.yaml`. Checked: the test passes the string to the scope planner as a path-classification sample and never opens the file. No change.
 
-- [x] **CV-1-01** Restore the lost depth as 26 parity references under the seven shared skills (`references/<repository>.md`), generated from git history with only links retargeted. Each names its source commit and its convergence step.
-- [x] **CV-1-02** Route to them from each `SKILL.md` (`Repository Detail` table) and correct the shared text: the unexpected-exception policy is scoped per repository instead of presenting the `DxUi` API 5 policy as universal; `RedMonitor` is in the `grill-cross-repo` owner map and the `wiki-sync` page list; `cross-repo-pins` names the real `DxUi` contract file for each consumer and treats engine notices as signals.
-- [x] **CV-1-03** Wiki: new [Skill-Catalog.md](../../../wiki/Skill-Catalog.md) and [Working-From-RedHome.md](../../../wiki/Working-From-RedHome.md); the dependency matrix lists pin owners and API revisions instead of commit SHAs; `RedMonitor` joins the ecosystem matrix; the `RedTilde` Winget identifier, the `RedSalamander.Perf` placeholder, engine-notice and stale-checkout notes, and three glossary terms are added.
+### Phase 1: RedHome is a complete front door
+
+Delivered in `RedHome` pull request #2.
+
+- [x] **CV-1-01** Restore the depth that the consolidation lost, from git history, under the seven shared skills.
+- [x] **CV-1-02** Correct the shared text: `RedMonitor` is in the `grill-cross-repo` owner map and the `wiki-sync` page list; `cross-repo-pins` names the real `DxUi` contract file for each consumer and treats engine notices as signals.
+- [x] **CV-1-03** Wiki: new [Skill-Catalog.md](../../../wiki/Skill-Catalog.md) and [Working-From-RedHome.md](../../../wiki/Working-From-RedHome.md); the dependency matrix lists pin owners and API revisions instead of commit SHAs; `RedMonitor` joins the ecosystem matrix; the `RedTilde` Winget identifier, the `RedSalamander.Perf` placeholder, engine-notice and stale-checkout notes, and glossary terms are added. The `RedTilde` settings format is corrected: line-based `key=value` text, not JSON.
 - [x] **CV-1-04** Plans have a home (`Specs/Plans/WIP/` and `Done/`), `validate.ps1` checks links under `Specs/`, and the workflow pins `actions/checkout` by commit as the engine policy does.
-- [ ] **CV-1-05** Run `pwsh -NoProfile -File .\validate.ps1 -CheckSiblings` on the Windows host. PowerShell 7 was not available where this change was authored; a Python re-implementation of the same checks passed, which is not a substitute.
-- [ ] **CV-1-06** Review, then merge through a pull request from a focused branch.
-- [ ] **CV-1-07** Extend `Tools/Get-WorkspaceStatus.ps1` with hygiene columns: age of the last fetch, merged-but-undeleted branches, local-only branches, worktree registrations, and the last `ci-state` outcome. Phase 0 then stays visible instead of being rediscovered.
-- [ ] **CV-1-08** Extend validation: every file under `Specs/Plans/WIP/` is indexed in its `README.md`; under `-CheckSiblings`, each sibling `AGENTS.md` still carries the shared-skill pointer sentence; every parity reference keeps its provenance header.
+- [x] **CV-1-05** `validate.ps1 -CheckSiblings` runs for real. The `Validate RedHome` workflow now has a second job that checks out the seven sibling repositories beside `RedHome` and runs it on every pull request, on every push to `main`, and weekly. PowerShell 7 could not be installed where this change was authored, so GitHub Actions is the place where these scripts were executed.
+- [x] **CV-1-07** `Tools/Get-WorkspaceStatus.ps1 -Hygiene` adds, from local git data only: days since the last fetch, local branches without an upstream, local branches merged into `origin/main`, local branches whose upstream was deleted, remote-tracking refs, and extra worktree registrations. Phase 0 stays visible instead of being rediscovered.
+- [x] **CV-1-08** Validation is extended: every plan under `Specs/Plans/WIP/` is indexed in its `README.md`; every shared skill that has a `references/` folder ends with the same closing sections; under `-CheckSiblings`, each sibling `AGENTS.md` still carries the identical shared-skill pointer sentence.
+- [ ] **CV-1-06** The owner reviews and merges `RedHome` pull request #2.
 
-### Phase 2: fold the parity references (skills converge)
+### Phase 2: one rule set per shared skill
 
-The parity references are a holding layer, not the end state. For each one, sort every rule into one of three places, then delete the reference or reduce it to a one-line pointer:
+Delivered in `RedHome` pull request #2. The first version of this plan kept one reference file per repository. Under the governing rule that was the wrong shape: it preserved six ways of doing the same thing. Each shared skill is now folded into one rule set.
 
-- **Common to every repository** goes into the shared `SKILL.md`.
-- **Normative for one repository** goes into that repository's `Specs/` or `AGENTS.md` if it is not already there; the shared skill links to it.
-- **How-to for one repository** returns to a repository-local skill, or stays as a reference with a recorded reason (decision D1).
+All seven folds (CV-2-01 to CV-2-07) are done. Shape of every folded skill:
 
-Work one shared skill per pull request in `RedHome`, with a matching pull request in a repository only when a rule has to move there.
+- `SKILL.md` states the rules once, for every repository.
+- `references/<topic>.md` holds the detailed patterns and code, again once.
+- `references/repository-facts.md` lists what is true of one product only: file paths, helper names, validators, gates. Facts, not rules.
+- `SKILL.md` ends with `Differences To Converge`: every rule that repositories still apply differently, with its target. Each row is also in the register (section H, plus A and E where it is tooling).
 
-| Step | Shared skill | References to fold | Expected outcome |
+| Step | Shared skill | Folded from | Result |
 | --- | --- | --- | --- |
-| **CV-2-01** | `yyjson` | `redsalamander`, `redprism`, `redxe` | The three overlap almost entirely with the shared text. Keep the mutable-string table once. Move the JSON5 and BOM read defaults to `RedSalamander`'s settings contract, the Swift `Codable` shapes stay owned by `RedPrism` `Specs/IO/IO_ProjectFormat.md`, and the settings-document notes stay with `RedXe` `settings-store`. |
-| **CV-2-02** | `wil-raii` | `redsalamander`, `redprism`, `redxe` | Promote the paint-context, GDI-selection, and menu patterns to the shared skill; they apply wherever GDI is used. Keep the cross-thread icon transfer with `RedSalamander`. |
-| **CV-2-03** | `modern-cpp-windows` | `redsalamander-cpp-modern-style`, `redsalamander-error-handling`, `redsalamander-compiler-warnings`, `redprism`, `redxe`, `dxui` | Fold the common style rules. The suppression policy is already normative in `RedSalamander` `Specs/Core/Core_CompilerWarnings.md`, so that reference shrinks to a pointer plus whatever fix guidance the spec lacks. `Debug::` logging conventions are a `RedSalamander` API and return there as a local skill (decision D1). |
-| **CV-2-04** | `localization` | `redsalamander`, `redprism` | Keep placeholder and parity rules shared. Resource-helper names, the `HostTests` string-table gate, and satellite layout are repository facts and return to each owner. |
-| **CV-2-05** | `performance-resources` | `redprism`, `redxe`, `dxui` | Fold the shared design rules; the `DxUi` hosted paired gate stays in its performance contract. |
-| **CV-2-06** | `d3d11-win32-host` | `redprism-*`, `redxe-*` (four files) | The shared skill already merges these. Diff each reference against it, keep only product-specific frame order and chrome rules, and link those to the owning UI spec. |
-| **CV-2-07** | `spec-workflow` | `redprism`, `redxe`, `redtilde`, `redmonitor`, `dxui` | All five describe the same authority model. Fold it once; keep a per-repository line naming the validators to run. |
+| **CV-2-01** | `yyjson` | 3 references | `patterns.md`, `repository-facts.md`; 2 differences |
+| **CV-2-02** | `wil-raii` | 3 references | `patterns.md`, `repository-facts.md` |
+| **CV-2-03** | `modern-cpp-windows` | 6 references | `cpp-style.md`, `error-handling.md`, `compiler-warnings.md`, `repository-facts.md` |
+| **CV-2-04** | `localization` | 2 references | `patterns.md`, `repository-facts.md` |
+| **CV-2-05** | `performance-resources` | 3 references | `repository-facts.md` |
+| **CV-2-06** | `d3d11-win32-host` | 4 references | `repository-facts.md` |
+| **CV-2-07** | `spec-workflow` | 5 references | `repository-facts.md` |
 
-- [ ] **CV-2-08** When every consumer is on `DxUi` API 5 (tracked in each consumer's own plan), promote the API 5 failure policy from "per repository" to the shared rule in `modern-cpp-windows`.
-- [ ] **CV-2-09** One skill folder convention (decision D4). `RedSalamander` keeps repository skills in `.github/skills/` plus one in `.agents/skills/`; every other repository uses `.agents/skills/`.
-- [ ] **CV-2-10** Settle the provenance of `improve` (decision D5). It is locally customised while `skills-lock.json` still records the upstream hash.
-- [ ] **CV-2-11** Decide whether shared skills carry Codex `agents/openai.yaml` metadata (decision D6). `RedXe` and `RedTilde` had it for their copies; the shared skills have none.
+Gate that was applied to each fold: every code line and every inline identifier, flag, and path of the 26 source files is still present in the folded skill (checked by script; the only exceptions are two pragma lines that were merged into one block, and the names of skills that no longer exist), and every "where it is defined" claim in the repository facts was checked against the sibling sources.
 
-Exit: no parity reference remains unless it starts with a "kept because" line.
+Remaining steps:
+
+- [ ] **CV-2-08** Remove rows from `Differences To Converge` as repositories converge. A skill is finished when its table is empty.
+- [ ] **CV-2-09** One skill folder (register A-09, A-10): `RedSalamander` moves its 11 skills from `.github/skills/` to `.agents/skills/` and drops the extra front-matter keys, in one pull request that also updates its guidance spec, tool inventory, and CI excludes.
+- [ ] **CV-2-10** `improve` provenance: the skill is locally customised while `skills-lock.json` still records the upstream hash. Declare the fork (drop the lock entry, keep licence and author in the skill) so the lock states only what is true.
+- [ ] **CV-2-11** Codex `agents/openai.yaml` (register A-11): all skills or none. Default: none.
+- [ ] **CV-2-12** Repository-local skills that cover the same subject in several repositories (for example testing and build skills in [Skill-Catalog.md](../../../wiki/Skill-Catalog.md)) are folded the same way, one subject per pull request, once their tooling converges in Phase 5.
 
 ### Phase 3: discovery in every harness, and outside RedHome
 
-- [ ] **CV-3-01** Native Claude Code discovery (decision D2). Claude Code loads skills from `.claude/skills/` or from plugins, not from `.agents/skills/`. Options:
-  - **A. Stubs**: one `.claude/skills/<name>/SKILL.md` per shared skill with the same name and description and a body that points to the canonical file, plus a validator that fails on any difference.
-  - **B. Plugin**: package `RedHome` as a Claude Code plugin whose skills are the canonical folder, publish it from this repository as a marketplace entry, and let each repository opt in through its own `.claude/settings.json`. This is the only option that also works in sessions started inside a product repository. Check the manifest fields against current Claude Code plugin documentation before building it.
-  - **C. Stay** with the `AGENTS.md` index, which is how every repository has worked so far.
-- [ ] **CV-3-02** Sessions that see one repository only (decision D3): a setup step that clones `RedHome` beside the repository for hosted agents, a pinned git-ignored `RedHome` checkout modelled on `.ci-engine`, or accept that only repository-owned guidance is available there.
-- [ ] **CV-3-03** Keep the pointer sentence identical in all six sibling `AGENTS.md` files (it is today) and have CV-1-08 enforce it.
-- [ ] **CV-3-04** Acceptance, recorded in this plan: in each harness the owner uses, from `RedHome` and from one product repository, ask the agent to list the skills it can use and to open `wil-raii` with its reference for that repository.
+- [x] **CV-3-01** Native Claude Code discovery. `RedHome` is a Claude Code plugin (`.claude-plugin/plugin.json`, plugin `redhome`) whose skills are the canonical `.agents/skills/` folder, and a marketplace (`.claude-plugin/marketplace.json`, marketplace `redsalamanders`). Nothing is copied. Delivered in `RedHome` pull request #2.
+- [x] **CV-3-02** Every repository opts in the same way: an identical `.claude/settings.json` that registers the marketplace from GitHub and enables the plugin, and an identical `CLAUDE.md`. Because the marketplace source is the GitHub repository, this works in sessions that see one repository only, with no sibling checkout. Delivered in the step 1 pull requests; `RedHome` carries the same settings file.
+- [x] **CV-3-03** The pointer sentence is identical in all six sibling `AGENTS.md` files and `validate.ps1 -CheckSiblings` now enforces it.
+- [ ] **CV-3-04** Other harnesses that see one repository only (Codex, Copilot, hosted agents): one identical setup step everywhere, `git clone https://github.com/RedSalamanders/RedHome ../RedHome`, documented in [Working-From-RedHome.md](../../../wiki/Working-From-RedHome.md). Add it to each hosted-agent setup the owner uses.
+- [ ] **CV-3-05** Acceptance by the owner, in each harness in use, from `RedHome` and from one product repository: ask the agent to list its skills and to open `wil-raii` with the facts for that repository. Recorded so far: Claude Code CLI 2.1.326 validates the plugin and marketplace manifests, and a project-scope install of `redhome@redsalamanders`, with the marketplace read from GitHub at this branch, lists all 11 skills. The step 1 settings take effect after `RedHome` pull request #2 is merged, because the marketplace is read from `main`.
 
 ### Phase 4: pins (one engine, aligned producers)
 
-- [ ] **CV-4-01** Stop engine-notice drift at the source (decision D12). Either widen the Dependabot `ignore` entry so it matches the reusable-workflow dependency names, or keep the notices and document that they are closed, never merged. The four identical `dependabot.yml` files show this belongs in an engine template.
-- [ ] **CV-4-02** Choose the target engine commit and a cadence for future waves (decision D11). Today the newest `main` is `a094b2e`, which `RedSalamander` already runs.
-- [ ] **CV-4-03** Run the wave, oldest pin first: `DxUi` (`766fd7e`), `RedMonitor` (`d6a33c5`), then `RedXe`, `RedPrism`, and `RedTilde` (`07bc6f1`). For each: `Update-ProjectPin.ps1` from a clean engine checkout at the target, sync `<repo>/.ci-engine`, add one `Changes/` fragment, pass the compiler-free checks, merge, and wait for `ci-state` to record `succeeded` before starting the next repository.
-- [ ] **CV-4-04** Close the 20 notice branches once their repository is on the target.
-- [ ] **CV-4-05** `DxUi` lock alignment inside API 4: `RedSalamander` pins `7fb2ab71` while `RedXe`, `RedPrism`, and `RedMonitor` pin `f2e328a0`. Owned by `RedSalamander`'s own plan; listed here so the difference is deliberate.
-- [ ] **CV-4-06** API 5 adoption by the four API 4 consumers is product work owned by each repository's plan. This plan only records it as the condition for CV-2-08.
+- [x] **CV-4-01** Stop engine-notice drift at the source: add `RedSalamanders/.github/*` to the Dependabot `ignore` list (register G-02). Delivered in the step 1 pull requests of `DxUi`, `RedXe`, `RedPrism`, `RedTilde`, and `RedMonitor`, identical in all five.
+- [ ] **CV-4-02** The same line in `RedSalamander`. Its `Tools/Tests/HistoricalTerminalProfile.Tests.ps1` asserts that the list has exactly one entry, so the rule and the test change together. That touches a native input and starts the ARM64 qualification job, which fails today for the unrelated reason in CV-0-07, so this waits for a green `main`. `RedSalamander` is on the newest engine commit and has no open notice.
+- [ ] **CV-4-03** Close the 20 open notice pull requests once CV-4-01 is merged in their repository (runbook step 7). They must not be merged: each bumps one caller only.
+- [ ] **CV-4-04** One engine commit. Target: engine `main` at the time of the wave (`a094b2e` today, which `RedSalamander` already runs). Cadence: one wave a week, or immediately when a repository needs a fix, always all repositories.
+- [ ] **CV-4-05** Run the wave, oldest pin first: `DxUi` (`766fd7e`), `RedMonitor` (`d6a33c5`), then `RedXe`, `RedPrism`, and `RedTilde` (`07bc6f1`). For each: `Update-ProjectPin.ps1` from a clean engine checkout at the target, sync `<repo>/.ci-engine`, add one `Changes/` fragment, pass the compiler-free checks, merge, and wait for `ci-state` to record `succeeded` before starting the next repository. This needs PowerShell and a Windows runner and was not attempted from the authoring environment.
+- [ ] **CV-4-06** One `DxUi` revision and commit in every consumer (register H-01, H-02): `RedSalamander`, `RedXe`, `RedPrism`, and `RedMonitor` move to API 5, where `RedTilde` already is. Product work, owned by each repository's plan; this plan tracks it because it removes the largest block of code-convention differences.
+- [ ] **CV-4-07** One vcpkg baseline, tool pin, and triplet set (register C-06, C-07).
 
-Gate for the phase: `Get-WorkspaceStatus.ps1` shows one engine SHA and `OK` for every `.ci-engine`.
+Gate for the phase: `Get-WorkspaceStatus.ps1` shows one engine SHA and `OK` for every `.ci-engine`, and one `DxUi` commit in every lock.
 
 ### Phase 5: tooling (each shared script exists once)
 
-Homes (decision D7):
+Homes, the same for every repository:
 
 | Kind of tooling | Home | Why |
 | --- | --- | --- |
@@ -200,69 +223,112 @@ Homes (decision D7):
 | Workspace status, wiki and plan validation | `RedHome/Tools/` | Only meaningful with every sibling present; never used by a build |
 
 - [ ] **CV-5-01** Pilot the shim pattern in `RedMonitor` (smallest surface): the repository keeps a file with the same name and parameters that imports the engine implementation from `.ci-engine` and fails closed with one clear message when the engine is absent or at the wrong commit.
-- [ ] **CV-5-02** Tier A, identical today, zero behavior change: the changelog suite. Reconcile the three variants (`DxUi`, `RedSalamander`, the other four) into the engine with the engine's tests, then replace the copies with shims, one repository per pull request.
-- [ ] **CV-5-03** Tier A continued: `BuildConsole.psm1`, `NativeBuildPolicy.targets`, `Get-CiNativeScope.ps1`.
-- [ ] **CV-5-04** Tier B, forks: `ScopedTesting.psm1`, `TestRunEvidence.psm1`, and `Test-Changes.ps1`. Write the design in the engine's own plan first (one planner, per-repository data for suites and paths), pin each fork's behavior with tests, then migrate.
-- [ ] **CV-5-05** Tier C, guidance validation: one skill grammar and one package-integrity policy in the engine, replacing the seven implementations. `RedHome` keeps its copy until decision D13 says whether `RedHome` adopts the engine.
-- [ ] **CV-5-06** Tier D, dependency tooling: move `DxUiPaths.psm1`, `restore-dxui.ps1`, `DxUiRestore.psm1`, and `DxUiProvenance.psm1` behind the `DxUi` consumer interface, and the two `RedMonitor` client scripts behind the `RedMonitor` lock.
-- [ ] **CV-5-07** Tier E, toolchain: `vcpkg-install.ps1`, `VcpkgTriplet.psm1`, `VisualStudio.psm1`, `Install-ClangFormat.ps1`.
+- [ ] **CV-5-02** Tier A: the changelog suite (register F-01). Reconcile the three variants into the engine with the engine's tests, then replace the copies with shims, one repository per pull request.
+- [ ] **CV-5-03** Tier A continued: `BuildConsole.psm1`, `NativeBuildPolicy.targets`, `Get-CiNativeScope.ps1`, the `setup-msvc` action (F-02, F-08, C-02), and the formatter pin (D-02).
+- [ ] **CV-5-04** Tier B, forks: `ScopedTesting.psm1`, `TestRunEvidence.psm1`, and `Test-Changes.ps1` with one parameter set (F-03, E-04). Write the design in the engine's own plan first (one planner, per-repository data for suites and paths), pin each fork's behavior with tests, then migrate.
+- [ ] **CV-5-05** Tier C, guidance validation: one skill grammar and one package-integrity policy in the engine, replacing the seven implementations (F-04). `RedHome` then runs the engine as a documentation-kind project (G-10) and drops its own copy.
+- [ ] **CV-5-06** Tier D, dependency tooling: `DxUiPaths.psm1`, `restore-dxui.ps1`, `DxUiRestore.psm1`, and `DxUiProvenance.psm1` behind the `DxUi` consumer interface, and the two `RedMonitor` client scripts behind the `RedMonitor` lock, with the same root script names everywhere (F-05, F-06, E-07, E-08, C-08).
+- [ ] **CV-5-07** Tier E, toolchain: `vcpkg-install.ps1`, `VcpkgTriplet.psm1`, `VisualStudio.psm1`, `Install-ClangFormat.ps1` (F-07, E-09).
 
 Gate for every step: the repository's `Test-Changes.ps1 -Mode PrePush` passes before and after with the same selected suites, and `main` reaches `ci-state` `succeeded`.
 
 ### Phase 6: one repository shape
 
-- [ ] **CV-6-01** Common entry points (decision D8): every code repository answers the same root commands. Today `RedSalamander` has no `validate.ps1` and formats through `format-all.ps1`, `RedXe` validates through `validate-skills.ps1` only and its `format.ps1` has no `-Check`.
-- [ ] **CV-6-02** One `.clang-format` or a recorded reason for two (decision D9).
-- [ ] **CV-6-03** One `Core_Changes.md`: three repositories already share one text; make the engine own it and let each repository link to it, keeping only repository-specific notes locally.
-- [ ] **CV-6-04** Identical `AGENTS.md` blocks (drive-root output policy, `Changes/` workflow, Unified CI paragraph) come from one engine template, as the workflow callers do, so they cannot drift apart.
-- [ ] **CV-6-05** `RedHome` governance (decision D13): whether it adopts the engine as a documentation-kind project, requires pull requests for `main`, and records its own changes.
+Each step takes one section of the register to zero rows. One option per pull request per repository; identical text comes from one engine template, as the workflow callers do, so it cannot drift again.
+
+- [ ] **CV-6-01** Prerequisite in the engine: add `.github/copilot-instructions.md` to the prose `exclude` template (A-04). Until then, adding that file to a repository changes its native inputs, which is why step 1 did not touch it.
+- [ ] **CV-6-02** Guidance files (A-03, A-05 to A-08, A-12, A-13): identical `.github/copilot-instructions.md`, `AGENTS.md` title, headings, and shared sections, and `capabilities.json` everywhere.
+- [ ] **CV-6-03** Specifications and documents (B-01 to B-12): one `Specs/README.md` structure, one WIP index format, the same top-level folders, one performance contract file name, one `Core_Changes.md`, one `Build_UnifiedCI.md` skeleton, the same root files.
+- [ ] **CV-6-04** Build (C-01, C-03 to C-05, C-09): one warning profile, one switch set, one intermediate directory, one ASan property set, one minimum Windows version.
+- [ ] **CV-6-05** Formatting (D-01, D-03, D-04): the 155-line `.clang-format` everywhere. Each adopter (`RedXe`, `RedPrism`, `RedTilde`) reformats in one dedicated pull request with no other change, at a moment with no open feature branch.
+- [ ] **CV-6-06** Entry points (E-01 to E-03, E-05, E-06, E-10): every repository answers the same root commands with the same parameters. Existing names keep working as thin wrappers for one release.
+- [ ] **CV-6-07** CI and project configuration (G-03 to G-09).
+- [ ] **CV-6-08** Code conventions (H-03 to H-13), each in the owning repository's own plan, with the shared skill's `Differences To Converge` row removed in the same change.
+- [ ] **CV-6-09** `RedHome` itself follows the same rules as every other repository: pull requests for `main`, auto-delete of head branches, a licence (B-11), and engine-run validation (G-10).
 
 ### Phase 7: sustain and close
 
 - [ ] **CV-7-01** Run `wiki-sync` after each convergence pull request merges, and refresh [Skill-Catalog.md](../../../wiki/Skill-Catalog.md) whenever a skill is added, moved, or removed.
-- [ ] **CV-7-02** Review this plan's checkboxes at each pin wave; move finished phases' lasting rules into `AGENTS.md`, `wiki/`, or the owning repository.
-- [ ] **CV-7-03** Close: move this file to `Specs/Plans/Done/` when every step is checked or explicitly dropped with a reason.
+- [ ] **CV-7-02** At each pin wave, review this plan's boxes and the register: delete converged rows, and move finished phases' lasting rules into `AGENTS.md`, `wiki/`, or the owning repository.
+- [ ] **CV-7-03** Close: move this file and its companions to `Specs/Plans/Done/` when the register holds only rows that stay different by design.
 
 ---
 
-## Decisions for the owner
+## Pull requests
 
-| Id | Question | Options | Recommendation |
-| --- | --- | --- | --- |
-| **D1** | Where does repository-specific how-to end up? | Stay in `RedHome` references; return to repository-local skills | Return it. `RedHome` keeps what is common; `Debug::` logging and resource-helper detail go back to `RedSalamander`, the string-table gate to `RedPrism`. |
-| **D2** | Native Claude Code discovery | A stubs; B plugin; C stay with the index | B if sessions are also started inside product repositories, otherwise C. A adds eleven files and a validator for a modest gain. |
-| **D3** | Sessions that see one repository | Setup-step clone; pinned checkout; accept | Setup-step clone for hosted agents. A pinned checkout adds a seventh pin to maintain for prose that does not need version locking. |
-| **D4** | Skill folder convention | `.agents/skills/` everywhere; leave `RedSalamander` as is | `.agents/skills/` everywhere, moved in one `RedSalamander` pull request that also updates its guidance spec, tool inventory, and CI excludes. |
-| **D5** | `improve` provenance | Declare a fork and drop the lock entry; re-vendor upstream and keep local rules elsewhere | Declare the fork; keep the licence and author metadata in the skill. |
-| **D6** | Codex `agents/openai.yaml` for shared skills | Add; skip | Add only if the owner uses the Codex skill picker; it changes nothing else. |
-| **D7** | Home for shared tooling | Engine, `DxUi`, and `RedMonitor` as in Phase 5; a new tooling repository | As in Phase 5. A new repository would add one more pin without removing any. |
-| **D8** | Common root entry points | `validate.ps1`, `format.ps1 -Check`, `build.ps1`, `test.ps1`, `Test-Changes.ps1`, `package.ps1` everywhere; leave as is | Adopt the common set through thin wrappers, keeping existing names working. |
-| **D9** | `.clang-format` | Adopt the 155-line style in the three short-style repositories; keep two styles | Decide per repository at a quiet point: adoption reformats the whole tree and must be its own pull request. |
-| **D10** | Branch hygiene | Auto-delete head branches; archive policy for local-only branches; `RedSalamander` `master` | Auto-delete on. Archive experiment branches as `git bundle` files, then delete. Tag and delete `master` if nothing still targets it. |
-| **D11** | Engine pin cadence | Wave on every engine merge; weekly; on demand | Weekly, or immediately when a repository needs a fix, always as a full wave. |
-| **D12** | Dependabot engine notices | Widen the `ignore` rule; keep notices and close them | Widen the rule and let `Get-WorkspaceStatus.ps1` report pin lag instead. |
-| **D13** | `RedHome` governance | Adopt the engine; stay lightweight | Stay lightweight until Phase 5 Tier C needs the shared validator, then adopt the engine as a documentation-kind project. |
+Step 1 is the same change in every product repository, limited to paths that the repository's CI treats as prose, so no native build is triggered. The one exception is the Dependabot line in `RedSalamander` (CV-4-02).
+
+| Repository | Pull request | Content |
+| --- | --- | --- |
+| `RedHome` | [#2](https://github.com/RedSalamanders/RedHome/pull/2) | Phases 1 and 2, the plugin, this plan, validation and workspace-status extensions |
+| `DxUi` | [#264](https://github.com/RedSalamanders/DxUi/pull/264) | Dependabot `ignore`, `CLAUDE.md`, `.claude/settings.json`, `Changes/` fragment |
+| `RedSalamander` | [#228](https://github.com/RedSalamanders/RedSalamander/pull/228) | `CLAUDE.md`, `.claude/settings.json`, the stale skill paths in one plan, `Changes/` fragment |
+| `RedXe` | [#98](https://github.com/RedSalamanders/RedXe/pull/98) | The same |
+| `RedPrism` | [#32](https://github.com/RedSalamanders/RedPrism/pull/32) | The same, plus the stale skill paths in one plan |
+| `RedTilde` | [#118](https://github.com/RedSalamanders/RedTilde/pull/118) | The same |
+| `RedMonitor` | [#63](https://github.com/RedSalamanders/RedMonitor/pull/63) | The same |
+
+Merge order: `RedHome` #2 first, then the six in any order.
+
+## Decisions
+
+### Resolved by the governing rule
+
+The first version of this plan listed thirteen decisions and recommended an answer per case. Under the governing rule each has one answer.
+
+| Id | Question | Answer |
+| --- | --- | --- |
+| **D1** | Where does repository-specific how-to end up? | Nowhere: there is no repository-specific how-to. The shared skill states one rule set; product paths are repository facts; every remaining difference is a register row with a target. |
+| **D2** | Native Claude Code discovery | The plugin, enabled by the same `.claude/settings.json` in every repository. Delivered. |
+| **D3** | Sessions that see one repository | Claude Code: the plugin, read from GitHub. Other harnesses: the same one-line clone of `RedHome` beside the repository. |
+| **D4** | Skill folder | `.agents/skills/` everywhere (CV-2-09). |
+| **D5** | `improve` provenance | Declare the fork (CV-2-10). |
+| **D7** | Home for shared tooling | The engine, `DxUi`, and `RedMonitor`, as in Phase 5. No new repository. |
+| **D8** | Root entry points | The same commands and parameters everywhere (CV-6-06). |
+| **D9** | `.clang-format` | The 155-line file everywhere (CV-6-05). |
+| **D10** | Branch hygiene | The same settings everywhere: auto-delete on, one long-lived branch, experiment branches archived as bundles. Deletions are run by the owner from the runbook. |
+| **D11** | Engine pin cadence | One commit for all, moved in one weekly wave (CV-4-04). |
+| **D12** | Dependabot engine notices | Ignored at the source, identically (CV-4-01, CV-4-02). Pin lag is reported by `Get-WorkspaceStatus.ps1`. |
+| **D13** | `RedHome` governance | The same rules as every other repository (CV-6-09). |
+
+### Owner choices
+
+These are the register rows marked *Choice*: two common end states are possible, and the default below follows the order in the governing rule. Whichever is picked, every repository moves to it.
+
+| Register row | Default | Alternative |
+| --- | --- | --- |
+| A-11 Codex `agents/openai.yaml` (was D6) | None: four of seven repositories have none | Add to every skill, if the Codex skill picker is used |
+| A-12 Tool folders that exist in one repository | Promote to a template for all when a second repository needs it, otherwise remove | Keep, with the reason recorded as "different by design" |
+| B-11 Licence file name, holder spelling, and third-party text | No default: legal text is the owner's to state | |
+| B-12 `CODEOWNERS`, `CONTRIBUTING.md`, pull request template, `.editorconfig`, `.vsconfig` | Present everywhere, from one template | Absent everywhere |
+| C-09 Minimum Windows version | Windows 11 22000.2600, declared by three repositories | Windows 10 `10.0.19041.0` everywhere, as `RedXe` supports today |
+| G-08 Tests layout | `<Suite>Tests/<Suite>Tests.vcxproj`, used by three repositories | Flat `Tooling.Tests.*.ps1` |
+| H-05 Logging helpers | `DxUi::Debug`, because every consumer already depends on the producer | The `Debug::` family from `RedSalamander` and `RedMonitor` |
+| H-07 Satellite layout and loader | `Lang\<Module>-<culture>.dll`, used by two repositories | `Languages\<tag>\<Product>.resources.dll` |
+| H-10 Settings format | JSON through `yyjson`, used by four repositories | Line-based text everywhere |
 
 ## Validation
 
 | Phase | Proof |
 | --- | --- |
-| 0 | `Get-WorkspaceStatus.ps1` clean; branch and worktree counts recorded here before and after |
-| 1 | `validate.ps1 -CheckSiblings` passes on the Windows host and in the `Validate RedHome` workflow |
-| 2 | For each folded reference, a line-by-line disposition table in the pull request; `validate.ps1 -CheckSiblings`; the receiving repository's guidance validator |
-| 3 | The CV-3-04 acceptance record |
-| 4 | One engine SHA in `Get-WorkspaceStatus.ps1`; `ci-state` `succeeded` in every repository after its bump |
+| 0 | `Get-WorkspaceStatus.ps1 -Hygiene` shows zero stale refs, merged branches, local-only branches, and extra worktrees |
+| 1 | Both jobs of the `Validate RedHome` workflow pass |
+| 2 | The fold gate described under Phase 2; `validate.ps1 -CheckSiblings` |
+| 3 | The CV-3-05 acceptance record |
+| 4 | One engine SHA and one `DxUi` commit in `Get-WorkspaceStatus.ps1`; `ci-state` `succeeded` in every repository after its bump |
 | 5 | Same `Test-Changes.ps1 -Mode PrePush` selection and result before and after each move; engine tests cover the moved tool |
-| 6 | The command map in [Working-From-RedHome.md](../../../wiki/Working-From-RedHome.md) collapses to one row |
+| 6 | The register section for the step has no rows left; the command map in [Working-From-RedHome.md](../../../wiki/Working-From-RedHome.md) collapses to one row |
 
 ## Risks
 
-- **`RedHome` becomes a hidden dependency.** Invariant 2 and CV-1-08 guard against it: nothing executable is consumed from `RedHome`.
-- **Parity references drift from their repositories.** They are dated copies. Phase 2 exists to remove them; do not edit them in place except to fold or delete.
+- **`RedHome` becomes a hidden dependency.** Invariant 2 guards against it: nothing executable is consumed from `RedHome`. The plugin carries prose only.
+- **The plugin follows `RedHome` `main` without a version.** That is deliberate, so skills never lag their source, and it means a bad merge to `RedHome` reaches every repository at the next plugin refresh. The `Validate RedHome` workflow is the gate.
+- **Converging by majority copies a mistake.** The default order puts producer contracts and the stricter option before the majority, and every Phase 6 step passes the receiving repository's own gates.
+- **A tree-wide reformat collides with open work.** CV-6-05 runs alone, per repository, with no open feature branch.
 - **Engine-hosted tooling breaks local work when `.ci-engine` is missing or stale.** Shims fail closed with one actionable message; `Get-CiPinnedEngineInputsIdentity` already enforces this for builds.
-- **Branch cleanup loses unpushed work.** CV-0-04 archives before anything is deleted, and worktree maintenance runs only on the Windows host.
-- **A pin wave lands on a red `main`.** CV-0-07 gates `RedSalamander`; every wave step waits for `ci-state`.
+- **Branch cleanup loses unpushed work.** The runbook archives and verifies before anything is deleted, and only the owner runs it.
+- **A pin wave lands on a red `main`.** CV-0-07 records the state of `RedSalamander`; every wave step waits for `ci-state`.
 
 ## Closeout criteria
 
-The plan closes when a session started in `RedHome` reaches, for every repository, the same guidance depth that repository's own skills carried before 2026-11-16; when each shared script, module, and policy file has one owner and thin consumers; when every repository runs one engine commit; and when the lasting rules from this plan live in `AGENTS.md`, `wiki/`, the shared skills, or the owning repository's `Specs/`.
+The plan closes when the register holds only rows that stay different by design; when a session started in `RedHome` or in any product repository reaches the same shared skills; when each shared script, module, and policy file has one owner and thin consumers; when every repository runs one engine commit and one `DxUi` revision; and when the lasting rules from this plan live in `AGENTS.md`, `wiki/`, the shared skills, or the owning repository's `Specs/`.
