@@ -1,0 +1,15 @@
+{
+  "name": "redsalamanders",
+  "owner": {
+    "name": "RedSalamanders",
+    "url": "https://github.com/RedSalamanders"
+  },
+  "description": "Shared agent skills for the RedSalamanders repositories, served from RedHome.",
+  "plugins": [
+    {
+      "name": "redhome",
+      "source": ".",
+      "description": "Shared RedSalamanders agent skills: one rule set for DxUi, RedSalamander, RedXe, RedPrism, RedTilde, and RedMonitor."
+    }
+  ]
+}
