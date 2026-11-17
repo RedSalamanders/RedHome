@@ -38,6 +38,10 @@ pwsh -NoProfile -File .\validate.ps1 -CheckSiblings
 pwsh -NoProfile -File .\Tools\Get-WorkspaceStatus.ps1
 ```
 
+## Plans
+
+Cross-repository plans live in [Specs/Plans/WIP/](Specs/Plans/WIP/README.md). The active one is the convergence plan that federates skills, tooling, pins, and conventions across all repositories step by step. Work items that belong to one repository stay in that repository's own `Specs/Plans/`.
+
 ## Authority Boundary
 
 `RedHome/wiki/` synthesizes cross-project architecture, terminology, and workflows, and routes to authoritative contracts. Product behavior, C++/COM ABI definitions, numeric goldens, `capabilities.json`, and dependency locks remain owned by each sibling repository (`../<Project>/Specs/`, `../<Project>/Dependencies/`).

@@ -1,17 +1,19 @@
 # Dependency Pin & Local `.ci-engine` Matrix
 
-Last verified: `2026-11-16` (run `./Tools/Get-WorkspaceStatus.ps1` from `RedHome` for live checkout values; sibling lock files are authoritative).
+This page records which file owns each pin and which API revision each repository consumes. It deliberately holds no commit SHAs: run `pwsh -NoProfile -File ./Tools/Get-WorkspaceStatus.ps1` from `RedHome` for live values, and treat the sibling lock files as authoritative. Dated pin snapshots and pending pin waves belong in [the active plans](../Specs/Plans/WIP/README.md).
 
-## Current Pin Snapshot Across Siblings
+## Pin Owners And Consumed API Revisions
 
-| Repository (from `RedHome`) | Kind | `.ci/project.json` `engine.ref` | `Dependencies/DxUi.lock.json` | `Dependencies/RedMonitor.lock.json` |
+| Repository (from `RedHome`) | Kind | Shared CI engine pin | `DxUi` | `RedMonitor` client |
 | --- | --- | --- | --- | --- |
-| [../DxUi](DxUi.md) | `sdk` | `766fd7e01aeef2e77ba18df83b9928516155014e` | *(Producer — API rev 5)* | *(None)* |
-| [../RedSalamander](RedSalamander.md) | `application` | `a094b2ea66fc6fd7a8933488a71dacda262903a4` | API `4` @ `7fb2ab718520…` | API `1` @ `9ebea6577fe9…` |
-| [../RedXe](RedXe.md) | `application` | `07bc6f1e56804390bd5b2ecfdd4027fac2493049` | API `4` @ `f2e328a0a26a…` | API `1` @ `9ebea6577fe9…` |
-| [../RedPrism](RedPrism.md) | `application` | `07bc6f1e56804390bd5b2ecfdd4027fac2493049` | API `4` @ `f2e328a0a26a…` | API `1` @ `9ebea6577fe9…` |
-| [../RedTilde](RedTilde.md) | `application` | `07bc6f1e56804390bd5b2ecfdd4027fac2493049` | API `5` @ `21fae0dc6600…` | API `1` @ `9ebea6577fe9…` |
-| [../RedMonitor](RedMonitor.md) | `application` | `d6a33c5b8aa009e04653704c648d7ad87be94fcc` | API `4` @ `f2e328a0a26a…` | *(Producer — API rev 1)* |
+| [../DxUi](DxUi.md) | `sdk` | `.ci/project.json` `engine.ref` | Producer; API revision declared in `capabilities.json` (`5`) | None |
+| [../RedSalamander](RedSalamander.md) | `application` | `.ci/project.json` `engine.ref` | `Dependencies/DxUi.lock.json`, API `4` | `Dependencies/RedMonitor.lock.json`, API `1` |
+| [../RedXe](RedXe.md) | `application` | `.ci/project.json` `engine.ref` | `Dependencies/DxUi.lock.json`, API `4` | `Dependencies/RedMonitor.lock.json`, API `1` |
+| [../RedPrism](RedPrism.md) | `application` | `.ci/project.json` `engine.ref` | `Dependencies/DxUi.lock.json`, API `4` | `Dependencies/RedMonitor.lock.json`, API `1` |
+| [../RedTilde](RedTilde.md) | `application` | `.ci/project.json` `engine.ref` | `Dependencies/DxUi.lock.json`, API `5` | `Dependencies/RedMonitor.lock.json`, API `1` |
+| [../RedMonitor](RedMonitor.md) | `application` | `.ci/project.json` `engine.ref` | `Dependencies/DxUi.lock.json`, API `4` | Producer; API `1` |
+
+In every repository the `@<40-hex-SHA>` in `.github/workflows/*.yml` callers must equal `engine.ref`, and `<repo>/.ci-engine` must be detached at that same commit.
 
 ## Why `DxUi` and `.ci-engine` Sync Differently
 
@@ -28,5 +30,9 @@ Last verified: `2026-11-16` (run `./Tools/Get-WorkspaceStatus.ps1` from `RedHome
      git -C .ci-engine fetch origin $pin
      git -C .ci-engine checkout --detach $pin
      ```
+
+3. **Dependabot engine notices are signals, not pin updates**:
+   - A Dependabot pull request that bumps one `RedSalamanders/.github` workflow caller changes a single `@SHA` and leaves `.ci/project.json` behind. Merging it creates caller drift that then has to be reconciled.
+   - Adopt a new engine only through `Update-ProjectPin.ps1` (see the `cross-repo-pins` skill), then close the notice.
 
 Return to [Index.md](Index.md).

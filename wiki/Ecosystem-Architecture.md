@@ -4,16 +4,16 @@ All RedSalamanders products target modern Windows (Windows 11 22000.2600+; `RedX
 
 ## Product Matrix
 
-| Dimension | [RedSalamander](RedSalamander.md) | [RedXe](RedXe.md) | [RedPrism](RedPrism.md) | [RedTilde](RedTilde.md) | [DxUi](DxUi.md) |
-| --- | --- | --- | --- | --- | --- |
-| **Sibling path (from `RedHome`)** | `../RedSalamander` | `../RedXe` | `../RedPrism` | `../RedTilde` | `../DxUi` |
-| **Version base** | `7.0` | `1.0` | `0.1` | `0.1` | `0.1` (Static SDK) |
-| **Primary domain** | Dual-pane file manager & VFS/viewers | XENEON EDGE widget dashboard & services | GPU/CPU raster layer editor (`.prism`) | Native Markdown editor (Compose/Source/Split) | Retained DirectX control & RichText library |
-| **Graphics stack** | D3D11 + D2D + DirectWrite + DXGI | D3D11 flip swap chain + DirectWrite glyph atlas | D3D11 + build-time HLSL + compute (`BrushCoverage.hlsl`) + D2D/DWrite | DxUi `WindowHost`/controls + Direct2D + DirectWrite | Borrowed-device `EmbeddedHost` + standalone `WindowHost` |
-| **DxUi integration** | Pinned `DxUi.lib` (API 4 -> API 5 pending) | Pinned `DxUi.lib` (API 4, used in `AVControl`) | Pinned `DxUi.lib` (API 4, full `ChromeHost` shell) | Pinned `DxUi.lib` (API 5, `RichTextEditor` + shell) | Canonical producer (`src/DxUi.vcxproj`) |
-| **Plugin ABI** | COM-style `RedSalamanderCreate` (`IFileSystem`, `IViewer`, `IHost`) | Strict COM (`sizeof`/`offsetof`-pinned `Widget.h`, `Service.h`, `Action.h`) | None (monolithic `RedPrism.exe`; future ABI COM/POD only) | None (monolithic `RedTilde.exe`) | Static `.lib` only; never pass `DxUi` C++ across DLL ABIs |
-| **Settings store** | [JSON/JSON5 through `yyjson`](../../RedSalamander/Specs/Core/Core_SettingsStore.md) under `%LOCALAPPDATA%\RedSalamander\Settings` + `SettingsStore.schema.json` | `%LOCALAPPDATA%\RedXe` JSON (`yyjson`) + event-blocked watcher | `%LOCALAPPDATA%\RedPrism` JSON (`yyjson`, atomic save + live reload) | `%LOCALAPPDATA%\RedTilde` JSON + live theme/syntax apply | Consumer-owned (`ThemeColors.h` supplied by host) |
-| **Skill folder** | `.github/skills/` (+ `.agents/skills/` meta-skills) | `.agents/skills/` | `.agents/skills/` | `.agents/skills/` | `.agents/skills/` |
+| Dimension | [RedSalamander](RedSalamander.md) | [RedXe](RedXe.md) | [RedPrism](RedPrism.md) | [RedTilde](RedTilde.md) | [RedMonitor](RedMonitor.md) | [DxUi](DxUi.md) |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Sibling path (from `RedHome`)** | `../RedSalamander` | `../RedXe` | `../RedPrism` | `../RedTilde` | `../RedMonitor` | `../DxUi` |
+| **Version base** | `7.0` | `1.0` | `0.1` | `0.1` | `0.1` | `0.1` (Static SDK) |
+| **Primary domain** | Dual-pane file manager & VFS/viewers | XENEON EDGE widget dashboard & services | GPU/CPU raster layer editor (`.prism`) | Native Markdown editor (Compose/Source/Split) | ETW/TraceLogging diagnostics viewer & single-header `Client.h` producer SDK | Retained DirectX control & RichText library |
+| **Graphics stack** | D3D11 + D2D + DirectWrite + DXGI | D3D11 flip swap chain + DirectWrite glyph atlas | D3D11 + build-time HLSL + compute (`BrushCoverage.hlsl`) + D2D/DWrite | DxUi `WindowHost`/controls + Direct2D + DirectWrite | D3D11 + D2D + DirectWrite with pinned `DxUi` controls | Borrowed-device `EmbeddedHost` + standalone `WindowHost` |
+| **DxUi integration** | Pinned `DxUi.lib` (API 4 -> API 5 pending) | Pinned `DxUi.lib` (API 4, used in `AVControl`) | Pinned `DxUi.lib` (API 4, full `ChromeHost` shell) | Pinned `DxUi.lib` (API 5, `RichTextEditor` + shell) | Pinned `DxUi.lib` (API 4) | Canonical producer (`src/DxUi.vcxproj`) |
+| **Plugin ABI** | COM-style `RedSalamanderCreate` (`IFileSystem`, `IViewer`, `IHost`) | Strict COM (`sizeof`/`offsetof`-pinned `Widget.h`, `Service.h`, `Action.h`) | None (monolithic `RedPrism.exe`; future ABI COM/POD only) | None (monolithic `RedTilde.exe`) | None (standalone `RedMonitor.exe`; consumers vendor only the hash-pinned `Client.h`) | Static `.lib` only; never pass `DxUi` C++ across DLL ABIs |
+| **Settings store** | [JSON/JSON5 through `yyjson`](../../RedSalamander/Specs/Core/Core_SettingsStore.md) under `%LOCALAPPDATA%\RedSalamander\Settings` + `SettingsStore.schema.json` | `%LOCALAPPDATA%\RedXe` JSON (`yyjson`) + event-blocked watcher | `%LOCALAPPDATA%\RedPrism` JSON (`yyjson`, atomic save + live reload) | `%LOCALAPPDATA%\RedTilde` JSON + live theme/syntax apply | Settings validated by [SettingsStore.schema.json](../../RedMonitor/Specs/SettingsStore.schema.json) (see [Core_Architecture.md](../../RedMonitor/Specs/Core/Core_Architecture.md)) | Consumer-owned (`ThemeColors.h` supplied by host) |
+| **Skill folder** | `.github/skills/` (+ `.agents/skills/` meta-skills) | `.agents/skills/` | `.agents/skills/` | `.agents/skills/` | `.agents/skills/` | `.agents/skills/` |
 
 ## Critical Cross-Boundary Rules
 

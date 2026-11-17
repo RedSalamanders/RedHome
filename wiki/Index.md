@@ -10,6 +10,8 @@ Welcome to the `RedHome` LLM Wiki—the cross-repository navigation map, archite
 - [Shared-Engineering-Policies.md](Shared-Engineering-Policies.md) — Shared C++/WIL rules, native compiler profiles and repository exceptions, `Changes/` fragments, scoped testing (`Test-Changes.ps1`), harness captures, and drive-root output policy.
 - [Dependency-And-CI-Matrix.md](Dependency-And-CI-Matrix.md) — Producer/consumer dependency graph (`DxUi.lock.json`, `RedMonitor.lock.json`, `.ci/project.json`, `.ci-engine`) and pin-wave runbook.
 - [Glossary.md](Glossary.md) — Shared RedSalamanders terminology (`EmbeddedHost`, `WindowHost`, `ACP`, `ci-state`, desktop lease, short 16-hex fingerprints, etc.).
+- [Working-From-RedHome.md](Working-From-RedHome.md) — Session start checklist, per-repository command map, branch and worktree conventions, harness discovery, and what to do when `RedHome` is not beside a repository.
+- [Skill-Catalog.md](Skill-Catalog.md) — Every shared and repository-local skill, routed by task, with the per-repository references each shared skill carries.
 
 ## Application Dossiers
 
@@ -23,3 +25,7 @@ Welcome to the `RedHome` LLM Wiki—the cross-repository navigation map, archite
 
 - [DxUi.md](DxUi.md) — `../DxUi` (`v0.1` SDK): Canonical static UI library (`DxUi.lib`, 35 retained controls, `EmbeddedHost`, `RichTextEditor`, lossless `MarkdownSyntax`).
 - [Shared-CI-Engine.md](Shared-CI-Engine.md) — `../RedSalamanders/.github` (`Policy v1`): Unified CI workflows, 5-minute quiet coordinator, dual-arch Release gate, local `Ci.*.psm1` modules, and Winget promotion.
+
+## Plans
+
+- [../Specs/Plans/WIP/README.md](../Specs/Plans/WIP/README.md) — Active cross-repository plans. Dated pin snapshots, branch inventories, and convergence steps live there, not in `wiki/`.

@@ -45,3 +45,13 @@ Isolate vendor warnings locally according to the target repository's warning pro
     }
     ```
 - **Custom resource wrapper classes**: Delete copy operations and `= default` move operations over `wil::unique_*` members—never write a raw `HANDLE` member with a defaulted C++ move.
+
+## Repository Detail
+
+| Working in | Read |
+| --- | --- |
+| `RedSalamander` | [references/redsalamander.md](references/redsalamander.md): member, paint-context, GDI-selection, menu, and Direct2D patterns with code, plus the documented cross-thread icon ownership transfer |
+| `RedPrism` | [references/redprism.md](references/redprism.md) |
+| `RedXe` | [references/redxe.md](references/redxe.md) |
+| `DxUi` | [modern-cpp-windows/references/dxui.md](../modern-cpp-windows/references/dxui.md) (its WIL rules lived in `modern-cpp-wil`) |
+| `RedTilde`, `RedMonitor` | No separate skill existed; follow this file and that repository's `AGENTS.md`. |

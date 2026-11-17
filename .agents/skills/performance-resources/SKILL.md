@@ -19,3 +19,13 @@ Read the target repository's `Specs/Core/Core_PerformanceAndResources.md` (or `S
 
 - Capture a paired baseline on the same machine, configuration (`Release`), and deterministic fixture **before** optimizing or accepting a hot-path change (`test.ps1` complex-UI FPS/memory in `DxUi`, `performance-paired.ps1` in `RedTilde`, archived `Specs/TestRuns/` selftests in `RedSalamander`, WARP/counter gates in `RedXe`/`RedPrism`).
 - Never silently rebaseline a budget or substitute draw-call counts for end-to-end frame/memory measurements. Confirmed regressions require developer review with measured optimization, scope-reduction, or deferral options recorded in the owning spec or WIP plan.
+
+## Repository Detail
+
+| Working in | Read |
+| --- | --- |
+| `RedSalamander` | Repository-local [perf-validation](../../../../RedSalamander/.github/skills/perf-validation/SKILL.md) skill (mandatory perf-first workflow) |
+| `RedPrism` | [references/redprism.md](references/redprism.md) |
+| `RedXe` | [references/redxe.md](references/redxe.md) |
+| `DxUi` | [references/dxui.md](references/dxui.md): dirty preparation versus composition and the hosted paired gate |
+| `RedTilde`, `RedMonitor` | No separate skill existed; read the owning performance spec named above. |

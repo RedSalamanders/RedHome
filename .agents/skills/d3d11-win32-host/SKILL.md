@@ -27,3 +27,12 @@ Shared host foundation for `RedXe` and `RedPrism` (read the repo's `AGENTS.md` a
   - On `DXGI_STATUS_OCCLUDED`, stop building frames, wait for a registered DXGI occlusion-status window message, and probe recovery with `Present(0, DXGI_PRESENT_TEST)` (never poll).
   - On `DXGI_ERROR_DEVICE_REMOVED`, `DXGI_ERROR_DEVICE_RESET`, or `DXGI_ERROR_DRIVER_INTERNAL_ERROR`, tear down and recreate device + swap chain + targets coherently (flushing the immediate context after releasing the swap chain so `CreateSwapChainForHwnd` never fails with `E_ACCESSDENIED`).
 - Keep `--warp` green across renderer edits.
+
+## Repository Detail
+
+| Working in | Read |
+| --- | --- |
+| `RedPrism` | [Direct3D 11 rendering](references/redprism-direct3d11-rendering.md), [Win32 windowing](references/redprism-win32-windowing.md) |
+| `RedXe` | [Direct3D 11 rendering](references/redxe-direct3d11-rendering.md), [Win32 windowing](references/redxe-win32-windowing.md) |
+| `DxUi` | Repository-local [win32-host](../../../../DxUi/.agents/skills/win32-host/SKILL.md) and [embedded-rendering](../../../../DxUi/.agents/skills/embedded-rendering/SKILL.md) skills |
+| `RedSalamander` | Repository-local [win32-wndproc](../../../../RedSalamander/.github/skills/win32-wndproc/SKILL.md) and [direct2d-rendering](../../../../RedSalamander/.github/skills/direct2d-rendering/SKILL.md) skills |

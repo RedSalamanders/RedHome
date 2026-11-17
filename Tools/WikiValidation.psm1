@@ -1,4 +1,4 @@
-# Validates RedHome pointer parity, wiki/Index.md completeness, and Markdown links.
+# Validates RedHome pointer parity, wiki/Index.md completeness, and Markdown links (root docs, skills, wiki, Specs).
 #Requires -Version 7.0
 Set-StrictMode -Version Latest
 
@@ -82,6 +82,12 @@ function Test-WikiIntegrity {
     }
     foreach ($wf in $wikiFiles) {
         $markdownFiles.Add($wf)
+    }
+    $specsDir = Join-Path $rootFull 'Specs'
+    if ([IO.Directory]::Exists($specsDir)) {
+        foreach ($pf in @(Get-ChildItem -LiteralPath $specsDir -Recurse -Filter '*.md' -File -Force)) {
+            $markdownFiles.Add($pf)
+        }
     }
 
     $failures = [Collections.Generic.List[string]]::new()

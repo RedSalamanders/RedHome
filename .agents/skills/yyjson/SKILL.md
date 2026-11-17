@@ -37,3 +37,12 @@ Check all `yyjson_mut_*` pointer allocations and `*_add_*` boolean returns when 
 - Pass a mutable buffer (`std::string` / `std::vector<char>`, never a string literal) to `yyjson_read_opts()`, capture `yyjson_read_err`, and avoid `YYJSON_READ_INSITU` unless mutating and retaining the input buffer is intentional.
 - Check root and field types (`yyjson_is_*`) before reading (`yyjson_get_*`), and validate numeric bounds before narrowing casts.
 - Note: `yyjson_obj_get` returns the **first** occurrence of a duplicate key (test fixtures overriding fields must prepend overrides). Use the `len` returned by `yyjson_write_opts` / `yyjson_mut_write_opts` when constructing strings.
+
+## Repository Detail
+
+| Working in | Read |
+| --- | --- |
+| `RedSalamander` | [references/redsalamander.md](references/redsalamander.md): DO/DON'T list with code, the JSON5 and BOM read flags for user-facing configuration, write-API notes, and the review checklist |
+| `RedPrism` | [references/redprism.md](references/redprism.md): Swift `Codable` shapes in `.prism` files |
+| `RedXe` | [references/redxe.md](references/redxe.md): settings-document rules alongside its `settings-store` skill |
+| `RedTilde`, `RedMonitor`, `DxUi` | No separate skill existed; follow this file and that repository's `AGENTS.md`. |

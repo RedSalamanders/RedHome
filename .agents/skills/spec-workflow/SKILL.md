@@ -30,3 +30,15 @@ Consolidated specification governance across `DxUi`, `RedSalamander`, `RedXe`, `
    - Generate any spec/doc screenshots strictly through the application's deterministic non-activating harness (`--screenshot` / capture scenarios)—never Computer Use or manual desktop screenshots.
    - Add one dated fragment under `Changes/<yyyy-mm-dd>-<topic>.md` (never hand-edit `CHANGELOG.md`).
    - Run the repository's spec/skill/changelog validators (`validate.ps1` / `validate-skills.ps1` / `validate-specs.ps1`, `Tools/Get-SpecInventory.ps1 -FailOnFindings` in `RedSalamander`, and `Tools/Test-Changelog.ps1`).
+
+## Repository Detail
+
+| Working in | Read |
+| --- | --- |
+| `RedPrism` | [references/redprism.md](references/redprism.md) |
+| `RedXe` | [references/redxe.md](references/redxe.md) |
+| `RedTilde` | [references/redtilde.md](references/redtilde.md) |
+| `RedMonitor` | [references/redmonitor.md](references/redmonitor.md) |
+| `DxUi` | [references/dxui.md](references/dxui.md) |
+| `RedSalamander` | No separate skill existed; `AGENTS.md`, `Specs/README.md`, and the repository-local [tooling-governance](../../../../RedSalamander/.github/skills/tooling-governance/SKILL.md) skill |
+| `RedHome` | Cross-repository plans live in [Specs/Plans/WIP/](../../../Specs/Plans/WIP/README.md): one indexed plan per initiative, while each repository's own work items stay in that repository's plans. |

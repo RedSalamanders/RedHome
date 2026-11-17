@@ -23,3 +23,11 @@ Applies across `RedSalamander`, `RedPrism`, `RedTilde`, and localized UI compone
    - Interactive `DxUi` and Win32 controls set their UI Automation accessible name (`SetAccessibleName`) from the same resource table (`IDS_*` label, tooltip, or `IDS_A11Y_*`).
 
 Run the owning repository's resource validation gate (`ResourceLocalizationContracts.Tests.ps1` in `RedSalamander`, `HostTests` in `RedPrism`, or `validate.ps1`) after editing resource strings.
+
+## Repository Detail
+
+| Working in | Read |
+| --- | --- |
+| `RedSalamander` | [references/redsalamander.md](references/redsalamander.md): `Common/Helpers.h` resource helpers, language-neutral embedded strings, `.rc` menus, and the limits on runtime menu extension, with examples |
+| `RedPrism` | [references/redprism.md](references/redprism.md): the `HostTests` string-table gate, chord captions, satellite DLL layout, and accessible names |
+| `RedTilde` and other localized UI | No separate skill existed; follow this file and that repository's `AGENTS.md`. |

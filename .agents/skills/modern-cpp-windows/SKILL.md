@@ -29,4 +29,17 @@ Applies across `DxUi`, `RedSalamander`, `RedXe`, `RedPrism`, `RedTilde`, and `Re
 
 - Use `HRESULT` for Windows/DirectX/COM calls; capture `GetLastError()` immediately after a failing Win32 call. Do not log normal control flow (`WM_SIZE` 0x0, cancellation, handled occlusion).
 - **Never** let C++ exceptions cross `wWinMain`, `WndProc`, threadpool callbacks, or COM/plugin DLL ABIs. Never pass `DxUi` C++ types, STL containers, or WIL wrappers across a plugin DLL ABI.
-- **`catch (...)` is forbidden.** Where catching at an ABI/callback boundary is mandatory, catch only explicitly named exception types with a comment documenting the fallback. Under the API-5 failure policy, expected refusals return checked status/`HRESULT` values while unexpected C++ exceptions (including `std::bad_alloc`, outside explicitly bounded job runners) route to host-owned local minidump diagnostics and termination.
+- **`catch (...)` is forbidden.** Where catching at an ABI/callback boundary is mandatory, catch only explicitly named exception types with a comment documenting the fallback, and never let a broader `catch (const std::exception&)` swallow `std::bad_alloc`.
+- **The unexpected-exception policy belongs to each repository; do not carry it across.** `DxUi` API 5 and its API-5 consumers (`RedTilde` today) return checked status/`HRESULT` values for expected refusals and route unexpected C++ exceptions, including `std::bad_alloc` outside explicitly bounded job runners, to host-owned local minidump diagnostics and termination. API-4 consumers follow their own `AGENTS.md`: `RedSalamander` converts named exceptions to a logged failure `HRESULT` at `noexcept` boundaries and fails fast on `std::bad_alloc`; `RedPrism` translates `std::bad_alloc` to `E_OUTOFMEMORY` only where the caller then fails the whole operation; `RedMonitor` treats allocation failure as fatal. [Dependency-And-CI-Matrix.md](../../../wiki/Dependency-And-CI-Matrix.md) lists the API revision each repository consumes.
+
+## Repository Detail
+
+Open the file for the repository you are editing; it restores what that repository's own skill said before consolidation.
+
+| Working in | Read |
+| --- | --- |
+| `RedSalamander` | [C++ style, naming, and shared-helper reuse](references/redsalamander-cpp-modern-style.md), [error handling and `Debug::` logging](references/redsalamander-error-handling.md), [warning fixes and suppression policy](references/redsalamander-compiler-warnings.md) |
+| `RedPrism` | [references/redprism.md](references/redprism.md) |
+| `RedXe` | [references/redxe.md](references/redxe.md) |
+| `DxUi` | [references/dxui.md](references/dxui.md) |
+| `RedTilde`, `RedMonitor` | No separate skill existed; that repository's `AGENTS.md` is the complete rule set. |

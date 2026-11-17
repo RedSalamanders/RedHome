@@ -17,6 +17,8 @@
    - `Prepare` -> `Release` (promotes exact qualified ZIP bytes without rebuilding) -> `Winget` (validates schema headers, installs inbox App Installer if needed, verifies real portable installation/aliases/smokeTests and clean uninstall on both architectures, then submits to `microsoft/winget-pkgs`).
 5. **Pin Maintenance & Testing**:
    - Update a project's pin from a clean engine checkout via `./Tools/Update-ProjectPin.ps1 -Root ../<Project> -EngineRef <SHA>`.
+   - Dependabot pull requests that bump a single `RedSalamanders/.github` workflow caller are notices that the engine moved. They change one `@SHA` without `.ci/project.json`, so adopt the new engine with `Update-ProjectPin.ps1` instead of merging them.
+   - The standalone `../RedSalamanders/.github` checkout is only as current as its last fetch. Fetch it before reading engine docs there, or read the copy a product actually runs in `<repo>/.ci-engine/`.
    - Engine behavior tests run against the existing marked root: `./Tests/Test-Engine.ps1 -TestRoot D:/RedSalamander.Perf` (or `Z:/RedSalamander.Perf` where marked).
 
 Return to [Index.md](Index.md).
