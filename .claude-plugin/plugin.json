@@ -1,0 +1,12 @@
+{
+  "name": "redhome",
+  "displayName": "RedHome shared skills",
+  "description": "Shared RedSalamanders agent skills: one rule set for DxUi, RedSalamander, RedXe, RedPrism, RedTilde, and RedMonitor.",
+  "author": {
+    "name": "RedSalamanders",
+    "url": "https://github.com/RedSalamanders"
+  },
+  "homepage": "https://github.com/RedSalamanders/RedHome",
+  "repository": "https://github.com/RedSalamanders/RedHome",
+  "skills": ["./.agents/skills/"]
+}

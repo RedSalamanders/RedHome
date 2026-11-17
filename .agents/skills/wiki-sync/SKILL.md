@@ -15,7 +15,7 @@ Use this skill whenever sibling architectures, domain contract tables, `DxUi` ca
 
 ## Workflow
 
-1. Read [wiki/Index.md](../../../wiki/Index.md) and identify affected pages (`RedSalamander.md`, `RedXe.md`, `RedPrism.md`, `RedTilde.md`, `DxUi.md`, `Shared-CI-Engine.md`, `Dependency-And-CI-Matrix.md`, `Shared-Engineering-Policies.md`, `Ecosystem-Architecture.md`, `Glossary.md`).
-2. Reconcile component ownership, plugin/module inventories, domain spec entrypoints, repo-specific skill lists, commands, and stamped (`Last verified: YYYY-MM-DD`) pin snapshots against sibling `AGENTS.md`, `Specs/README.md`, `capabilities.json`, and lock files.
+1. Read [wiki/Index.md](../../../wiki/Index.md) and identify affected pages (`RedSalamander.md`, `RedXe.md`, `RedPrism.md`, `RedTilde.md`, `RedMonitor.md`, `DxUi.md`, `Skill-Catalog.md`, `Working-From-RedHome.md`, `Shared-CI-Engine.md`, `Dependency-And-CI-Matrix.md`, `Shared-Engineering-Policies.md`, `Ecosystem-Architecture.md`, `Glossary.md`).
+2. Reconcile component ownership, plugin/module inventories, domain spec entrypoints, repo-specific skill lists, commands, and consumed API revisions (never commit SHAs: `Tools/Get-WorkspaceStatus.ps1` reports live pins, and dated snapshots belong in `Specs/Plans/WIP/`) against sibling `AGENTS.md`, `Specs/README.md`, `capabilities.json`, and lock files.
 3. Run `pwsh -NoProfile -File ./validate.ps1 -CheckSiblings` in `RedHome` and fix any broken links or unindexed pages.
 4. When ending a multi-repo session, emit a concise handoff naming touched repos/branches/SHAs, exact verified commands and receipts, and remaining qualification gates.

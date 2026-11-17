@@ -5,22 +5,18 @@ description: Parse, validate, and serialize JSON/JSON5 safely with yyjson across
 
 # Safe `yyjson` Usage
 
-Consume `yyjson` from `vcpkg.json` (never vendor a duplicate copy) and combine with the `wil-raii` skill for unconditional cleanup.
+Consume `yyjson` from `vcpkg.json`; never vendor a duplicate copy and never introduce a second JSON library. Apply the [wil-raii](../wil-raii/SKILL.md) skill to document and write-buffer ownership so cleanup is unconditional.
 
 ## Document & Buffer Ownership
 
-- A `yyjson_doc*` or `yyjson_mut_doc*` owns every `yyjson_val*` and borrowed `const char*` (`yyjson_get_str()`) read from it. Copy/convert strings to `std::wstring`/`std::string` before freeing the document.
-- Own documents and serialized buffers via WIL RAII (never `delete`/`delete[]` a `yyjson` allocation; write buffers use `free()` unless a custom `yyjson_alc` was passed):
-
-```cpp
-using unique_yyjson_doc     = wil::unique_any<yyjson_doc*, decltype(&yyjson_doc_free), yyjson_doc_free>;
-using unique_yyjson_mut_doc = wil::unique_any<yyjson_mut_doc*, decltype(&yyjson_mut_doc_free), yyjson_mut_doc_free>;
-using unique_malloc_string  = wil::unique_any<char*, decltype(&free), free>;
-```
+- A `yyjson_doc*` or `yyjson_mut_doc*` owns every `yyjson_val*` and borrowed `const char*` (`yyjson_get_str()`) read from it. Never store them beyond the document lifetime; copy/convert strings to `std::wstring`/`std::string` before freeing the document.
+- Free `yyjson_doc*` with `yyjson_doc_free()` and `yyjson_mut_doc*` with `yyjson_mut_doc_free()`, on every path (prefer RAII).
+- Never `delete`/`delete[]` a `yyjson` allocation. Free buffers returned by `yyjson_write*()` / `yyjson_mut_write*()` with `free()` (or `alc->free` when a custom `yyjson_alc` was passed).
+- The RAII aliases are in [references/patterns.md](references/patterns.md#memory-management-raii-patterns).
 
 ## Mutable Document String Lifetime (Most Common Bug)
 
-`yyjson_mut_obj_add_*` convenience functions **never copy the key**, and `*_str` / `*_strn` **do not copy value bytes**:
+`yyjson_mut_obj_add_*` convenience functions **never copy the key**, and `*_str` / `*_strn` **do not copy value bytes**. Only `*_strcpy` / `*_strncpy` copy value bytes into the doc. Borrowing is safe only when the string outlives the doc (literals, static storage, buffers you keep alive).
 
 | Function | Copies Key? | Copies Value? | Safe Usage |
 | --- | --- | --- | --- |
@@ -29,11 +25,37 @@ using unique_malloc_string  = wil::unique_any<char*, decltype(&free), free>;
 | `yyjson_mut_obj_add_strncpy` | No | Yes | Literal/static key + known-length UTF-8 (`str.data()`, `str.size()`) |
 | `yyjson_mut_obj_add_val` | No | n/a | Literal/static key + doc-owned `yyjson_mut_val*` |
 | `yyjson_mut_obj_add` | Yes (via `yyjson_mut_val*`) | Yes (via `yyjson_mut_val*`) | **Required for dynamic keys**: allocate key with `yyjson_mut_strncpy(doc, k.data(), k.size())` |
+| `yyjson_mut_str` / `yyjson_mut_strn` | n/a | No | Only for literals/static buffers |
+| `yyjson_mut_strcpy` / `yyjson_mut_strncpy` | n/a | Yes | Preferred for any temporary/converted UTF-8 |
 
-Check all `yyjson_mut_*` pointer allocations and `*_add_*` boolean returns when complete output is required, propagating `E_OUTOFMEMORY` on failure.
+- For a dynamic key, allocate both key and value as document-owned `yyjson_mut_val*` values and call `yyjson_mut_obj_add()`.
+- Check all pointer-returning allocations (`*_new`, `yyjson_mut_obj/arr`, `yyjson_mut_*str*`, `yyjson_mut_*number*`) and all `*_add_*` boolean returns when complete output is required. Propagate `E_OUTOFMEMORY`/failure; treat `false` as out of memory.
 
 ## Parsing & Validation
 
-- Pass a mutable buffer (`std::string` / `std::vector<char>`, never a string literal) to `yyjson_read_opts()`, capture `yyjson_read_err`, and avoid `YYJSON_READ_INSITU` unless mutating and retaining the input buffer is intentional.
-- Check root and field types (`yyjson_is_*`) before reading (`yyjson_get_*`), and validate numeric bounds before narrowing casts.
-- Note: `yyjson_obj_get` returns the **first** occurrence of a duplicate key (test fixtures overriding fields must prepend overrides). Use the `len` returned by `yyjson_write_opts` / `yyjson_mut_write_opts` when constructing strings.
+- Prefer `yyjson_read_opts()` and capture `yyjson_read_err` for error details.
+- Pass a mutable buffer (`std::string` / `std::vector<char>`, never a string literal) to `yyjson_read_opts()`.
+- Avoid `YYJSON_READ_INSITU` unless you intend the input buffer to be modified and to outlive the parsed doc.
+- Check the root and every value's type (`yyjson_is_*`) before reading (`yyjson_get_*`); validate numeric bounds before narrowing casts.
+- `yyjson_obj_get` returns the **first** occurrence of a duplicate key: test fixtures overriding fields must prepend (inject first) the overrides.
+- Read flags for user-facing configuration: see [Differences To Converge](#differences-to-converge).
+
+## Serialization
+
+- Use `yyjson_write_err` with `yyjson_write_opts()` / `yyjson_mut_write_opts()` when you need diagnostics.
+- Use the returned `len` when building strings; do not rely on a null terminator alone.
+
+## Detailed Patterns
+
+DO/DON'T code examples, RAII aliases, the read and write API notes, and the review checklist: [references/patterns.md](references/patterns.md).
+
+## Repository Facts
+
+Product-specific facts (file formats, owning specifications, test gates) for `RedSalamander`, `RedPrism` and `RedXe`: [references/repository-facts.md](references/repository-facts.md). `RedMonitor` has no product-specific yyjson facts; follow this file and its `AGENTS.md`. `RedTilde` and `DxUi` do not use `yyjson` (see Differences To Converge).
+
+## Differences To Converge
+
+| Topic | Today (per repository) | Common target |
+| --- | --- | --- |
+| Read flags for user-facing configuration | RedSalamander: `YYJSON_READ_JSON5 \| YYJSON_READ_ALLOW_BOM` (documented project default). RedMonitor: same flags in `support/SettingsStore.cpp`. RedXe: `YYJSON_READ_ALLOW_COMMENTS \| YYJSON_READ_ALLOW_TRAILING_COMMAS \| YYJSON_READ_ALLOW_BOM` in `RedXe/Settings.cpp` and `RedXe/SettingsV4.cpp`. RedPrism: `YYJSON_READ_ALLOW_BOM` only in `Common/SettingsStore.cpp`. | `YYJSON_READ_JSON5 \| YYJSON_READ_ALLOW_BOM` (the documented default). RedXe and RedPrism change; RedXe also needs its strict-rejection settings tests re-checked. |
+| JSON library and settings format | `RedSalamander`, `RedXe`, `RedPrism`, `RedMonitor`: JSON settings through `yyjson`. `RedTilde`: no `yyjson`; its settings file is line-based `key=value` text with a `RedTilde.Settings/1` header (`Common/Settings.cpp`). `DxUi`: no JSON (settings are consumer-owned). | One settings format and parser for every application. `RedTilde` would move to JSON through `yyjson`. Needs an owner decision. |

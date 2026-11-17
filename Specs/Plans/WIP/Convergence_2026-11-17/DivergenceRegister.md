@@ -1,0 +1,173 @@
+# Divergence register
+
+Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists every known option, rule, or file that is not the same in all repositories, with one common target each. The owner's rule decides every row: at the end, all projects are as close as possible. A difference survives only when the product requires it, and then the reason is written in the row.
+
+**Source.** Four file-level inventories of the six `main` branches at the plan's baseline commits (build and toolchain, script entry points, guidance and documentation, CI and project configuration), the `Differences To Converge` tables of the shared skills, and spot checks of the high-impact rows. Effective MSBuild evaluation was not run; property rows come from reading the files. Correct a row here when a repository proves it wrong.
+
+**Review of 2026-11-17.** A second pass on the Windows host re-read the build, formatting, guidance, and local-skill files of all six repositories, hashed the files claimed identical, and checked GitHub. It corrected A-01, A-02, A-10, A-12, C-02, C-03, D-01, D-02, F-04, and G-02, and added A-14 to A-18, B-13, C-10 to C-19, D-05, D-06, E-11 to E-13, G-11, G-12, and H-14 to H-16.
+
+**Abbreviations.** RS `RedSalamander`, Xe `RedXe`, Pr `RedPrism`, Ti `RedTilde`, Mo `RedMonitor`, Dx `DxUi`, Home `RedHome`.
+
+**Columns.** *Target* is the single end state. *Changes* names the repositories that must move. *In* is the plan phase that converges the row; "PR open" means this plan's first product pull requests already carry it. *Choice* marks rows where two uniform end states are possible and the owner picks one.
+
+## A. Agent guidance and discovery
+
+| Id | Option | Today | Target | Changes | In | Choice |
+| --- | --- | --- | --- | --- | --- | --- |
+| A-01 | `CLAUDE.md` pointer | Converged: one blob in all six since step 1 was merged. Before: three texts in RS, Xe, Mo and no file in Pr, Ti, Dx | One identical file | None | Merged | |
+| A-02 | Claude Code skill discovery | One `.claude/settings.json` blob in all six since step 1 was merged. It names a marketplace that `RedHome` `main` does not have until `RedHome` #2 is merged | `.claude/settings.json` enabling the `redhome` plugin, identical everywhere | Home | Merged in six; Home with #2 | |
+| A-03 | `.github/copilot-instructions.md` | RS, Xe, Mo: three texts. Pr, Ti, Dx: absent | One identical file | All six | 6 | |
+| A-04 | Prose exclusion of `.github/copilot-instructions.md` | Not in any `.ci/project.json` `exclude`, so adding or editing it changes native inputs (`CLAUDE.md`, `.claude/**`, `.agents/**` are excluded) | Excluded by the engine template | Engine, then all six | 6 | |
+| A-05 | Shared-skill pointer sentence | Identical text in all six; placement differs (bullet in RS, no `Skills` heading in Mo) | Directly under `## Skills` | RS, Mo | 6 | |
+| A-06 | `AGENTS.md` title and skills heading | Titles: "development guidance" (Ti, Mo, Dx) and two other styles. Heading: `## Skills` (Xe, Pr, Dx), `Skills Reference` (RS), `Focused skills` (Ti), none (Mo) | `# <Name> development guidance`, `## Skills` | RS, Xe, Pr, Ti, Mo | 6 | |
+| A-07 | `AGENTS.md` shared sections | Unified CI: identical in five (Dx variant). Shared native build policy: identical in five (Mo lacks it). Changes workflow: identical in four. Drive-root output policy: five wordings. Scoped testing: three wordings and two dates. Mo carries them as bullets | One text per section from one engine template, product names as parameters | All six | 6 | |
+| A-08 | Interactive desktop lease rule | Stated only in RS and Dx | One text, in every `AGENTS.md` or in the shared policy page | Xe, Pr, Ti, Mo | 6 | |
+| A-09 | Skill folder | `.agents/skills/` in five. RS: 11 skills in `.github/skills/`, 1 in `.agents/skills/` | `.agents/skills/` | RS | 2 | |
+| A-10 | Skill front matter | `name` and `description` only in five. RS adds `metadata.author` and `metadata.version` to 8 skills. Home's `improve` carries `license` and `metadata` (CV-2-10) | `name` and `description` only | RS, Home | 2 | |
+| A-11 | Codex `agents/openai.yaml` | Present in Xe (3 skills), Ti (8), RS (3). Absent in Pr, Mo, Dx, Home. Ti's validator requires the file with three interface keys; two of Xe's files lack one of them | All skills or none | Three repositories either way | 2 | Yes |
+| A-12 | Other tool folders and files | `.codex/`, `.github/agents/`, `.vscode/` only in RS. `.agents/guidance.json` with five nested `AGENTS.md` files only in Ti; two nested `AGENTS.md` under `Specs/Mockups` in RS | Each adopted everywhere or removed | RS, Ti or the others | 6 | Yes |
+| A-13 | `capabilities.json` | Ti, Mo, Dx (keys `implemented` in Ti and Mo, `supported` in Dx). Absent in RS, Xe, Pr | Present everywhere with one key vocabulary | RS, Xe, Pr; key rename in one group | 6 | |
+| A-14 | Skill description form | 33 of 53 descriptions do not say when to use the skill: 10 of 11 in Home, 8 of 8 in Ti, 6 of 6 in Mo, 5 of 6 in Dx, 3 of 12 in RS, 1 of 3 in Xe, none in Pr. 13 skills are under 15 lines | What the skill does, then "Use when ...", in every description | Home, Ti, Mo, Dx, RS, Xe | 2 | |
+| A-15 | Subjects with a skill in several repositories | `test-harness` in Pr, Ti, Mo; `settings-store` in Xe and Pr; `file-safety` in Ti and Mo; `consumer-dxui` in Pr and Ti; six build skills, of which RS's is `cpp-build` and the rest `build-<repository>` | One shared skill per subject, with repository facts (plan CV-2-12) | All six | 2 | |
+| A-16 | Skill validator grammar | Four dialects in six implementations. Home, Xe, Pr: keys `name`, `description`, `license`, `allowed-tools`, `metadata`; block scalars allowed; description length in code points. Ti: the same keys, no block scalars, UTF-16 units, `agents/openai.yaml` required. Dx: any key, single-line values. Mo: `name` and `description` only. RS: no validator. Only Home checks that `AGENTS.md` indexes every skill | One grammar in the engine: the Home, Xe, Pr dialect, which accepts every existing skill | Ti, Dx, Mo, RS | 5 | |
+| A-17 | Personal harness files | `.claude/settings.local.json` exists in RS (git-ignored) and Xe (no ignore rule). `.claude/scheduled_tasks.lock` in RS has no ignore rule. RS's tracked `.vscode/settings.json` holds a machine-specific compiler path | Ignored by the common `.gitignore` block (D-03); no machine path in a tracked file | Xe, RS, then all | 6 | |
+| A-18 | Guidance that contradicts another rule or the code | Xe and Pr `AGENTS.md` require a full test run before a change is complete and also say scoped testing replaces unconditional full runs. Pr `AGENTS.md` and `consumer-dxui` name `Z:\src\DxUi` as the `DxUi` checkout; everything else uses `../DxUi`. RS `AGENTS.md` prescribes `FreeLibraryWhenCallbackReturns` for module pins where its skills and helper use `TransferModulePinToCallbackReturn`. Dx `AGENTS.md` names two consumers; five repositories hold a `DxUi.lock.json`. Dx `consumer-integration` describes API 5 only | Each statement agrees with the shared section text (A-07) and with the code | Xe, Pr, RS, Dx | 6 | |
+
+## B. Specifications, documents, and metadata
+
+| Id | Option | Today | Target | Changes | In | Choice |
+| --- | --- | --- | --- | --- | --- | --- |
+| B-01 | `Specs/README.md` structure | Three shapes: RS catalog; Xe and Pr workflow with six shared headings; Ti, Mo, Dx headings only | The Xe and Pr structure | RS, Ti, Mo, Dx | 6 | |
+| B-02 | WIP index format | Five formats; bullets with `**ACTIVE**:` (Ti, Dx, RS), tables (Xe, Pr), `— ACTIVE;` suffix (Mo). Extra labels `DRAFT` (RS), `SPEC READY` (Dx) | `- **STATUS**: [Title](File.md) — purpose` with `ACTIVE`, `HOLD`, `DECISION`, `RETIRED` | Xe, Pr, Mo; labels in RS, Dx | 6 | |
+| B-03 | `Specs/Plans/Done/README.md` | Missing in RS | Present | RS | 6 | |
+| B-04 | Plan file names | `<Topic>_<yyyy-mm-dd>.md` is the rule; undated plans exist in RS (41), Xe (8 `RFC_*`), Pr (1), Dx (1) | Dated names for every active plan; completed history stays untouched | RS, Xe, Pr, Dx for active plans | 6 | |
+| B-05 | `Specs/` top level | `Testing/` missing in Xe; `UI/` missing in Mo; stray `Specs/Done/` in Dx; settings schema named `SettingsStore.schema.json` (RS, Mo) and `Settings.schema.json` (Xe) | Same folders and one schema file name | Xe, Mo, Dx | 6 | |
+| B-06 | Performance contract | `Specs/Core/Core_PerformanceAndResources.md` in Dx, Xe, Pr. Ti: `Specs/Testing/Testing_Performance.md` only. RS: `Specs/Testing/Testing_PerformanceValidation.md` only. Mo: none | The `Core` file everywhere; procedure stays under `Testing/` | Ti, RS, Mo | 6 | |
+| B-07 | `Specs/Core/Core_Changes.md` | Identical in Xe, Ti, Mo; three other variants | One text owned by the engine | RS, Pr, Dx, then all link | 6 | |
+| B-08 | `Specs/Build/Build_UnifiedCI.md` | Six different documents | One skeleton; only adapter sections differ | All six | 6 | |
+| B-09 | `README.md` | `## Recording changes` in five (not Mo); Pr has no H1 | Same common sections | Mo, Pr | 6 | |
+| B-10 | `CHANGELOG.md` header | Same in RS, Xe, Pr, Ti; Mo lacks the intro; Dx differs | One header | Mo, Dx | 6 | |
+| B-11 | Licence files | `LICENSE.txt` in all six; Xe also has a different `LICENSE`. Holder "RedSalamander" in five, "RedSalamanders" in Pr. Mo's file is a byte copy of RS's, including RS's third-party list. Home has no licence | One file name, one holder spelling, correct third-party text, and a licence in Home | Xe, Pr, Mo, Home | 6 | Yes |
+| B-12 | Other root files | `THIRD-PARTY-NOTICES.md`, `CONTRIBUTING.md`: Dx only. `.github/CODEOWNERS`: RS, Dx. Pull request template: RS. `.editorconfig`: Xe, Dx (different). `.vsconfig`: Xe | Each present everywhere with one text, or nowhere | Up to five each | 6 | Yes |
+| B-13 | `RedMonitor` consumer contract | `Specs/Core/Core_RedMonitorIntegration.md` is the same 30 lines in Pr and Ti apart from the product name, a 43-line superset in Xe, and absent in RS, which states the rules in `AGENTS.md` and `Build_Toolchain.md`. All repeat `RedMonitor`'s `Specs/Build/Build_Consumption.md` | One text owned by `RedMonitor`; each consumer keeps only its adapter facts and links to it | Xe, Pr, Ti, RS | 6 | |
+
+## C. Build and toolchain
+
+| Id | Option | Today | Target | Changes | In | Choice |
+| --- | --- | --- | --- | --- | --- | --- |
+| C-01 | Warning profile | `/Wall`, `/WX` off, zero-warning gate in five. Mo: `/W4 /WX` | `/Wall`, `/WX` off, zero warnings | Mo | 6 | |
+| C-02 | `Build/NativeBuildPolicy.targets` | One SHA-256 in RS, Xe, Pr, Ti. Dx is one include path ahead (`Samples\Shared`, which only matches `DxUi`'s own projects), so the four copies can take Dx's text unchanged. Mo has none, so no shared disabled-warning list, no identical-code-folding policy, and no Debug edit-and-continue format | One file delivered by the engine | RS, Xe, Pr, Ti now; Mo | 6 part 1, then 5 | |
+| C-03 | Compiler switches and defines in root props | `/utf-8` central in five; RS sets it in about 111 project files. `/Zc:preprocessor` in four, not RS or Mo, although both compile `DxUi` headers. `/FS` only in RS and Mo. `WINVER`, `_WIN32_WINNT`, `NTDDI_VERSION` only in RS and Mo. `NOMINMAX;WIN32_LEAN_AND_MEAN` central in Xe, Pr, Ti, Dx only. `/MP` central in Xe, Pr, Ti, Mo; per project in RS; unset in Dx | The same switch and define set, set centrally | RS, Mo for `/Zc:preprocessor` and the lean defines; Xe, Pr, Ti, Dx for the version defines | 6 | |
+| C-04 | Intermediate directory | `.build\Intermediate\...` in four; `.build\obj\...` in Ti and Mo | `.build\Intermediate\...` | Ti, Mo | 6 | |
+| C-05 | ASan Debug property set | Five set the full set; Ti sets only `EnableASAN` | The full set | Ti | 6 | |
+| C-06 | vcpkg baseline | `9eec002d…` in Xe, Pr, Mo, Dx; `aeb162b7…` in RS; Ti has no vcpkg | One baseline; Ti stays without vcpkg only if it keeps no vcpkg dependency | RS | 4 | |
+| C-07 | vcpkg tool pin and triplets | Four different `vcpkg-tool.json` commits. Mo uses `*-windows-static-md`; the others the standard triplets | One tool commit and one triplet set | RS, Pr, Mo and the Xe/Dx pair | 4 | |
+| C-08 | `Build/PinnedDxUiPolicy.targets` | Identical in Dx, Xe, Pr, Ti; RS variant; Mo none | The `DxUi` file, consumed through the pin | RS, Mo | 5 | |
+| C-09 | Minimum Windows version | Windows 11 22000.2600 stated in RS and Pr; Winget minimum `10.0.22000.2600` in RS, Pr, Mo; Xe supports Windows 10 (`10.0.19041.0`); Ti declares none | One minimum | Xe or the others; Ti declares it | 6 | Yes |
+| C-10 | Release whole-program optimization, `/LTCG`, `/OPT:REF`, function-level linking | The same block is copied into the `Directory.Build.targets` of RS, Xe, Pr, Ti, Dx. Mo sets none of it, and its Debug uses `/Zi` where the others use `/ZI` | One block in the shared policy file | Mo; the five drop their copy | 6 part 2 for Mo, then 5 | |
+| C-11 | Where profile values are set | Toolset, SDK, character set, runtime library, and optimization are set in each `.vcxproj` in Xe, Pr, Ti, Dx and centrally in RS and Mo | Central props; a project file holds only project facts | Xe, Pr, Ti, Dx | 6 part 1 | |
+| C-12 | MSVC 14.52 requirement | Enforced by an MSBuild target in five (each its own copy). Mo declares the property and no target checks it | One target in the shared policy file | Mo; the five drop their copy | 6 part 1, then 5 | |
+| C-13 | ASan strategy | RS disables STL annotations and builds `DxUi` with the matching flag. Pr restores sanitized dependency triplets. Xe and Ti do neither. `DxUi`'s own flag defaults to annotations on | One strategy | Three repositories either way | 6 | Yes |
+| C-14 | vcpkg restore model and linkage | MSBuild manifest mode in RS; scripted restore with `VcpkgEnabled=false` in Xe, Pr, Mo, Dx. Static `*-windows-static-md` triplets in Mo; dynamic elsewhere | One model and one linkage | RS, Mo or the others | 4 | Yes |
+| C-15 | Compiler host architecture | `PreferredToolArchitecture` in props in RS, Xe, Mo (with three different conditions); from the script environment in Pr and Ti; unset in Dx | One rule in the shared policy file | All six | 6 | |
+| C-16 | Test-hook macro | `ENABLE_TESTS`, off in Release, in RS and Mo. `REDPRISM_ENABLE_TESTS` and `REDTILDE_ENABLE_TESTS`, on by default in Release, in Pr and Ti. None in Xe and Dx | One name and one Release default | Two or four repositories | 6 | Yes |
+| C-17 | Root solution file | Present in five. Mo has no `.sln` at its root | Present | Mo | 6 part 1 | |
+| C-18 | Static analysis | `build.ps1 -Analyze` (`/analyze`) only in Pr | Available everywhere | RS, Xe, Ti, Mo, Dx | 6 | |
+| C-19 | Consumer names inside the shared policy file | `NativeBuildPolicy.targets` reads `RedXeVcpkgTriplet`, `RedPrismVcpkgTriplet`, and `RSVcpkgTriplet` by name | One neutral property that each repository sets | The file, then Xe, Pr, RS | 6 part 1 | |
+
+## D. Formatting and text conventions
+
+| Id | Option | Today | Target | Changes | In | Choice |
+| --- | --- | --- | --- | --- | --- | --- |
+| D-01 | `.clang-format` | One 155-line file (column limit 160) in RS, Mo, Dx: SHA-256 `23912fba6395daaccd17cfcc355107849f72ea183da731221da642c9a156f248`. Xe and Pr: 120 columns, 13 keys (the two files differ by a trailing blank line). Ti: 150 columns, 7 keys, and right pointer alignment, which its code follows. About 570,000 lines change: Xe about 260 files, Pr about 1,360, Ti about 60 | The 155-line file; each adopter reformats in one dedicated pull request | Xe, Pr, Ti | 6, can start now | |
+| D-02 | Formatter pin | CI: clang-format 22.1.3, pinned by hash in the engine's `Policy/clang-format.json`. Local: the same version pinned again in RS and Mo (`Build/clang-format.json`) and hard-coded twice in Dx; Xe, Pr, Ti take whatever Visual Studio or `PATH` provides. The 155-line style needs version 21 or newer | Every `format.ps1` uses `Install-CiFormatter` from its own `.ci-engine`, which every pinned engine commit already exports | All six | 6, with D-01 | |
+| D-03 | `.gitattributes` and `.gitignore` | Six different files each | One common block plus repository lines | All six | 6 | |
+| D-04 | Script line endings | CRLF in Xe, Ti, Mo, Dx adapters; LF in RS, Pr | One rule in `.gitattributes` | RS, Pr or the others | 6 | |
+| D-05 | What the format command covers | CI formats eight C and C++ extensions under `.ci/project.json` `formatRoots`. Local scripts format `.cpp` and `.h` only, with their own roots: RS includes `Tools/TerminalEngine`, which CI excludes; Xe omits `RedXeLauncher`; Ti omits `res`; Dx omits `Tools` | The local command reads `formatRoots` and `formatExclude` and the same extensions | All six | 6 | |
+| D-06 | Formatting as the specs describe it | RS `Specs/Build/Build_Toolchain.md` and Mo `Specs/Testing/Testing_Validation.md` name the repository's own pin, and Mo's says CI verifies the complete source set, where the engine checks changed files with its own pin. Dx `Specs/Build/Build_ToolchainAndConsumption.md` describes a workflow `DxUi` owns. Pr `Specs/Build/Build_Toolchain.md` prefers the formatter bundled with Visual Studio. Xe specs tell the reader to run a `format.ps1` that rewrites files | One paragraph that matches the engine | RS, Mo, Dx, Pr, Xe | 6 | |
+
+## E. Script entry points
+
+| Id | Option | Today | Target | Changes | In | Choice |
+| --- | --- | --- | --- | --- | --- | --- |
+| E-01 | Validation | `validate.ps1`: Pr, Ti, Mo, Dx. `validate-skills.ps1`: Xe, Pr, Dx. `validate-specs.ps1`: Dx only (RS uses `Tools/Get-SpecInventory.ps1`) | All three at every root | All six | 6 | |
+| E-02 | Formatting | `format.ps1 -Check`: Pr, Ti, Mo, Dx. Xe: no `-Check`. RS: `format-all.ps1` | `format.ps1 -Check` | Xe, RS | 6 | |
+| E-03 | Tests | Root `test.ps1` in five; RS uses `Tools/Run-AllTests.ps1` | Root `test.ps1` | RS | 6 | |
+| E-04 | `Test-Changes.ps1` parameters | Identical in Xe, Pr, Ti. Mo has only `-Explain`, `-Mode`, `-Force`. RS differs in `-BaseRef` default and extras. Dx adds `-ParallelSuites` and a separate `Test-PrePush.ps1` | One parameter set from the engine planner | Mo, RS, Dx | 5 | |
+| E-05 | `build.ps1` parameters | Only `Configuration`, `Platform`, `ProductionOnly` are common; `-Clean`, `-Rebuild`, `-MaxCpuCount`, `-BuildNumber` vary | One common set | Ti, Mo, Dx, RS | 6 | |
+| E-06 | Packaging | `package.ps1` in Xe, Pr, Ti, Mo; RS packages through `build.ps1 -Zip`. Output: `.build/packages` (Xe, Pr, Mo), `.build/package` (Ti), `.build/AppPackages` (RS) | `package.ps1` writing `.build/packages` | RS, Ti | 6 | |
+| E-07 | `DxUi` scripts | `restore-dxui.ps1` at the root in Xe, Pr, Ti, Mo; `Tools/Restore-DxUi.ps1` in RS. `Update-DxUi.ps1` only in RS (`Tools/`) and Xe (root) | Same names at the root, implemented once in `DxUi` | RS, Pr, Ti, Mo | 5 | |
+| E-08 | `RedMonitor` client scripts | Root in Xe, Pr, Ti; `Tools/` in RS | Root, implemented once in `RedMonitor` | RS | 5 | |
+| E-09 | `vcpkg-install.ps1` | Absent in Ti; RS defaults `-Platform` to `All`, the others to `x64` | Same defaults | RS | 5 | |
+| E-10 | Performance entry point and gate | `performance-paired.ps1` in Ti and Dx; `measure-*.ps1` in Xe; none in RS, Pr, Mo. Hosted paired gate (`benchmark.yml`) only in Dx | `performance-paired.ps1` and the hosted gate everywhere | Xe, RS, Pr, Mo; gate in five | 6 | |
+| E-11 | Meaning of a bare `test.ps1` | The affected suites in Xe; all nine suites in Pr; the `Core` suite in Ti; everything in Mo, which has no suite selection | One meaning | Three repositories | 6 | Yes |
+| E-12 | Restore entry point | `restore.ps1` only in Mo. Elsewhere restore is `vcpkg-install.ps1` plus `restore-dxui.ps1`, or part of `build.ps1` | `restore.ps1` everywhere, calling the two | RS, Xe, Pr, Ti, Dx | 6 | |
+| E-13 | Application harness switches | Capture: `--screenshot` in Xe and Pr, `--capture --scenario` in Ti. Crash probe: `--crash-test` in Xe, `--crash-probe` in Pr and Ti. Interactive lease: `test.ps1 -Interactive` in Dx, `test-interactive.ps1` in Ti, `Test-Changes.ps1 -Interactive` in RS, none elsewhere | One switch vocabulary and one interactive entry point | Xe, Ti, RS, Dx | 6 | |
+
+## F. Tooling that exists more than once
+
+The plan's inventory table lists the copies. Each row converges by giving the tool one owner and thin consumers (Phase 5).
+
+| Id | Tool | Owner after convergence |
+| --- | --- | --- |
+| F-01 | Changelog suite (four scripts and `Changelog.psm1`; three variants) | Engine |
+| F-02 | `BuildConsole.psm1`, `NativeBuildPolicy.targets`, `Get-CiNativeScope.ps1` | Engine |
+| F-03 | `ScopedTesting.psm1`, `TestRunEvidence.psm1`, `Test-Changes.ps1` (four forks) | Engine |
+| F-04 | Skill grammar and package integrity (six implementations of four dialects, one of them in Home; none in RS; see A-16) | Engine |
+| F-05 | `DxUiPaths.psm1`, `restore-dxui.ps1`, `DxUiRestore.psm1`, `DxUiProvenance.psm1` | `DxUi` consumer interface |
+| F-06 | `Update-RedMonitorClient.ps1`, `Verify-RedMonitorClient.ps1` | `RedMonitor` |
+| F-07 | `vcpkg-install.ps1`, `VcpkgTriplet.psm1`, `VisualStudio.psm1`, `Install-ClangFormat.ps1` | Engine or `DxUi` |
+| F-08 | `.github/actions/setup-msvc` (`action.yml` in three variants, `Setup.ps1` in five) | Engine |
+
+## G. CI and project configuration
+
+| Id | Option | Today | Target | Changes | In | Choice |
+| --- | --- | --- | --- | --- | --- | --- |
+| G-01 | Engine pin | Four commits: Dx `766fd7e`, Mo `d6a33c5`, Xe/Pr/Ti `07bc6f1`, RS `a094b2e` | One commit | Dx, Mo, Xe, Pr, Ti | 4 | |
+| G-02 | Dependabot engine `ignore` | The line `RedSalamanders/.github/*` is merged in Dx, Xe, Pr, Ti, Mo with step 1, and the 20 open notices are closed. RS still has the old entry, which does not match the reusable-workflow names | Add `RedSalamanders/.github/*` | RS with its test `HistoricalTerminalProfile.Tests.ps1`, which pins the list to one entry, once its `main` is green | Merged in five; RS 4 | |
+| G-03 | `dependabot.yml` | Identical in Xe, Pr, Mo, Dx. Ti has no vcpkg block. RS adds `exclude-paths`, a vcpkg `ignore` list, and a group | One file from an engine template | RS, Ti | 6 | |
+| G-04 | `.ci/project.json` lists | `legacy/**` missing from Pr's `exclude`; `Plugins/**/README.md` only in Xe; `Tools` is a format root only in RS and Dx | Same lists apart from real content differences | Pr, Xe or RS, four for `Tools` | 6 | |
+| G-05 | Winget block | `minimumOSVersion` missing in Ti; `smokeTests` only in Xe; alias mixed case in RS | Same fields everywhere | Ti, four for smoke tests, RS | 6 | |
+| G-06 | Repository-only workflows | RS has ten extra workflows; Pr `native-arm64-feasibility.yml`; Dx `benchmark.yml` | Shared ones become engine templates; the rest carry a recorded reason | RS, Pr, Dx | 6 | |
+| G-07 | CI adapter | Same parameters; RS has six extra `QualificationScope` values; static-phase commands differ in every repository | One static phase calling `validate.ps1` | All six | 6 | |
+| G-08 | Tests layout | `<Suite>Tests/<Suite>Tests.vcxproj` (RS, Xe, Pr); flat `Tooling.Tests.*.ps1` (Ti, Mo); `DxUi.*Tests.vcxproj` (Dx) | One layout | Three repositories | 6 | Yes |
+| G-09 | Winget manifests in the repository | `Installer/` in RS and Xe only | Generated from `.ci/project.json` everywhere | RS, Xe | 6 | |
+| G-10 | `RedHome` CI | Its own `validate.yml`, outside the engine | Engine-run once the engine has a documentation kind | Home, engine | 5 | |
+| G-11 | "Automatically delete head branches" | On in Dx, RS, Xe, Pr, Ti. Off in Home, Mo, and the engine repository; Mo still has its merged step 1 branch | On everywhere | Home, Mo, engine | 0 | |
+| G-12 | Prose paths in `.ci/project.json` `exclude` | `Update-ProjectPin.ps1` writes `.github/skills/**/*.md` into every list, a folder only RS uses and leaves with A-09. No list names `.github/copilot-instructions.md` (A-04), `.codex/**`, or `.github/agents/**`, so editing those counts as a native input change | One template list that covers every harness path in use | Engine, then all six | 6 | |
+
+## H. Code conventions
+
+Each row is also the `Differences To Converge` entry of a shared skill, which carries the evidence.
+
+| Id | Option | Today | Target | Changes | In | Choice |
+| --- | --- | --- | --- | --- | --- | --- |
+| H-01 | `DxUi` API revision and commit | API 5 in Ti (`21fae0dc`); API 4 in Xe, Pr, Mo (`f2e328a0`) and RS (`7fb2ab71`) | One revision and commit | RS, Xe, Pr, Mo | 4 | |
+| H-02 | Unexpected-exception and `std::bad_alloc` policy | API 5 policy in Dx and Ti; four different API 4 rules | The API 5 policy | RS, Xe, Pr, Mo with H-01 | 4 | |
+| H-03 | COM smart pointer | `wil::com_ptr<T>` in RS; `wil::com_ptr_nothrow<T>` in `HRESULT` code elsewhere | `wil::com_ptr_nothrow<T>` | RS | 6 | |
+| H-04 | WIL include guard | RS guards only `<wil/resource.h>` | One block that also wraps `<wil/com.h>` | RS | 6 | |
+| H-05 | Logging helpers | `Debug::` in RS and Mo; `DxUi::Debug` in Dx; none in Xe, Pr, Ti | One family with the same names | Three or four repositories | 6 | Yes |
+| H-06 | Resource string helpers | RS and Mo share one set; Pr has its own; Ti a local `LoadStringW` wrapper; Xe has none and no `STRINGTABLE` | One helper set; chrome strings in resources everywhere | Pr, Ti, Xe | 6 | |
+| H-07 | Satellite layout and loader | `Lang\<Module>-<culture>.dll` in RS and Mo; `Languages\<tag>\RedPrism.resources.dll` in Pr; none in Ti, Xe | One layout and loader | Pr or RS and Mo | 6 | Yes |
+| H-08 | Resource-string gate | RS and Pr only | A gate wherever a `STRINGTABLE` exists | Mo, Ti, Xe | 6 | |
+| H-09 | `yyjson` read flags for configuration | JSON5 and BOM in RS and Mo; comments, trailing commas, BOM in Xe; BOM only in Pr | JSON5 and BOM | Xe, Pr | 6 | |
+| H-10 | Settings format | JSON through `yyjson` in RS, Xe, Pr, Mo; line-based `key=value` text in Ti | JSON through `yyjson` | Ti | 6 | Yes |
+| H-11 | `--self-test` and WARP | Forces WARP in Pr; not in Xe | Forces WARP | Xe | 6 | |
+| H-12 | Host windowing spec name | `UI_Windowing.md` in Pr; `UI_XeneonDisplayWindowing.md` in Xe | `UI_Windowing.md` | Xe | 6 | |
+| H-13 | Stale rule | The former `RedPrism` skill allowed `new (std::nothrow)` only in `Main.cpp`; the source also uses it in `AccessibilityRoot.cpp` | Rule and code agree, stated once | Pr | 6 | |
+| H-14 | Posted-payload helper | Three forks: RS `Common/Helpers.h`, Mo `support/Helpers.h`, Dx `src/Support/PostedPayload.h`. Dx's `InitPostedPayloadWindow` returns `bool` and its `PostMessagePayload` takes an extra token argument; the other two return `void`. Xe, Pr, Ti state the same rule (publish on the UI owner, cancel by identity, reject stale completion) with their own code | One helper with one signature | Two or three repositories | 6 | Yes |
+| H-15 | Settings reload behavior | Watcher: a worker that coalesces and posts to the UI thread in Xe; a wait beside the message queue with no worker in Pr. Invalid value: whole-candidate validation in Xe; field-level fallback in Pr and Ti. Unknown members: validated in Xe; preserved across a save in Pr | One behavior | One or two repositories each | 6 | Yes |
+| H-16 | Crash artifacts | Dump plus `pending.txt` in Pr; marker plus a `.record` sidecar in Ti; dump plus sidecar in RS. Xe has the handler and a normative spec and no skill | One artifact shape and one retention rule | Three repositories | 6 | |
+
+## Rows that stay different by design
+
+| Item | Reason |
+| --- | --- |
+| `kind` (`sdk` for Dx, `application` elsewhere) and the workflows that follow from it | `DxUi` is a library with no public release |
+| `versionBase` | Each product has its own release line |
+| Product specifications, plugin ABIs, numeric goldens | They are the products |
+| `RedSalamander` Ghostty and terminal-engine workflows, `RedPrism` ARM64 feasibility workflow | Product-specific until a second repository needs them |
+| `formatRoots` and `formatExclude` in `.ci/project.json` | Each product has its own source folders; `RedSalamander` excludes vendored `Tools/TerminalEngine` |
+| Rendering in `WM_PAINT` in `RedSalamander`'s GDI and Direct2D windows | They are message-driven child windows, not Direct3D hosts that present from the idle side of the loop (plan CV-2-14) |
+
+Candidates for this table that still need a reason from the owner: `RedLauncher` in `RedSalamander` links the static runtime library where everything else uses the DLL runtime.

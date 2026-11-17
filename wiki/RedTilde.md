@@ -1,6 +1,6 @@
 # RedTilde (`../RedTilde`)
 
-- **Repository**: `RedSalamanders/RedTilde` (`versionBase: 0.1`, experimental API-5 consumer)
+- **Repository**: `RedSalamanders/RedTilde` (`versionBase: 0.1`, experimental API-5 consumer; `.ci/project.json` declares Winget `RedSalamanders.RedTilde`, alias `redtilde`)
 - **Authoritative sibling docs**: [AGENTS.md](../../RedTilde/AGENTS.md), [Specs/README.md](../../RedTilde/Specs/README.md), [README.md](../../RedTilde/README.md), [capabilities.json](../../RedTilde/capabilities.json), [Active WIP](../../RedTilde/Specs/Plans/WIP/README.md)
 
 ## Overview & Architecture

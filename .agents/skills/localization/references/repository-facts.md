@@ -1,0 +1,22 @@
+# Localization repository facts
+
+Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md); examples are in [patterns.md](patterns.md).
+
+| Repository | Fact | Where it is defined | Kept because |
+| --- | --- | --- | --- |
+| `RedPrism` | Read `Specs/UI/UI_ApplicationChrome.md` (Strings) before adding chrome text. | `Specs/UI/UI_ApplicationChrome.md` | The spec owns the chrome string contract. |
+| `RedPrism` | Declare the `IDS_*` id in `RedPrism/resource.h`, define the text in `RedPrism/RedPrism.rc` (`#pragma code_page(65001)`, UTF-8 source), and add the id to the `kIds` table so the string-table gate proves it resolves. | `RedPrism/resource.h`, `RedPrism/RedPrism.rc`, `Tests/HostTests/Host.Tests.Runner.cpp` | The `kIds` gate exists only here. |
+| `RedPrism` | Helpers are called as `LoadStringResource(nullptr, IDS_X)` and `FormatStringResource(nullptr, IDS_X, args...)`. | `Common/Resources.h` | Signature takes `HMODULE`. |
+| `RedPrism` | `HostTests` fails on bare `{}` and printf specs (`%s`) in resource strings. | `Tests/HostTests/Host.Tests.Runner.cpp` | This is the `RedPrism` resource-string gate. |
+| `RedPrism` | `CaptionWithoutChord` drops the `\t` column of a menu caption; `PlainCommandName` yields the plain name. | `Common/Resources.h` | Menu chord captions are `RedPrism`-specific. |
+| `RedPrism` | Tool names come from `EditorToolNameId(tool)`; tooltips use `IDS_TOOL_TOOLTIP` with the name and the effective chord. | `RedPrism` chrome code | Tool set is `RedPrism`-specific. |
+| `RedPrism` | Default `Layer N` / `Folder N` names and blend mode names on disk stay literal exactly as the legacy app writes them. | `Common/Document.cpp` | Persisted document data is not chrome. |
+| `RedPrism` | A translated table is `<exe dir>\Languages\<tag>\RedPrism.resources.dll`. `Common/Localization.*` picks candidates (the `language` setting's tag, its primary subtag, then Windows' display languages and theirs); `SetStringResourceSatellite` makes `LoadStringResource(nullptr, id)` read the satellite first. No translation ships in v1. The harness switches stay English; `HostTests` `locale.*` proves the candidate order and the override. | `Common/Localization.*`, `Common/Resources.h`, `Tests/HostTests` | Layout and loader exist only here (language setting C14). |
+| `RedPrism` | The self-test fails on an interactive `DxUi` control without an accessible name. | `RedPrism` self-test | The self-test is `RedPrism`-specific. |
+| `RedSalamander` | Resource helpers (`LoadStringResource`, `FormatStringResource`, `LoadEmbeddedStringResource`, `FormatEmbeddedStringResource`, `MessageBoxResource`). | `Common/Helpers.h` | Header lives only in this repository (`RedMonitor` has its own copy in `support/Helpers.h`). |
+| `RedSalamander` | Run `ResourceLocalizationContracts.Tests.ps1` when adding or editing resource strings with braces. | `Tools/Tests/ResourceLocalizationContracts.Tests.ps1` | This is the `RedSalamander` resource gate. |
+| `RedSalamander` | Plugin code passes its plugin DLL handle such as `g_hInstance`, not `nullptr`, to the embedded helpers. | Plugins | Plugins exist only here. |
+| `RedSalamander` | Dynamic menu parts come from `Themes\*.theme.json5`, custom themes in settings and per-user history. | `RedSalamander` menus | Theme files exist only here. |
+| `RedSalamander` | Satellites are per-language resource projects (about 90 in the solution) under `RedSalamander/Lang/<tag>/` and are loaded by the `Localization` manager. | `RedSalamander/Lang/`, `Common/Common/LocalizationManager.cpp` | Layout is `RedSalamander`-specific today. |
+| `RedMonitor` | Helpers `LoadEmbeddedStringResource`, `LoadStringResource`, `FormatStringResource`, `FormatEmbeddedStringResource`, `MessageBoxResource`; four satellite projects. | `support/Helpers.h`, `src/Lang/<tag>/` | Own copy of the helper header. |
+| `RedTilde` | Chrome strings live in `res/RedTilde.rc`; `Resource(id)` loads through `LoadStringW`. Document examples are content, not chrome. | `res/RedTilde.rc`, `RedTilde/Application.cpp` | Local loader. |

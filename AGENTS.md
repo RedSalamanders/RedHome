@@ -20,8 +20,13 @@ All sibling repositories live beside `RedHome` (`..`):
 - [wiki/Shared-Engineering-Policies.md](wiki/Shared-Engineering-Policies.md) — Shared WIL/C++ rules, native compiler profiles and repository exceptions, `Changes/` fragments, scoped testing, desktop-focus lease, and drive-root output policy.
 - [wiki/Ecosystem-Architecture.md](wiki/Ecosystem-Architecture.md) — Graphics, UI-host, plugin-ABI, and settings comparison across apps.
 - [wiki/Glossary.md](wiki/Glossary.md) — Canonical RedSalamanders vocabulary.
+- [wiki/Working-From-RedHome.md](wiki/Working-From-RedHome.md) — Session start, per-repository command map, branch and worktree conventions, and harness discovery.
+- [wiki/Skill-Catalog.md](wiki/Skill-Catalog.md) — Every shared and repository-local skill, routed by task.
+- [Specs/Plans/WIP/README.md](Specs/Plans/WIP/README.md) — Active cross-repository plans (currently the convergence plan).
 
 ## Shared Skills
+
+Each shared skill is one rule set for every repository. Its `references/` folder holds the detailed patterns and `repository-facts.md` (product-specific paths, helpers, and gates), and the skill ends with a `Differences To Converge` table of rules that are not yet the same everywhere.
 
 - [cross-repo-pins](.agents/skills/cross-repo-pins/SKILL.md) — Read-only sibling checkout diagnostics and `DxUi`, `RedMonitor`, and `.ci-engine` pin waves.
 - [wiki-sync](.agents/skills/wiki-sync/SKILL.md) — Reconcile `wiki/` pages with sibling repos and produce clean multi-repo session handoffs.

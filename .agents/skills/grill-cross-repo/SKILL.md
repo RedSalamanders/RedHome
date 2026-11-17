@@ -15,7 +15,7 @@ Adapted from Matt Pocock's `grill-with-docs` and `grill-me` skills for the RedSa
 
 ## Workflow
 
-1. Map affected owners across `../DxUi`, `../RedSalamander`, `../RedXe`, `../RedPrism`, `../RedTilde`, and `../RedSalamanders/.github`.
+1. Map affected owners across `../DxUi`, `../RedMonitor`, `../RedSalamander`, `../RedXe`, `../RedPrism`, `../RedTilde`, and `../RedSalamanders/.github`.
 2. Check boundary invariants against the owning contracts:
    - **Ownership**: Shared retained control vs consumer adapter? COM/POD plugin boundary respected (no `DxUi` C++, STL, WIL, or exceptions across a DLL plugin ABI)?
    - **Performance & Resources**: Zero steady-state heap allocation on composition/render paths? Event-blocked idle/hidden/occluded state (no busy polling)? Paired baseline measurement fixture identified?
