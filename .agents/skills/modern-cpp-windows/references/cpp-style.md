@@ -1,11 +1,13 @@
-# RedSalamander detail: `cpp-modern-style`
+# C++ Style Patterns
 
-> **Parity reference.** Body of `RedSalamander/.github/skills/cpp-modern-style/SKILL.md` as of `53d0a9d58257`, the commit before the 2026-11-16 consolidation, unchanged apart from Markdown links retargeted to the sibling checkout. Read it when working in `../RedSalamander`. Unlinked paths are relative to that repository's root. That repository's `AGENTS.md` and `Specs/` win on any conflict, and the shared rules in [SKILL.md](../SKILL.md) apply everywhere. Folding this file into the shared skill or back into its owning repository is tracked in [Convergence_2026-11-17.md](../../../../Specs/Plans/WIP/Convergence_2026-11-17.md) (Phase 2).
+Common detail for every repository. The rules summary is in [SKILL.md](../SKILL.md); product-specific facts are in [repository-facts.md](repository-facts.md).
 
 ## Project Requirements
+
 - **MSVC stdcpplatest** mode
 - **Unicode UTF-16** encoding
-- **Windows 11 build 22000.2600** minimum
+- Compile source as UTF-8 (`/utf-8`) while calling wide-character Win32 APIs. `.rc` files carry `#pragma code_page(65001)`.
+- Minimum Windows version: see [repository-facts.md](repository-facts.md).
 
 ## Smart Pointers
 
@@ -111,6 +113,8 @@ public:
 
 WIL move assignment releases the destination's previous owned handle and empties the source. A defaulted move of a scalar `HANDLE` does neither. Borrowed/shared Win32 handles are not adopted into an owning wrapper unless the acquisition API explicitly transfers ownership.
 
+Delete copying for unique resource owners. Make cleanup idempotent so partial initialization remains safe.
+
 ## File Organization
 
 - **Headers**: Keep interfaces minimal, use forward declarations
@@ -118,10 +122,13 @@ WIL move assignment releases the destination's previous owned handle and empties
 - **Dependencies**: Minimize header includes
 - **Platform**: Isolate platform-specific code when possible
 
+Keep headers small, include what they use, and avoid global mutable state.
+
 ## Shared Helper Reuse
 
-Before defining a local helper, consult `Specs/Core/Core_SharedHelpers.md` and search `Common/` (or
-`Tests/TestSupport/` for test infrastructure). If an existing helper has the required semantics, use it directly.
+Before defining a local helper, consult the repository's shared-helper catalog and search its common code folder (`Common/`, or
+`Tests/TestSupport/` for test infrastructure). `RedSalamander` keeps its catalog in `Specs/Core/Core_SharedHelpers.md`; see
+[repository-facts.md](repository-facts.md). If an existing helper has the required semantics, use it directly.
 Do not create a differently named copy or a leaf wrapper that only forwards the same policy.
 
 If the existing helper is at the correct dependency layer but lacks a generally useful operation, extend it and
@@ -130,7 +137,7 @@ ownership, failure handling, or hot-path constraints; name and document that dif
 shared helper, update the catalog and its authoritative domain spec, and add a source-contract guard when a
 regression could silently recreate prior copies.
 
-## Win32 includes
+## Win32 Includes
 
 - Define `WIN32_LEAN_AND_MEAN` and `NOMINMAX` before `#include <windows.h>`.
 - Put `windows.h` in its own include block (blank line after it) before

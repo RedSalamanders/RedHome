@@ -1,19 +1,10 @@
-# RedSalamander detail: `localization`
+# Localization patterns
 
-> **Parity reference.** Body of `RedSalamander/.github/skills/localization/SKILL.md` as of `53d0a9d58257`, the commit before the 2026-11-16 consolidation, unchanged apart from Markdown links retargeted to the sibling checkout. Read it when working in `../RedSalamander`. Unlinked paths are relative to that repository's root. That repository's `AGENTS.md` and `Specs/` win on any conflict, and the shared rules in [SKILL.md](../SKILL.md) apply everywhere. Folding this file into the shared skill or back into its owning repository is tracked in [Convergence_2026-11-17.md](../../../../Specs/Plans/WIP/Convergence_2026-11-17.md) (Phase 2).
+Common how-to for every repository. Rules are in [SKILL.md](../SKILL.md); product-specific names are in [repository-facts.md](repository-facts.md).
 
-## Mandatory Rules
+## Resource Helpers
 
-1. **All user-facing strings** → `.rc` STRINGTABLE
-2. **All static menus** → `.rc` MENU resources
-3. **Never hardcode UI text** in C++
-4. **Always use positional formatting** for variable resource strings to help localization. `.rc` format strings must use `{0}`, `{1:08X}`, etc.; bare `{}` and unindexed specs like `{:08X}` are forbidden.
-5. **Keep source placeholders in argument order.** Embedded/source strings introduce placeholders as `{0}`, then `{1}`, then `{2}` with no skipped indexes; pass `FormatStringResource(...)` arguments in that same order.
-6. **Keep translations placeholder-equivalent.** Satellite strings may reorder placeholders for grammar, but must not add, drop, duplicate, renumber, or change format specs compared with the source string.
-7. **Never treat a resource string as a printf-format string** (`%s`, `%d`, etc.). Use `FormatStringResource(...)` with `std::format`-style positional placeholders and avoid C4774 suppressions.
-8. **Run `ResourceLocalizationContracts.Tests.ps1`** when adding or editing resource strings with braces.
-
-## Resource Helpers (Common/Helpers.h)
+The shared helper names and their owners are listed in [Differences To Converge](../SKILL.md). The first parameter of the real helpers is the owning module (`nullptr` for the executable); the example omits it.
 
 ```cpp
 // Load string from resources
@@ -130,3 +121,25 @@ auto title = LoadStringResource(IDS_TITLE);
 // ❌ Wrong - hardcoded
 SetWindowTextW(hWnd, L"My Title");
 ```
+
+## Menu Captions With Chords
+
+Menu captions may keep a `\t` column in the table, but menus show the effective chord. Build chord text from the modifier-name strings (`IDS_KEY_*`) and the keyboard layout's key names, never from literals. Tooltips take the name and the effective chord as arguments; no key is baked into a string. The helpers that implement this in `RedPrism` are listed in [repository-facts.md](repository-facts.md).
+
+## Data That Is Not Chrome
+
+- `OutputDebugStringW` diagnostics stay literal and English.
+- Document data that the model persists or compares (default `Layer N` / `Folder N` names, blend mode names on disk) stays in code exactly as the file format writes it.
+- Never call `MessageBoxW(..., L"literal", ...)` or `SetWindowTextW(..., L"literal")` in product code.
+
+## Satellite Translations
+
+A translated table is a resource-only DLL built from the same `.rc` and ids. A satellite supplies translations; an id it lacks falls back to the embedded English. Keep ids stable so a translation can be added later. Satellite layouts differ per repository; see [Differences To Converge](../SKILL.md).
+
+## Tests
+
+Tests load the executable's table with `LoadLibraryExW(..., LOAD_LIBRARY_AS_DATAFILE | LOAD_LIBRARY_AS_IMAGE_RESOURCE)` and pass that module to the helpers; nothing in `Tests/` runs the product executable's code (`RedPrism.exe` for `RedPrism`) to read strings.
+
+## Accessible Names
+
+Accessible names are chrome strings too. Every interactive `DxUi` control gets `SetAccessibleName` from the same table (a label id, a tooltip id or an `IDS_A11Y_*` id). A self-test that fails on a control without a name proves it.

@@ -1,6 +1,6 @@
 # Skill Catalog
 
-Every skill available across RedSalamanders, grouped by owner. Pick the row for the task, open the shared skill first, then the per-repository detail. Shared skills live in `RedHome/.agents/skills/`; repository-local skills stay with their repository and are linked here so a session started in `RedHome` reaches them directly.
+Every skill available across RedSalamanders, grouped by owner. Pick the row for the task, open the shared skill first, then the repository-local skill. Shared skills live in `RedHome/.agents/skills/`; repository-local skills stay with their repository and are linked here so a session started in `RedHome` reaches them directly.
 
 Each repository's `AGENTS.md` and `Specs/` still decide product behavior. A skill never overrides them.
 
@@ -8,13 +8,13 @@ Each repository's `AGENTS.md` and `Specs/` still decide product behavior. A skil
 
 | Task | Shared skill | Then, in the target repository |
 | --- | --- | --- |
-| C++ style, warnings, header hygiene, error handling | [modern-cpp-windows](../.agents/skills/modern-cpp-windows/SKILL.md) | Its `references/` file for the repository; `RedSalamander` [async-threading](../../RedSalamander/.github/skills/async-threading/SKILL.md) for threading |
-| Windows handle and COM ownership | [wil-raii](../.agents/skills/wil-raii/SKILL.md) | Its `references/` file for the repository |
+| C++ style, warnings, header hygiene, error handling | [modern-cpp-windows](../.agents/skills/modern-cpp-windows/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [async-threading](../../RedSalamander/.github/skills/async-threading/SKILL.md) for threading |
+| Windows handle and COM ownership | [wil-raii](../.agents/skills/wil-raii/SKILL.md) | Its `references/repository-facts.md` |
 | JSON parsing and serialization | [yyjson](../.agents/skills/yyjson/SKILL.md) | `RedXe` [settings-store](../../RedXe/.agents/skills/settings-store/SKILL.md), `RedPrism` [settings-store](../../RedPrism/.agents/skills/settings-store/SKILL.md), `RedTilde` [settings-crashes](../../RedTilde/.agents/skills/settings-crashes/SKILL.md) |
-| User-visible strings, menus, accessible names | [localization](../.agents/skills/localization/SKILL.md) | Its `references/` file for `RedSalamander` or `RedPrism` |
-| Hot paths, allocation, idle behaviour, baselines | [performance-resources](../.agents/skills/performance-resources/SKILL.md) | `RedSalamander` [perf-validation](../../RedSalamander/.github/skills/perf-validation/SKILL.md); `references/` for `RedPrism`, `RedXe`, `DxUi` |
+| User-visible strings, menus, accessible names | [localization](../.agents/skills/localization/SKILL.md) | Its `references/repository-facts.md` |
+| Hot paths, allocation, idle behaviour, baselines | [performance-resources](../.agents/skills/performance-resources/SKILL.md) | `RedSalamander` [perf-validation](../../RedSalamander/.github/skills/perf-validation/SKILL.md); its `references/repository-facts.md` |
 | Win32 window, D3D11 device, swap chain, device loss | [d3d11-win32-host](../.agents/skills/d3d11-win32-host/SKILL.md) | `RedSalamander` [win32-wndproc](../../RedSalamander/.github/skills/win32-wndproc/SKILL.md), `RedSalamander` [direct2d-rendering](../../RedSalamander/.github/skills/direct2d-rendering/SKILL.md), `DxUi` [win32-host](../../DxUi/.agents/skills/win32-host/SKILL.md), `DxUi` [embedded-rendering](../../DxUi/.agents/skills/embedded-rendering/SKILL.md), `RedPrism` [hlsl-composition](../../RedPrism/.agents/skills/hlsl-composition/SKILL.md) |
-| Specs, WIP and Done plans, closeout | [spec-workflow](../.agents/skills/spec-workflow/SKILL.md) | Its `references/` file for the repository; `RedSalamander` [tooling-governance](../../RedSalamander/.github/skills/tooling-governance/SKILL.md) |
+| Specs, WIP and Done plans, closeout | [spec-workflow](../.agents/skills/spec-workflow/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [tooling-governance](../../RedSalamander/.github/skills/tooling-governance/SKILL.md) |
 | Build, restore, package, toolchain failures | — | `RedSalamander` [cpp-build](../../RedSalamander/.github/skills/cpp-build/SKILL.md), `RedXe` [build-redxe](../../RedXe/.agents/skills/build-redxe/SKILL.md), `RedPrism` [build-redprism](../../RedPrism/.agents/skills/build-redprism/SKILL.md), `RedTilde` [build-redtilde](../../RedTilde/.agents/skills/build-redtilde/SKILL.md), `RedMonitor` [build-redmonitor](../../RedMonitor/.agents/skills/build-redmonitor/SKILL.md), `DxUi` [build-dxui](../../DxUi/.agents/skills/build-dxui/SKILL.md) |
 | Tests, goldens, captures, evidence | — | `RedPrism` [test-harness](../../RedPrism/.agents/skills/test-harness/SKILL.md), `RedPrism` [numeric-goldens](../../RedPrism/.agents/skills/numeric-goldens/SKILL.md), `RedTilde` [test-harness](../../RedTilde/.agents/skills/test-harness/SKILL.md), `RedMonitor` [test-harness](../../RedMonitor/.agents/skills/test-harness/SKILL.md), `RedSalamander` [perf-validation](../../RedSalamander/.github/skills/perf-validation/SKILL.md) |
 | `DxUi` pin bumps and consumer adapters | [cross-repo-pins](../.agents/skills/cross-repo-pins/SKILL.md) | `DxUi` [consumer-integration](../../DxUi/.agents/skills/consumer-integration/SKILL.md), `RedPrism` [consumer-dxui](../../RedPrism/.agents/skills/consumer-dxui/SKILL.md), `RedTilde` [consumer-dxui](../../RedTilde/.agents/skills/consumer-dxui/SKILL.md) |
@@ -29,23 +29,23 @@ Each repository's `AGENTS.md` and `Specs/` still decide product behavior. A skil
 | Audits and improvement plans | [improve](../.agents/skills/improve/SKILL.md) | — |
 | Wiki upkeep and session handoff | [wiki-sync](../.agents/skills/wiki-sync/SKILL.md) | — |
 
-## Shared Skills And Their Per-Repository References
+## Shared Skills
 
-A parity reference restores what a repository's own skill said before the 2026-11-16 consolidation. Read the one for the repository you are editing.
+Each shared skill is one rule set for every repository. `references/` holds the detailed patterns and `repository-facts.md`, the product-specific paths, helpers, and gates. Every skill that covers code ends with a `Differences To Converge` table; the [convergence plan](../Specs/Plans/WIP/README.md) collects those rows into one register.
 
-| Shared skill | Parity references |
+| Shared skill | Reference files |
 | --- | --- |
-| [modern-cpp-windows](../.agents/skills/modern-cpp-windows/SKILL.md) | [dxui](../.agents/skills/modern-cpp-windows/references/dxui.md), [redprism](../.agents/skills/modern-cpp-windows/references/redprism.md), [redsalamander-compiler-warnings](../.agents/skills/modern-cpp-windows/references/redsalamander-compiler-warnings.md), [redsalamander-cpp-modern-style](../.agents/skills/modern-cpp-windows/references/redsalamander-cpp-modern-style.md), [redsalamander-error-handling](../.agents/skills/modern-cpp-windows/references/redsalamander-error-handling.md), [redxe](../.agents/skills/modern-cpp-windows/references/redxe.md) |
-| [wil-raii](../.agents/skills/wil-raii/SKILL.md) | [redprism](../.agents/skills/wil-raii/references/redprism.md), [redsalamander](../.agents/skills/wil-raii/references/redsalamander.md), [redxe](../.agents/skills/wil-raii/references/redxe.md) |
-| [yyjson](../.agents/skills/yyjson/SKILL.md) | [redprism](../.agents/skills/yyjson/references/redprism.md), [redsalamander](../.agents/skills/yyjson/references/redsalamander.md), [redxe](../.agents/skills/yyjson/references/redxe.md) |
-| [localization](../.agents/skills/localization/SKILL.md) | [redprism](../.agents/skills/localization/references/redprism.md), [redsalamander](../.agents/skills/localization/references/redsalamander.md) |
-| [performance-resources](../.agents/skills/performance-resources/SKILL.md) | [dxui](../.agents/skills/performance-resources/references/dxui.md), [redprism](../.agents/skills/performance-resources/references/redprism.md), [redxe](../.agents/skills/performance-resources/references/redxe.md) |
-| [d3d11-win32-host](../.agents/skills/d3d11-win32-host/SKILL.md) | [redprism-direct3d11-rendering](../.agents/skills/d3d11-win32-host/references/redprism-direct3d11-rendering.md), [redprism-win32-windowing](../.agents/skills/d3d11-win32-host/references/redprism-win32-windowing.md), [redxe-direct3d11-rendering](../.agents/skills/d3d11-win32-host/references/redxe-direct3d11-rendering.md), [redxe-win32-windowing](../.agents/skills/d3d11-win32-host/references/redxe-win32-windowing.md) |
-| [spec-workflow](../.agents/skills/spec-workflow/SKILL.md) | [dxui](../.agents/skills/spec-workflow/references/dxui.md), [redmonitor](../.agents/skills/spec-workflow/references/redmonitor.md), [redprism](../.agents/skills/spec-workflow/references/redprism.md), [redtilde](../.agents/skills/spec-workflow/references/redtilde.md), [redxe](../.agents/skills/spec-workflow/references/redxe.md) |
+| [modern-cpp-windows](../.agents/skills/modern-cpp-windows/SKILL.md) | [compiler-warnings](../.agents/skills/modern-cpp-windows/references/compiler-warnings.md), [cpp-style](../.agents/skills/modern-cpp-windows/references/cpp-style.md), [error-handling](../.agents/skills/modern-cpp-windows/references/error-handling.md), [repository-facts](../.agents/skills/modern-cpp-windows/references/repository-facts.md) |
+| [wil-raii](../.agents/skills/wil-raii/SKILL.md) | [patterns](../.agents/skills/wil-raii/references/patterns.md), [repository-facts](../.agents/skills/wil-raii/references/repository-facts.md) |
+| [yyjson](../.agents/skills/yyjson/SKILL.md) | [patterns](../.agents/skills/yyjson/references/patterns.md), [repository-facts](../.agents/skills/yyjson/references/repository-facts.md) |
+| [localization](../.agents/skills/localization/SKILL.md) | [patterns](../.agents/skills/localization/references/patterns.md), [repository-facts](../.agents/skills/localization/references/repository-facts.md) |
+| [performance-resources](../.agents/skills/performance-resources/SKILL.md) | [repository-facts](../.agents/skills/performance-resources/references/repository-facts.md) |
+| [d3d11-win32-host](../.agents/skills/d3d11-win32-host/SKILL.md) | [repository-facts](../.agents/skills/d3d11-win32-host/references/repository-facts.md) |
+| [spec-workflow](../.agents/skills/spec-workflow/SKILL.md) | [repository-facts](../.agents/skills/spec-workflow/references/repository-facts.md) |
 | [cross-repo-pins](../.agents/skills/cross-repo-pins/SKILL.md) | None (cross-repository by nature) |
 | [grill-cross-repo](../.agents/skills/grill-cross-repo/SKILL.md) | None (cross-repository by nature) |
 | [wiki-sync](../.agents/skills/wiki-sync/SKILL.md) | None (cross-repository by nature) |
-| [improve](../.agents/skills/improve/SKILL.md) | Upstream support files: [audit-playbook.md](../.agents/skills/improve/references/audit-playbook.md), [closing-the-loop.md](../.agents/skills/improve/references/closing-the-loop.md), [plan-template.md](../.agents/skills/improve/references/plan-template.md) |
+| [improve](../.agents/skills/improve/SKILL.md) | [audit-playbook](../.agents/skills/improve/references/audit-playbook.md), [closing-the-loop](../.agents/skills/improve/references/closing-the-loop.md), [plan-template](../.agents/skills/improve/references/plan-template.md) |
 
 ## Repository-Local Skills
 

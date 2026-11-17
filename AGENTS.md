@@ -26,7 +26,7 @@ All sibling repositories live beside `RedHome` (`..`):
 
 ## Shared Skills
 
-Skills with a `references/` folder carry per-repository detail restored from that repository's former skill; open the file for the repository you are editing.
+Each shared skill is one rule set for every repository. Its `references/` folder holds the detailed patterns and `repository-facts.md` (product-specific paths, helpers, and gates), and the skill ends with a `Differences To Converge` table of rules that are not yet the same everywhere.
 
 - [cross-repo-pins](.agents/skills/cross-repo-pins/SKILL.md) — Read-only sibling checkout diagnostics and `DxUi`, `RedMonitor`, and `.ci-engine` pin waves.
 - [wiki-sync](.agents/skills/wiki-sync/SKILL.md) — Reconcile `wiki/` pages with sibling repos and produce clean multi-repo session handoffs.

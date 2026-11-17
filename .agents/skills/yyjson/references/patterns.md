@@ -1,6 +1,6 @@
-# RedSalamander detail: `yyjson`
+# `yyjson` detailed patterns
 
-> **Parity reference.** Body of `RedSalamander/.github/skills/yyjson/SKILL.md` as of `53d0a9d58257`, the commit before the 2026-11-16 consolidation, unchanged apart from Markdown links retargeted to the sibling checkout. Read it when working in `../RedSalamander`. Unlinked paths are relative to that repository's root. That repository's `AGENTS.md` and `Specs/` win on any conflict, and the shared rules in [SKILL.md](../SKILL.md) apply everywhere. Folding this file into the shared skill or back into its owning repository is tracked in [Convergence_2026-11-17.md](../../../../Specs/Plans/WIP/Convergence_2026-11-17.md) (Phase 2).
+Common rules are in [SKILL.md](../SKILL.md). Apply them in every repository; the owning repository's `AGENTS.md` and `Specs/` win on any conflict.
 
 ## DO / DON'T (quick rules)
 
@@ -15,9 +15,7 @@
 - ❌ DON'T pass temporary strings to APIs that do not copy key/value strings.
 - ❌ DON'T use `YYJSON_READ_INSITU` unless you *really* want the input buffer to be modified and to outlive the parsed doc.
 
-## Mutable API: key/value ownership (most common bugs)
-
-### Critical rule: many `yyjson_mut_obj_add_*` APIs do not copy strings
+## Copying strings into the document
 
 yyjson mutable builders often *borrow* pointers:
 
@@ -25,7 +23,7 @@ yyjson mutable builders often *borrow* pointers:
 - For string values, `..._str` / `..._strn` do **not** copy the **value** either.
 - Only `..._strcpy` / `..._strncpy` copy the *value bytes* into the doc.
 
-This is safe only when the borrowed key/value outlives the doc (string literals, static storage, or buffers you keep alive).
+This is safe only when the borrowed key/value outlives the doc (string literals, static storage, or buffers you keep alive). The ownership table is in [SKILL.md](../SKILL.md#mutable-document-string-lifetime-most-common-bug).
 
 ### ❌ DON'T: Pass temporary strings to non-copy APIs
 
@@ -48,6 +46,8 @@ std::string utf8 = Utf8FromUtf16(wide);
 yyjson_mut_obj_add_strncpy(doc, root, "key", utf8.data(), utf8.size()); // value copied
 ```
 
+## Dynamic keys
+
 ### ❌ DON'T: Use dynamic object keys with `yyjson_mut_obj_add_*` convenience APIs
 
 `yyjson_mut_obj_add_*` functions do not copy the key:
@@ -66,27 +66,16 @@ yyjson_mut_val* val = yyjson_mut_strcpy(doc, "value");
 yyjson_mut_obj_add(root, key, val);
 ```
 
-### Quick reference (mutable builder strings)
-
-| Function | Copies key? | Copies value bytes? | Use when |
-|----------|-------------|---------------------|----------|
-| `yyjson_mut_obj_add_str` | ❌ No | ❌ No | Only when key+value have guaranteed lifetime (literals/static) |
-| `yyjson_mut_obj_add_strcpy` | ❌ No | ✅ Yes | Key is a literal/static; value is a temporary/C++ string |
-| `yyjson_mut_obj_add_strncpy` | ❌ No | ✅ Yes | Key is a literal/static; value is known-length UTF-8 |
-| `yyjson_mut_obj_add_val` | ❌ No | n/a | Key is a literal/static; value is a `yyjson_mut_val*` owned by the doc |
-| `yyjson_mut_obj_add` | ✅ (via `yyjson_mut_val*`) | ✅ (via `yyjson_mut_val*`) | Dynamic keys and/or fully doc-owned strings |
-| `yyjson_mut_str` / `yyjson_mut_strn` | n/a | ❌ No | Only for literals/static buffers |
-| `yyjson_mut_strcpy` / `yyjson_mut_strncpy` | n/a | ✅ Yes | Preferred for any temporary/converted UTF-8 |
-
 ## Read API: parsing & type safety
 
 - Prefer `yyjson_read_opts()` when you need error details (`yyjson_read_err`).
 - `yyjson_read_opts()` takes a mutable `char*`; pass a mutable buffer (`std::string`, `std::vector<char>`), not a string literal.
-- Use project defaults when reading user-facing config: `YYJSON_READ_JSON5 | YYJSON_READ_ALLOW_BOM`.
-- Always check types (`yyjson_is_*`) before reading (`yyjson_get_*`).
+- Use project defaults when reading user-facing config: `YYJSON_READ_JSON5 | YYJSON_READ_ALLOW_BOM` (see [Differences To Converge](../SKILL.md#differences-to-converge)).
+- Check the root and every value's type (`yyjson_is_*`) before reading (`yyjson_get_*`), and reject invalid ranges before narrowing numeric values.
 - Treat `yyjson_get_str()` as borrowed; convert to `std::wstring`/`std::string` immediately.
+- `yyjson_obj_get` returns the first occurrence of a duplicated key; tests that override a field inject it first.
 
-## Memory management (recommended RAII patterns)
+## Memory management (RAII patterns)
 
 Prefer `wil::unique_any` or `wil::scope_exit` to make cleanup unconditional:
 
@@ -100,7 +89,7 @@ using unique_malloc_string  = wil::unique_any<char*, decltype(&free), free>;
 
 - Use `yyjson_write_err` with `yyjson_write_opts()` / `yyjson_mut_write_opts()` when you need diagnostics.
 - Free output with `free()` (or `alc->free` if you passed an allocator).
-- Use the returned `len` when building `std::string` (don’t assume a null terminator is sufficient).
+- Use the returned `len` when building `std::string` (don't assume a null terminator is sufficient).
 
 ## Audit checklist (use when reviewing a change)
 

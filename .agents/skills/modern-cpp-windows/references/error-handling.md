@@ -1,10 +1,11 @@
-# RedSalamander detail: `error-handling`
+# Error Handling Patterns
 
-> **Parity reference.** Body of `RedSalamander/.github/skills/error-handling/SKILL.md` as of `53d0a9d58257`, the commit before the 2026-11-16 consolidation, unchanged apart from Markdown links retargeted to the sibling checkout. Read it when working in `../RedSalamander`. Unlinked paths are relative to that repository's root. That repository's `AGENTS.md` and `Specs/` win on any conflict, and the shared rules in [SKILL.md](../SKILL.md) apply everywhere. Folding this file into the shared skill or back into its owning repository is tracked in [Convergence_2026-11-17.md](../../../../Specs/Plans/WIP/Convergence_2026-11-17.md) (Phase 2).
+Common detail for every repository. The rules summary is in [SKILL.md](../SKILL.md).
+
 
 ## HRESULT Pattern
 
-Use HRESULT for all Windows API calls:
+Use HRESULT for all Windows API calls. `Debug::` is the logging family of `RedSalamander` and `RedMonitor`; `DxUi` has `DxUi::Debug`, and `RedXe`, `RedPrism` and `RedTilde` have no `Debug::` helpers (see [repository-facts.md](repository-facts.md)).
 
 ```cpp
 HRESULT hr = SomeWindowsApi();
@@ -17,7 +18,7 @@ if (FAILED(hr))
 
 ## No `goto` Cleanup
 
-`goto` is prohibited. Use early `return` and RAII (`wil::unique_*`, `wil::com_ptr`, `wil::scope_exit`) to handle cleanup and common exit paths.
+`goto` is prohibited. Use early `return` and RAII (`wil::unique_*`, `wil::com_ptr_nothrow` / `wil::com_ptr`, `wil::scope_exit`) to handle cleanup and common exit paths.
 
 ```cpp
 HRESULT DoWork() noexcept
@@ -37,6 +38,8 @@ HRESULT DoWork() noexcept
 ```
 
 ## Debug Logging Functions
+
+Available in `RedSalamander` and `RedMonitor`.
 
 | Function | When to Use |
 |----------|-------------|
@@ -118,7 +121,8 @@ If exception handling is mandatory, only catch explicitly named exception types 
 - Win32 callbacks / `WndProc` / threadpool callbacks
 - Thread entrypoints (`std::jthread`, `TrySubmitThreadpoolCallback`, etc.)
 
-If you need to translate exceptions into failure codes, prefer:
+If you need to translate exceptions into failure codes, prefer the pattern below. The `std::bad_alloc` branch shows the `RedSalamander` policy (fail fast); the policy differs per repository, see Differences To Converge in [SKILL.md](../SKILL.md).
+
 ```cpp
 HRESULT DoThing() noexcept
 {
@@ -151,8 +155,10 @@ When catching exceptions:
 ## User-Facing Errors
 
 - Fail gracefully with user-friendly messages
-- Use resource strings (see localization skill)
+- Use resource strings (see `localization` skill)
 - Provide actionable information when possible
+
+`FormatStringResource` and `LoadStringResource` exist in `RedSalamander`, `RedPrism` and `RedMonitor`. `HostShowPrompt` and `HostPromptRequest` are `RedSalamander` host APIs; the example below is a `RedSalamander` example.
 
 ```cpp
 if (FAILED(hr)) 

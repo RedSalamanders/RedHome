@@ -1,8 +1,9 @@
-# RedSalamander detail: `compiler-warnings`
+# Compiler Warning Patterns
 
-> **Parity reference.** Body of `RedSalamander/.github/skills/compiler-warnings/SKILL.md` as of `53d0a9d58257`, the commit before the 2026-11-16 consolidation, unchanged apart from Markdown links retargeted to the sibling checkout. Read it when working in `../RedSalamander`. Unlinked paths are relative to that repository's root. That repository's `AGENTS.md` and `Specs/` win on any conflict, and the shared rules in [SKILL.md](../SKILL.md) apply everywhere. Folding this file into the shared skill or back into its owning repository is tracked in [Convergence_2026-11-17.md](../../../../Specs/Plans/WIP/Convergence_2026-11-17.md) (Phase 2).
+Common detail for every repository. The rules summary is in [SKILL.md](../SKILL.md).
 
-**Objective: zero actionable warnings under `/Wall`**.
+
+**Objective: zero actionable warnings under `/Wall`** (`/WX` disabled). `RedMonitor` still builds `/W4 /WX`; see Differences To Converge in [SKILL.md](../SKILL.md).
 
 ## Critical Rule
 
@@ -32,7 +33,7 @@ Test projects may carry broader project-local suppressions only when they intent
 | C5219 | Explicit cast for data loss |
 | C5264 | Remove unused or add `[[maybe_unused]]` |
 | C4464 | Fix include paths, avoid `..` |
-| C4774 | Do not use runtime printf-format strings; use `FormatStringResource(...)` (resources) or `std::format` |
+| C4774 | Do not use runtime printf-format strings; use `FormatStringResource(...)` (resources; helper of `RedSalamander`, `RedPrism`, `RedMonitor`) or `std::format` |
 
 ## C4774: Format String Not String Literal
 
@@ -99,16 +100,4 @@ void Process(T value) {
 
 - Support Debug and Release configurations
 - Enable `/Wall` (`EnableAllWarnings`) for first-party projects
-- Use static analysis tools (PVS-Studio, Clang-Tidy)
-- Configure proper optimization flags for Release
-
-## Testing and Quality
-
-- Use static analysis tools regularly
-- Follow consistent formatting (.clang-format)
-- Write unit tests for complex logic
-- Perform regular code reviews
-- Profile graphics-intensive operations
-- Test with large datasets
-- Validate memory usage patterns
-- Test on different DPI settings
+- Build Release too when touching warning-sensitive or optimization-sensitive code

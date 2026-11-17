@@ -1,9 +1,6 @@
-# RedSalamander detail: `wil-raii`
+# WIL RAII detailed patterns
 
-> **Parity reference.** Body of `RedSalamander/.github/skills/wil-raii/SKILL.md` as of `53d0a9d58257`, the commit before the 2026-11-16 consolidation, unchanged apart from Markdown links retargeted to the sibling checkout. Read it when working in `../RedSalamander`. Unlinked paths are relative to that repository's root. That repository's `AGENTS.md` and `Specs/` win on any conflict, and the shared rules in [SKILL.md](../SKILL.md) apply everywhere. Folding this file into the shared skill or back into its owning repository is tracked in [Convergence_2026-11-17.md](../../../../Specs/Plans/WIP/Convergence_2026-11-17.md) (Phase 2).
-
-**CRITICAL: NO MANUAL RESOURCE CLEANUP** - All Windows resources MUST use RAII wrappers.
-`goto` is prohibited; use `wil::scope_exit` for cleanup and common exit paths.
+Rules live in [SKILL.md](../SKILL.md). Every Windows resource uses an RAII wrapper; `goto` is prohibited, so use `wil::scope_exit` for cleanup and common exit paths.
 
 ## WIL Wrapper Reference
 
@@ -17,12 +14,10 @@
 | HPEN | `wil::unique_any<HPEN, decltype(&::DeleteObject), ::DeleteObject>` |
 | HDC | `wil::unique_hdc` |
 | Paint | `wil::unique_hdc_paint` with `wil::BeginPaint(hwnd, &ps)` |
-| COM | `wil::com_ptr<T>` |
+| COM | `wil::com_ptr_nothrow<T>` in `noexcept` / `HRESULT` code; `wil::com_ptr<T>` only where WIL exceptions are intentional |
 | Cleanup | `wil::scope_exit` with lambda |
 
-## Patterns
-
-### Member Variables
+## Member Variables
 ```cpp
 class MyWindow 
 {
@@ -32,7 +27,7 @@ class MyWindow
 };
 ```
 
-### Paint Context (auto EndPaint)
+## Paint Context (auto EndPaint)
 ```cpp
 PAINTSTRUCT ps;
 wil::unique_hdc_paint hdc = wil::BeginPaint(_hWnd, &ps);
@@ -40,7 +35,7 @@ FillRect(hdc.get(), &ps.rcPaint, brush);
 // Automatic EndPaint on scope exit
 ```
 
-### GDI Selection (auto restore)
+## GDI Selection (auto restore)
 ```cpp
 {
     auto oldBrush = wil::SelectObject(hdc, _brush.get());
@@ -48,7 +43,20 @@ FillRect(hdc.get(), &ps.rcPaint, brush);
 } // Old brush automatically restored
 ```
 
-### Direct2D BeginDraw/EndDraw
+## Multiple GDI Selections
+
+```cpp
+{
+    auto oldPen = wil::SelectObject(hdc, _pen.get());
+    {
+        auto oldBrush = wil::SelectObject(hdc, _brush.get());
+        // Draw with pen and brush
+    } // Brush restored
+    // Draw with pen only
+} // Pen restored
+```
+
+## Direct2D BeginDraw/EndDraw
 ```cpp
 {
     HRESULT hr = S_OK;
@@ -61,9 +69,9 @@ FillRect(hdc.get(), &ps.rcPaint, brush);
 }
 ```
 
-### COM Pointers (`wil::com_ptr<T>`)
+## COM Pointers
 
-Use `wil::com_ptr<T>` for COM interface lifetimes and prefer single-step copy semantics.
+Use a WIL COM pointer for every COM interface lifetime and prefer single-step copy semantics. The examples below use `wil::com_ptr<T>`; see [SKILL.md](../SKILL.md) for which pointer type applies.
 
 ```cpp
 // ✅ Copy (AddRef) in one step
@@ -80,14 +88,6 @@ Avoid manual ref-counting + `attach()` on the same pointer:
 // ❌ Two-step hazard (can leak a ref if an exception occurs between lines)
 rawFs->AddRef();
 fs.attach(rawFs);
-```
-
-## Required Include
-```cpp
-#pragma warning(push)
-#pragma warning(disable: 4625 4626 5026 5027 28182)
-#include <wil/resource.h>
-#pragma warning(pop)
 ```
 
 ## Resource Creation and Access
@@ -111,7 +111,7 @@ _bitmaps.clear();  // All HBITMAPs automatically deleted
 _icon.reset();     // Old icon destroyed, set to nullptr
 ```
 
-### Destroying Owned Windows (`wil::unique_hwnd`)
+## Destroying Owned Windows (`wil::unique_hwnd`)
 
 If an `HWND` is owned by `wil::unique_hwnd`, destroy via the wrapper (do not call `DestroyWindow(_hWnd.get())`).
 
@@ -131,19 +131,6 @@ HMENU menu = CreatePopupMenu();
 auto menuCleanup = wil::scope_exit([&] { if (menu) DestroyMenu(menu); });
 // Use menu...
 // Automatic cleanup on scope exit
-```
-
-## Multiple GDI Selections
-
-```cpp
-{
-    auto oldPen = wil::SelectObject(hdc, _pen.get());
-    {
-        auto oldBrush = wil::SelectObject(hdc, _brush.get());
-        // Draw with pen and brush
-    } // Brush restored
-    // Draw with pen only
-} // Pen restored
 ```
 
 ## Exception: Transfer-of-Ownership
