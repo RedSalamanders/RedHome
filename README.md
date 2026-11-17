@@ -28,15 +28,30 @@ Tip: Open `RedHome\wiki` in **RedTilde** (`Ctrl+Shift+O` -> select `wiki`) or VS
 Requires PowerShell 7 (`pwsh`) and Git:
 
 ```powershell
-# Validate all skills, thin pointer files, wiki index coverage, and internal Markdown links
+# Validate all skills, thin pointer files, wiki and plan index coverage, and internal Markdown links
 pwsh -NoProfile -File .\validate.ps1
 
-# Also verify sibling links (../../RedSalamander, ../../RedXe, etc.) against local checkouts
+# Also verify sibling links (../../RedSalamander, ../../RedXe, etc.) and the shared-skill pointer in each sibling
 pwsh -NoProfile -File .\validate.ps1 -CheckSiblings
 
 # Read-only status of all sibling branches, DxUi/RedMonitor locks, and .ci-engine pins
 pwsh -NoProfile -File .\Tools\Get-WorkspaceStatus.ps1
+
+# The same, plus clone hygiene: last fetch, local-only and merged branches, stale refs, extra worktrees
+pwsh -NoProfile -File .\Tools\Get-WorkspaceStatus.ps1 -Hygiene
 ```
+
+The `Validate RedHome` workflow runs both validations on every pull request, on `main`, and weekly, with the sibling repositories checked out beside `RedHome`.
+
+## Claude Code Plugin
+
+`RedHome` is also a Claude Code plugin marketplace (`.claude-plugin/`), so the shared skills load natively in Claude Code from any repository as `redhome:<skill>`:
+
+```text
+/plugin install redhome --marketplace RedSalamanders/RedHome
+```
+
+`.claude/settings.json` enables the plugin for this repository, and the product repositories opt in with the same file. Codex reads the same skills directly from `.agents/skills/` when started in `RedHome`.
 
 ## Plans
 

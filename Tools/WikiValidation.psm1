@@ -1,4 +1,5 @@
-# Validates RedHome pointer parity, wiki/Index.md completeness, and Markdown links (root docs, skills, wiki, Specs).
+# Validates RedHome pointer parity, wiki/Index.md completeness, Markdown links (root docs, skills, wiki, Specs),
+# plan indexes, the closing sections of folded shared skills, and the shared-skill pointer in sibling repositories.
 #Requires -Version 7.0
 Set-StrictMode -Version Latest
 
@@ -121,4 +122,86 @@ function Test-WikiIntegrity {
     return $wikiFiles.Count
 }
 
-Export-ModuleMember -Function Test-PointerParity, Test-WikiIntegrity
+function Test-PlanIndex {
+    <#
+    .SYNOPSIS
+    Every plan file directly under Specs/Plans/WIP and Specs/Plans/Done is linked from that folder's README.md.
+    #>
+    [CmdletBinding()]
+    param([Parameter(Mandatory)][string]$Root)
+    $failures = [Collections.Generic.List[string]]::new()
+    foreach ($state in @('WIP', 'Done')) {
+        $relative = 'Specs/Plans/{0}' -f $state
+        $dir = Join-Path $Root $relative
+        if (-not [IO.Directory]::Exists($dir)) { continue }
+        $indexPath = Join-Path $dir 'README.md'
+        if (-not [IO.File]::Exists($indexPath)) {
+            $failures.Add(('{0}: missing README.md index' -f $relative))
+            continue
+        }
+        $prose = Remove-MarkdownCode ([IO.File]::ReadAllText($indexPath, [Text.UTF8Encoding]::new($false, $true)))
+        $indexed = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+        foreach ($m in [regex]::Matches($prose, '\[[^\]]+\]\((?<target>[^)#?\s]+\.md)(?:#[^)]*)?\)')) {
+            $target = $m.Groups['target'].Value
+            if (-not $target.Contains('/')) { [void]$indexed.Add($target) }
+        }
+        foreach ($plan in @(Get-ChildItem -LiteralPath $dir -Filter '*.md' -File -Force | Sort-Object Name)) {
+            if ($plan.Name -ceq 'README.md') { continue }
+            if (-not $indexed.Contains($plan.Name)) {
+                $failures.Add(('{0}/{1}: plan is not linked from {0}/README.md' -f $relative, $plan.Name))
+            }
+        }
+    }
+    if ($failures.Count) { throw ($failures -join "`n") }
+}
+
+function Test-SharedSkillShape {
+    <#
+    .SYNOPSIS
+    A shared skill that carries references/repository-facts.md ends with the two closing sections every folded
+    skill shares, in this order: "## Repository Facts", then "## Differences To Converge".
+    #>
+    [CmdletBinding()]
+    param([Parameter(Mandatory)][string]$Root)
+    $failures = [Collections.Generic.List[string]]::new()
+    $skillRoot = Join-Path $Root '.agents/skills'
+    foreach ($folder in @(Get-ChildItem -LiteralPath $skillRoot -Directory -Force | Sort-Object Name)) {
+        $factsPath = Join-Path $folder.FullName 'references/repository-facts.md'
+        if (-not [IO.File]::Exists($factsPath)) { continue }
+        $skillPath = Join-Path $folder.FullName 'SKILL.md'
+        if (-not [IO.File]::Exists($skillPath)) { continue }
+        $prose = Remove-MarkdownCode ([IO.File]::ReadAllText($skillPath, [Text.UTF8Encoding]::new($false, $true)))
+        $headings = @([regex]::Matches($prose, '(?m)^## +(?<title>.+?) *$') | ForEach-Object { $_.Groups['title'].Value })
+        $count = $headings.Count
+        if ($count -lt 2 -or $headings[$count - 2] -cne 'Repository Facts' -or $headings[$count - 1] -cne 'Differences To Converge') {
+            $failures.Add(('.agents/skills/{0}/SKILL.md: must end with "## Repository Facts" then "## Differences To Converge" because the skill has references/repository-facts.md' -f $folder.Name))
+        }
+    }
+    if ($failures.Count) { throw ($failures -join "`n") }
+}
+
+function Test-SiblingSkillPointer {
+    <#
+    .SYNOPSIS
+    Each sibling product repository's AGENTS.md carries the identical sentence that points to the RedHome skills.
+    #>
+    [CmdletBinding()]
+    param([Parameter(Mandatory)][string]$Root)
+    $sentence = 'Shared skill index: `../RedHome/AGENTS.md`; packages: `../RedHome/.agents/skills/`.'
+    $workspace = [IO.Path]::GetFullPath((Join-Path $Root '..'))
+    $failures = [Collections.Generic.List[string]]::new()
+    foreach ($name in @('DxUi', 'RedSalamander', 'RedXe', 'RedPrism', 'RedTilde', 'RedMonitor')) {
+        $agentsPath = Join-Path (Join-Path $workspace $name) 'AGENTS.md'
+        if (-not [IO.File]::Exists($agentsPath)) {
+            $failures.Add(('{0}: AGENTS.md not found beside RedHome (expected {1})' -f $name, $agentsPath))
+            continue
+        }
+        $text = [IO.File]::ReadAllText($agentsPath, [Text.UTF8Encoding]::new($false, $true))
+        if (-not $text.Contains($sentence)) {
+            $failures.Add(('{0}/AGENTS.md: missing the shared-skill pointer sentence: {1}' -f $name, $sentence))
+        }
+    }
+    if ($failures.Count) { throw ($failures -join "`n") }
+}
+
+Export-ModuleMember -Function Test-PointerParity, Test-WikiIntegrity, Test-PlanIndex, Test-SharedSkillShape, Test-SiblingSkillPointer

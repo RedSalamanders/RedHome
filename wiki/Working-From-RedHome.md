@@ -4,9 +4,9 @@ How to run a session from `RedHome` so that work in any sibling repository is as
 
 ## Session Start
 
-1. Run `pwsh -NoProfile -File ./Tools/Get-WorkspaceStatus.ps1` (read-only). It reports branch, dirty state, `.ci-engine` against its pin, and the `DxUi` and `RedMonitor` locks for every sibling.
+1. Run `pwsh -NoProfile -File ./Tools/Get-WorkspaceStatus.ps1` (read-only). It reports branch, dirty state, `.ci-engine` against its pin, and the `DxUi` and `RedMonitor` locks for every sibling. Add `-Hygiene` to also see days since the last fetch, local-only and merged branches, stale remote-tracking refs, and extra worktrees.
 2. For each repository you will change, read its `AGENTS.md` and `Specs/README.md` completely, then the owning domain spec. The dossier in [Index.md](Index.md) tells you where those are.
-3. Choose skills from [Skill-Catalog.md](Skill-Catalog.md) in this order: the shared skill, its `references/` file for the target repository, then the repository-local skill.
+3. Choose skills from [Skill-Catalog.md](Skill-Catalog.md) in this order: the shared skill (its rules, its `references/` patterns, and the `repository-facts.md` rows for the target repository), then the repository-local skill. Check the skill's `Differences To Converge` table before assuming a rule already holds in that repository.
 4. For work that spans repositories, use `grill-cross-repo` before writing specs, `spec-workflow` to record the agreed work, and sequence producers (`DxUi`, `RedMonitor`, `RedSalamanders/.github`) before consumers.
 5. Check [the active plans](../Specs/Plans/WIP/README.md) so the change does not collide with a convergence step in progress.
 
@@ -42,7 +42,7 @@ Aligning these entry points is a step of the convergence plan; until it lands, u
 - Every change adds one dated fragment under `Changes/` and never edits `CHANGELOG.md`. After the merge, `Tools/Submit-ChangelogFold.ps1` opens its own `changelog/fold-*` pull request.
 - Pull requests run compiler-free checks only. Native qualification starts on `main` after five continuous quiet minutes, so a merged change is `CI_PENDING` until the repository's `ci-state` branch records `succeeded`.
 - When a pull request merges, delete its head branch locally and on the remote, including `changelog/fold-*` branches.
-- `RedHome` itself has no `Changes/` workflow; its gate is `validate.ps1` locally and the `Validate RedHome` workflow on pull requests.
+- `RedHome` itself has no `Changes/` workflow; its gate is `validate.ps1` locally and the `Validate RedHome` workflow, which also checks out every sibling and runs `validate.ps1 -CheckSiblings` on pull requests, on `main`, and weekly.
 
 ## Worktrees
 
@@ -56,17 +56,18 @@ Aligning these entry points is a step of the convergence plan; until it lands, u
 | Harness | Loads at session start in `RedHome` | Shared skills |
 | --- | --- | --- |
 | Codex | `AGENTS.md` | Discovered natively from `.agents/skills/` |
-| Claude Code | `CLAUDE.md`, which points to `AGENTS.md` | Reached through the `AGENTS.md` skill index. Claude Code auto-discovers skills only under `.claude/skills/` or from plugins, which no RedSalamanders repository has used so far |
+| Claude Code | `CLAUDE.md`, which points to `AGENTS.md` | Loaded natively as `redhome:<skill>` through the `redhome` plugin that `.claude/settings.json` enables (Claude Code does not read `.agents/skills/` itself). The `AGENTS.md` skill index remains the fallback |
 | GitHub Copilot | `.github/copilot-instructions.md`, which points to `AGENTS.md` | Reached through the `AGENTS.md` skill index |
 
-Native Claude Code discovery and discovery outside `RedHome` are decisions in the convergence plan, not gaps to patch ad hoc.
+`RedHome` is a Claude Code plugin marketplace (`.claude-plugin/marketplace.json`, marketplace `redsalamanders`, plugin `redhome`) whose plugin root is the repository, so the installed copy carries the skills and this wiki. A repository opts in with the same `.claude/settings.json` as `RedHome`; a single machine can also install it once for every repository with `/plugin install redhome --marketplace RedSalamanders/RedHome`. While editing skills locally, start Claude Code with `--plugin-dir .` to load the working tree instead of the installed copy.
 
 ## When RedHome Is Not Beside The Repository
 
 A session started inside one repository (a hosted coding agent, a fresh machine, CI) sees only that repository.
 
 - Each repository's `AGENTS.md` names `../RedHome/AGENTS.md`, the skill package directory, and the clone URL. Clone `RedHome` beside the repository when the environment allows it.
-- When it does not, the repository's own `AGENTS.md`, `Specs/`, and local skills still fully define product behavior and validation. Only the shared how-to detail is missing; do not guess it, and say so in the handoff.
+- In Claude Code the `redhome` plugin still supplies the shared skills there. Sibling links inside a skill (`../../../../<Repo>/...`) resolve only in the `RedHome` workspace layout; in a product repository read the same path inside that repository.
+- In any other harness, the repository's own `AGENTS.md`, `Specs/`, and local skills still fully define product behavior and validation. Only the shared how-to detail is missing; do not guess it, and say so in the handoff.
 - Nothing in any build, test, or CI path may depend on `RedHome`. It is unpinned and absent from CI by design.
 
 ## Keeping RedHome Current

@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - main
+  schedule:
+    # Mondays 05:17 UTC: sibling repositories move without a RedHome change, so links are re-checked weekly.
+    - cron: '17 5 * * 1'
   workflow_dispatch:
 
 permissions:
@@ -22,3 +25,42 @@ jobs:
       - name: Run validate.ps1
         shell: pwsh
         run: ./validate.ps1
+
+  siblings:
+    name: Validate links into sibling repositories
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout RedHome
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: RedHome
+
+      # The siblings are public. Each is cloned beside RedHome at its default branch, without history and
+      # without evidence folders or binary assets, which RedHome never links to.
+      - name: Checkout sibling repositories beside RedHome
+        shell: bash
+        run: |
+          set -euo pipefail
+          for repo in DxUi RedSalamander RedXe RedPrism RedTilde RedMonitor RedSalamanders/.github; do
+            name="${repo##*/}"
+            git clone --quiet --depth 1 --filter=blob:none --no-checkout \
+              "https://github.com/RedSalamanders/${name}.git" "${repo}"
+            git -C "${repo}" sparse-checkout set --no-cone \
+              '/*' \
+              '!/Specs/TestRuns/' '!/Specs/Mockups/' '!/Measurements/' '!/docs/' '!/legacy/' \
+              '!*.png' '!*.jpg' '!*.jpeg' '!*.gif' '!*.bmp' '!*.ico' '!*.webp' '!*.mp4' \
+              '!*.zip' '!*.dmp' '!*.bin' '!*.pdf' '!*.dds' '!*.ttf'
+            git -C "${repo}" checkout --quiet
+            echo "${repo}: $(git -C "${repo}" rev-parse --short HEAD), $(git -C "${repo}" ls-files | wc -l) tracked files"
+          done
+
+      - name: Run validate.ps1 -CheckSiblings
+        shell: pwsh
+        working-directory: RedHome
+        run: ./validate.ps1 -CheckSiblings
+
+      - name: Report workspace status
+        shell: pwsh
+        working-directory: RedHome
+        run: ./Tools/Get-WorkspaceStatus.ps1 -Hygiene
