@@ -39,5 +39,6 @@ Each shared skill is one rule set for every repository. Its `references/` folder
 - [localization](.agents/skills/localization/SKILL.md) — UTF-8 `.rc` `STRINGTABLE`/`MENU` resources, positional `{0}` placeholders, and UIA accessible names.
 - [performance-resources](.agents/skills/performance-resources/SKILL.md) — Zero steady-state hot-path allocations, bounded storage, event-blocked idle states, and paired baselines.
 - [d3d11-win32-host](.agents/skills/d3d11-win32-host/SKILL.md) — Win32 window rules for every host, then D3D11 device selection, flip swap chains, occlusion, WARP, and device loss for idle-loop and `WM_PAINT` hosts (`RedXe`, `RedPrism`, `RedMonitor`, `DxUi` `ControlHost`).
+- [test-evidence](.agents/skills/test-evidence/SKILL.md) — Behavioral tests with independent expectations, hidden non-activating captures, shared-process suite isolation, source-bound receipts, and the performance-evidence workflow.
 
 Validate `RedHome` edits with `pwsh -NoProfile -File .\validate.ps1 -CheckSiblings`.
