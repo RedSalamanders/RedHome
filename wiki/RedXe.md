@@ -17,7 +17,7 @@ Per-monitor-v2 DPI Win32 + Direct3D 11 dashboard foundation for **XENEON EDGE** 
 
 ## Repository-Specific Rules & Skills
 
-- **Skills (`../../RedXe/.agents/skills/`)**: Repo-specific skills `build-redxe`, `plugin-development`, `settings-store` (shared skills `spec-workflow`, `d3d11-win32-host`, `performance-resources`, `modern-cpp-windows`, `wil-raii`, `yyjson` live in `RedHome/.agents/skills/`).
+- **Skills (`../../RedXe/.agents/skills/`)**: Repo-specific skills `build-redxe`, `plugin-development`, `settings-store` (shared skills `spec-workflow`, `d3d11-win32-host`, `performance-resources`, `modern-cpp-windows`, `wil-raii`, `yyjson`, `test-evidence` live in `RedHome/.agents/skills/`).
 - **Aligned Catalogs**:
   - Adding/changing CLI switches requires updating `RedXe/CommandLine.h`, `docs/usage.md`, and `Specs/UI/UI_XeneonDisplayWindowing.md` together (`SettingsTests` enforces parity).
   - Adding/removing bundled widgets/services requires updating `RedXe/BundledPlugins.h`, `Specs/Settings.schema.json`, Debug & Release `Settings/*.json` templates, plugin contract, and `docs/plugins/<widget>.md`.

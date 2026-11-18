@@ -18,7 +18,7 @@ Windows-native GPU/CPU raster image editor built with Win32, Direct3D 11, DXGI, 
 
 ## Repository-Specific Rules & Skills
 
-- **Skills (`../../RedPrism/.agents/skills/`)**: Repo-specific skills `build-redprism`, `test-harness`, `hlsl-composition`, `numeric-goldens`, `settings-store`, `crash-handling`, `consumer-dxui` (shared skills `spec-workflow`, `d3d11-win32-host`, `performance-resources`, `wil-raii`, `yyjson`, `modern-cpp-windows`, `localization` live in `RedHome/.agents/skills/`).
+- **Skills (`../../RedPrism/.agents/skills/`)**: Repo-specific skills `build-redprism`, `test-harness`, `hlsl-composition`, `numeric-goldens`, `settings-store`, `crash-handling`, `consumer-dxui` (shared skills `spec-workflow`, `d3d11-win32-host`, `performance-resources`, `wil-raii`, `yyjson`, `modern-cpp-windows`, `localization`, `test-evidence` live in `RedHome/.agents/skills/`).
 - **Independent Numeric Goldens**: Every document, I/O, rendering, tool, and history behavior requires an independent mathematical/reference golden with documented tolerance—never screenshot diffs or rebaselining to match an implementation bug.
 - **DxUi Press/Invalidation Discipline**: `ChromeHost` writes control setters and layout bounds only on state change (`_resync`) and never mutates layout/focus mid-press or inside a `Splitter` preview callback.
 
