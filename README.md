@@ -39,6 +39,10 @@ pwsh -NoProfile -File .\Tools\Get-WorkspaceStatus.ps1
 
 # The same, plus clone hygiene: last fetch, local-only and merged branches, stale refs, extra worktrees
 pwsh -NoProfile -File .\Tools\Get-WorkspaceStatus.ps1 -Hygiene
+
+# The same, plus the harness report: hashes of the files every repository must share, the formatter each
+# format script uses, and every root command with its parameters
+pwsh -NoProfile -File .\Tools\Get-WorkspaceStatus.ps1 -Harness
 ```
 
 The `Validate RedHome` workflow runs both validations on every pull request, on `main`, and weekly, with the sibling repositories checked out beside `RedHome`.
