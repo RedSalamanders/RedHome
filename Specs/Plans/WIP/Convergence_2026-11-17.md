@@ -9,7 +9,7 @@
 - **Governing rule**: at the end, all projects are as close as possible for every option and every decision. See [Governing rule](#governing-rule).
 - **Companions**: [DivergenceRegister.md](Convergence_2026-11-17/DivergenceRegister.md) lists every known difference with its single target. [CleanupRunbook.md](Convergence_2026-11-17/CleanupRunbook.md) holds the destructive hygiene steps, which only the owner runs.
 - **Contracts to reconcile on closeout**: [AGENTS.md](../../../AGENTS.md), [wiki/Index.md](../../../wiki/Index.md) and the pages it lists, the shared skills under `.agents/skills/`, each sibling's `AGENTS.md` and `Specs/README.md`, and the engine's [Specs/CI.md](../../../../RedSalamanders/.github/Specs/CI.md).
-- **Owner decisions**: D1 to D5 and D7 to D13 accepted on 2026-11-18, D2 and D10 with amendments. D14 to D17 and the default of every owner choice were taken the same day; B-11 and H-15 have no default and stay open. See [Decisions](#decisions).
+- **Owner decisions**: D1 to D5 and D7 to D13 accepted on 2026-11-18, D2 and D10 with amendments. D14 to D19 and every owner choice were decided the same day: the plan's default where it had one, and the owner's own answer for B-11 and H-15 (D18, D19). No owner question is open. See [Decisions](#decisions).
 - **Owner's part**: merging pull requests and the [owner choices](#owner-choices) where two common end states are possible.
 
 ---
@@ -249,7 +249,7 @@ Remaining steps:
   | Tests and evidence | `test-harness` in `RedPrism`, `RedTilde`, `RedMonitor`; the generic steps of `RedSalamander` `perf-validation` | Hidden non-activating captures; no foreground, clipboard, or cursor use without agreement; preserve failures; a focused pass is not qualification; source-bound receipts; paired same-machine baselines; expected values independent of the code under test | Now. Capture, crash-probe, and interactive switch names stay repository facts until E-13 |
   | Crash dumps | `crash-handling` in `RedPrism`; the crash half of `RedTilde` `settings-crashes`. `RedXe` and `RedSalamander` have the handler code and no skill for writing it | Install before UI and workers; no allocation in the fault path; local only; pending marker and next-start prompt; probes in an isolated child process; a separate ASan check | Now. The artifact shape waits for H-16 |
   | File safety | `file-safety` in `RedTilde` and `RedMonitor`; the same temporary-file-then-replace code in `RedXe` and `RedPrism` | Validate before publishing; failure or cancel preserves the target; completion keyed by request identity; fault tests in isolated directories | Now |
-  | Settings | `settings-store` in `RedXe` and `RedPrism`; the settings half of `RedTilde` `settings-crashes` | The spec owns the fields; a live reload never writes the watched file; an invalid cold start backs up and installs the template; coalesced change notification applied on the UI thread; harness runs never touch the user's file | Now for the shared rules. The three policy differences are H-15 and the format is H-10 |
+  | Settings | `settings-store` in `RedXe` and `RedPrism`; the settings half of `RedTilde` `settings-crashes` | The spec owns the fields; a live reload never writes the watched file; an invalid cold start backs up and installs the template; coalesced change notification applied on the UI thread; harness runs never touch the user's file | Now, with the reload policy of D19 (H-15). `RedTilde`'s store moves to JSON with H-10 |
   | Build, restore, package | `cpp-build`, `build-redxe`, `build-redprism`, `build-redtilde`, `build-redmonitor`, `build-dxui` | Root entry points only; the six-profile matrix; never kill a running executable; discover Visual Studio; pinned vcpkg under `.build`; ARM64 is a cross-build; a real ASan probe; Release-only package with a clean-extraction smoke | Rules now, with the command table as repository facts. The table empties with E-01 to E-12 |
   | UI thread and workers | `async-threading` in `RedSalamander`; the same rule in the `AGENTS.md` of `RedTilde`, `RedMonitor`, `RedPrism` | Publish on the UI owner, cancel by identity, reject stale completion | After H-14 (one posted-payload helper) |
   | Win32 window and Direct2D | `win32-wndproc` and `direct2d-rendering` in `RedSalamander`; `win32-host` in `DxUi` | Small handlers, instance binding in `WM_NCCREATE`, DPI handling, `BeginDraw` with scoped `EndDraw` | With CV-2-14 |
@@ -331,7 +331,7 @@ Each step takes one section of the register to zero rows. One option per pull re
 - [ ] **CV-6-06** Entry points (E-01 to E-03, E-05, E-06, E-10 to E-13): every repository answers the same root commands with the same parameters and the same meaning, and the application harness switches have one vocabulary. Existing names keep working as thin wrappers for one release.
 - [ ] **CV-6-07** CI and project configuration (G-03 to G-09).
 - [ ] **CV-6-08** Code conventions (H-03 to H-13), each in the owning repository's own plan, with the shared skill's `Differences To Converge` row removed in the same change.
-- [ ] **CV-6-09** `RedHome` itself follows the same rules as every other repository: pull requests for `main`, auto-delete of head branches, a licence (B-11), and engine-run validation (G-10).
+- [ ] **CV-6-09** `RedHome` itself follows the same rules as every other repository: pull requests for `main`, auto-delete of head branches, the same MIT `LICENSE.txt` as the products (B-11, D18), and engine-run validation (G-10).
 
 ### Phase 7: sustain and close
 
@@ -381,16 +381,18 @@ The first version of this plan listed thirteen decisions. The governing rule gav
 | **D15** | `DxUi`'s API 4 line | Rename it to `maintenance/api4` and protect it against deletion and force-push (CV-0-10). Done. |
 | **D16** | `DxUi` `ej/dxui-performance-motion-impl-wip` (104 unmerged commits, no pull request) | Keep it: it is unfinished work. |
 | **D17** | Refs that tools write into the clones | Bundle and delete the 2026-11-06 backups; keep the tools' own refs (CV-0-11). Done. |
+| **D18** | Licence files (register B-11) | `LICENSE.txt` in every repository, `RedHome` included, is the same MIT text naming "RedSalamander" as the holder. The six product repositories already have that text byte for byte apart from the holder line, so only `RedPrism`'s holder changes. Each repository lists the third-party components it ships in its own `THIRD-PARTY-NOTICES.md`, as `DxUi` does: `RedSalamander`, `RedXe`, and `RedMonitor` move their lists out of `LICENSE.txt`, `RedMonitor`'s list, a copy of `RedSalamander`'s, is rewritten for what it ships, and `RedPrism` and `RedTilde` add one. `RedXe` removes `LICENSE`, which repeats its MIT text (CV-6-03, CV-6-09). |
+| **D19** | Settings reload (register H-15), with H-10's JSON through `yyjson` | One behavior in every settings store. A worker thread waits on the directory change and a stop event, coalesces, and posts one notification; parsing and applying stay on the UI thread, as in `RedXe`. A value of the wrong type or out of range takes that field's default or is clamped, and the rest applies, as in `RedPrism` and `RedTilde`. Only a file that cannot be parsed is invalid: at start it is backed up and the template installed; on a live reload the last good settings stay. Unknown members are ignored on read and kept across a save, as in `RedPrism`. `RedPrism` changes its watcher, `RedXe` its validation and unknown-member handling, and `RedTilde` moves to JSON first (CV-2-12, CV-6-08). |
 
 ### Owner choices
 
-These are the register rows marked *Choice*: two common end states are possible, and the default below follows the order in the governing rule. Whichever is picked, every repository moves to it. On 2026-11-18 the owner took every default. B-11 and H-15 have none and are still open.
+These are the register rows marked *Choice*: two common end states are possible, and the default below follows the order in the governing rule. Whichever is picked, every repository moves to it. On 2026-11-18 the owner took every default, and answered B-11 and H-15, which have none, as D18 and D19.
 
 | Register row | Default | Alternative | Decision |
 | --- | --- | --- | --- |
 | A-11 Codex `agents/openai.yaml` (was D6) | None: four of seven repositories have none | Add to every skill, if the Codex skill picker is used | Default, 2026-11-18 |
 | A-12 Tool folders that exist in one repository | Promote to a template for all when a second repository needs it, otherwise remove | Keep, with the reason recorded as "different by design" | Default, 2026-11-18 |
-| B-11 Licence file name, holder spelling, and third-party text | No default: legal text is the owner's to state | | Open: needs the owner's text |
+| B-11 Licence file name, holder spelling, and third-party text | No default: legal text is the owner's to state | | Owner, 2026-11-18 (D18) |
 | B-12 `CODEOWNERS`, `CONTRIBUTING.md`, pull request template, `.editorconfig`, `.vsconfig` | Present everywhere, from one template | Absent everywhere | Default, 2026-11-18 |
 | C-09 Minimum Windows version | Windows 11 22000.2600, declared by three repositories | Windows 10 `10.0.19041.0` everywhere, as `RedXe` supports today | Default, 2026-11-18 |
 | C-13 ASan strategy | Sanitized dependency trees with STL annotations left on, as `RedPrism` does: it instruments the dependencies and matches `DxUi`'s default. Confirm it first in `RedXe`, which has three dependencies | STL annotations disabled in the application and in the `DxUi` it builds, as `RedSalamander` does | Default, 2026-11-18 |
@@ -402,7 +404,7 @@ These are the register rows marked *Choice*: two common end states are possible,
 | H-07 Satellite layout and loader | `Lang\<Module>-<culture>.dll`, used by two repositories | `Languages\<tag>\<Product>.resources.dll` | Default, 2026-11-18 |
 | H-10 Settings format | JSON through `yyjson`, used by four repositories | Line-based text everywhere | Default, 2026-11-18 |
 | H-14 Posted-payload helper | `DxUi`'s `PostedPayload.h`, for the reason given for H-05 | The helper `RedSalamander` and `RedMonitor` share | Default, 2026-11-18 |
-| H-15 Settings reload behavior | No default: the three stores disagree in different directions. Decide together with H-10 | | Open: decide with H-10 |
+| H-15 Settings reload behavior | No default: the three stores disagree in different directions. Decide together with H-10 | | Owner, 2026-11-18 (D19) |
 
 ## Validation
 
