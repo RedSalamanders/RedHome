@@ -1,6 +1,6 @@
 ---
 name: performance-resources
-description: Design and validate low-overhead CPU, memory, GPU-submission, bounded-queue, and event-blocked idle behavior across RedSalamanders projects.
+description: Design and validate low-overhead CPU, memory, GPU-submission, bounded-queue, and event-blocked idle behavior across RedSalamanders projects. Use when changing a render, composition, logging, plugin, or background-worker path, adding a cache or queue, handling idle, hidden, or occluded states, or measuring a change against a paired baseline.
 ---
 
 # Performance & Resource Discipline

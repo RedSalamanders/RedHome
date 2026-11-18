@@ -1,6 +1,6 @@
 ---
 name: localization
-description: Author and load UTF-8 Win32 STRINGTABLE and MENU resources with positional std::format placeholders and UI Automation accessible names.
+description: Author and load UTF-8 Win32 STRINGTABLE and MENU resources with positional std::format placeholders and UI Automation accessible names. Use when adding or changing user-visible text, menus, resource strings or their placeholders, translations, or accessible names in any repository with a Win32 UI.
 ---
 
 # Localization & Win32 Resource Strings

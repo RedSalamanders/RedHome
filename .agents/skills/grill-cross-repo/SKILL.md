@@ -1,6 +1,6 @@
 ---
 name: grill-cross-repo
-description: Stress-test a proposed cross-repository feature, shared DxUi control, or policy change against the RedHome wiki and owning sibling domain specs.
+description: Stress-test a proposed cross-repository feature, shared DxUi control, or policy change against the RedHome wiki and owning sibling domain specs. Use when a request spans several repositories, before writing its specs or code, to settle ownership, boundary invariants, and open product decisions with the user.
 ---
 
 # Grill Cross-Repo

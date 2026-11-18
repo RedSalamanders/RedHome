@@ -1,6 +1,6 @@
 ---
 name: cross-repo-pins
-description: Inspect sibling checkout health and coordinate DxUi, RedMonitor, and shared .ci-engine pin updates across producer and consumer repositories.
+description: Inspect sibling checkout health and coordinate DxUi, RedMonitor, and shared .ci-engine pin updates across producer and consumer repositories. Use when starting a cross-repository session, when a .ci-engine, DxUi.lock.json, or RedMonitor.lock.json pin looks wrong, when planning or applying a pin wave, or when Dependabot bumps a shared workflow caller.
 ---
 
 # Cross-Repo Pins & Workspace Health

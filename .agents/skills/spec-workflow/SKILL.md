@@ -1,6 +1,6 @@
 ---
 name: spec-workflow
-description: Create, update, or reconcile normative domain specifications and sequence single-repo or cross-repo WIP-to-Done plans across RedSalamanders projects.
+description: Create, update, or reconcile normative domain specifications and sequence single-repo or cross-repo WIP-to-Done plans across RedSalamanders projects. Use when behavior, ownership, or required validation changes, when code and a spec disagree, or when starting, updating, or closing a Specs/Plans/WIP plan.
 ---
 
 # Specification & WIP Plan Workflow

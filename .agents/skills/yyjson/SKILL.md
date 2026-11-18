@@ -1,6 +1,6 @@
 ---
 name: yyjson
-description: Parse, validate, and serialize JSON/JSON5 safely with yyjson across RedSalamanders C++ projects without lifetime, string-borrowing, or leak bugs.
+description: Parse, validate, and serialize JSON/JSON5 safely with yyjson across RedSalamanders C++ projects without lifetime, string-borrowing, or leak bugs. Use when reading or writing JSON with yyjson, building a mutable document, or reviewing yyjson code for document lifetime, borrowed strings, or unchecked allocations.
 ---
 
 # Safe `yyjson` Usage

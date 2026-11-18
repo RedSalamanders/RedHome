@@ -1,6 +1,6 @@
 ---
 name: wil-raii
-description: Manage Windows handles, GDI/Direct2D scopes, and COM interfaces with WIL RAII across all RedSalamanders C++ repositories.
+description: Manage Windows handles, GDI/Direct2D scopes, and COM interfaces with WIL RAII across all RedSalamanders C++ repositories. Use when creating, owning, or releasing a COM pointer, HWND, icon, bitmap, DC, font, brush, pen, menu, or other Windows handle, or when pairing begin and end calls such as Direct2D BeginDraw and EndDraw.
 ---
 
 # WIL RAII Resource Management
