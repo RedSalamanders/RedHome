@@ -43,6 +43,10 @@ pwsh -NoProfile -File .\Tools\Get-WorkspaceStatus.ps1 -Hygiene
 # The same, plus the harness report: hashes of the files every repository must share, the formatter each
 # format script uses, and every root command with its parameters
 pwsh -NoProfile -File .\Tools\Get-WorkspaceStatus.ps1 -Harness
+
+# Report how the shared skills would be linked into the machine-wide skill folders of Codex, Copilot, and
+# Antigravity, and any skill names that collide with them; add -Apply to create the links
+pwsh -NoProfile -File .\Tools\Install-SharedSkills.ps1
 ```
 
 The `Validate RedHome` workflow runs both validations on every pull request, on `main`, and weekly, with the sibling repositories checked out beside `RedHome`.
@@ -55,7 +59,17 @@ The `Validate RedHome` workflow runs both validations on every pull request, on 
 /plugin install redhome --marketplace RedSalamanders/RedHome
 ```
 
-`.claude/settings.json` enables the plugin for this repository, and the product repositories opt in with the same file. Codex reads the same skills directly from `.agents/skills/` when started in `RedHome`.
+`.claude/settings.json` enables the plugin for this repository, and the product repositories opt in with the same file.
+
+## Codex, GitHub Copilot, And Antigravity
+
+These harnesses read the same skills directly from `.agents/skills/` when started in `RedHome`. For every other repository, link them once per machine into their machine-wide skill folders, `~/.agents/skills/` (Codex and Copilot) and `~/.gemini/config/skills/` (Antigravity):
+
+```powershell
+pwsh -NoProfile -File .\Tools\Install-SharedSkills.ps1 -Apply
+```
+
+The script reports and changes nothing without `-Apply`. It creates directory junctions to the main `RedHome` checkout and copies nothing, replaces only its own links, and lists any skill name that collides with a shared one. `-Remove -Apply` takes its links out again. Details are in [Working-From-RedHome.md](wiki/Working-From-RedHome.md).
 
 ## Plans
 
