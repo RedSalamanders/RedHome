@@ -143,8 +143,8 @@ Each row is also the `Differences To Converge` entry of a shared skill, which ca
 
 | Id | Option | Today | Target | Changes | In | Choice |
 | --- | --- | --- | --- | --- | --- | --- |
-| H-01 | `DxUi` API revision and commit | API 5 in Ti (`21fae0dc`); API 4 in Xe, Pr, Mo (`f2e328a0`) and RS (`7fb2ab71`) | One revision and commit | RS, Xe, Pr, Mo | 4 | |
-| H-02 | Unexpected-exception and `std::bad_alloc` policy | API 5 policy in Dx and Ti; four different API 4 rules | The API 5 policy | RS, Xe, Pr, Mo with H-01 | 4 | |
+| H-01 | `DxUi` API revision and commit | API 5 in Ti (`21fae0dc`); API 4 in Xe, Pr, Mo (`f2e328a0`) and RS (`7fb2ab71`) | One revision and commit, with the API 6 adoption (plan D20) | RS, Xe, Pr, Mo | API 6 | |
+| H-02 | Unexpected-exception and `std::bad_alloc` policy | API 5 policy in Dx and Ti; four different API 4 rules | The policy of the revision every consumer adopts, API 6 (plan D20) | RS, Xe, Pr, Mo with H-01 | API 6 | |
 | H-03 | COM smart pointer | `wil::com_ptr<T>` in RS; `wil::com_ptr_nothrow<T>` in `HRESULT` code elsewhere | `wil::com_ptr_nothrow<T>` | RS | 6 | |
 | H-04 | WIL include guard | RS guards only `<wil/resource.h>` | One block that also wraps `<wil/com.h>` | RS | 6 | |
 | H-05 | Logging helpers | `Debug::` in RS and Mo; `DxUi::Debug` in Dx; none in Xe, Pr, Ti | One family with the same names | Three or four repositories | 6 | Default |

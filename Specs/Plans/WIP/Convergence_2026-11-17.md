@@ -52,7 +52,7 @@ The owner's rule, stated on 2026-11-17: **at the end, all projects are as close 
 4. **Parity gate.** No step removes guidance or tooling from a repository until the replacement is reachable from that repository, in every harness the owner uses, and that reachability has been checked.
 5. **No behavior change when moving identical code.** Byte-identical files move first, behind shims that keep script names and parameters stable. Forks are reconciled only after tests pin the behavior of every variant.
 6. **Read-only first.** Diagnostics never reset, clean, or check out a sibling. Destructive git operations run on the Windows host, by the owner, after unpushed work is archived.
-7. **Truthful status.** A merged change is `CI_PENDING` until `ci-state` records `succeeded`; scoped or cross-compile-only results are reported as such.
+7. **Truthful status.** A merged change is `CI_PENDING` until `ci-state` records `succeeded`; scoped or cross-compile-only results are reported as such. Under D21 a change that compiled and whose tests failed or did not run is reported as "compiled; tests deferred (D21)", never as qualified.
 8. **Convergence moves one way.** A step may only reduce the number of register rows or move a row closer to its target.
 9. **A style or flag change travels alone.** A tree-wide reformat or a compiler or linker setting never shares a pull request with a functional change, and a behavioral setting changes one at a time, so a regression has one possible cause and a small revert.
 10. **Same is checked, not asserted.** A row leaves the register when a command shows the repositories agree (a file hash, a tool version, a parameter list), not when a pull request says so. CV-1-09 provides that command.
@@ -289,10 +289,10 @@ Remaining steps:
 - [x] **CV-4-03** Close the 20 open notice pull requests once CV-4-01 is merged in their repository (runbook step 7). They must not be merged: each bumps one caller only. Observed at the review: none is open and their branches are deleted.
 - [ ] **CV-4-04** One engine commit. Target: engine `main` at the time of the wave (`a094b2e` today, which `RedSalamander` already runs). Cadence: one wave a week, or immediately when a repository needs a fix, always all repositories.
 - [ ] **CV-4-05** Run the wave, oldest pin first: `DxUi` (`766fd7e`), `RedMonitor` (`d6a33c5`), then `RedXe`, `RedPrism`, and `RedTilde` (`07bc6f1`). For each: `Update-ProjectPin.ps1` from a clean engine checkout at the target, sync `<repo>/.ci-engine`, add one `Changes/` fragment, pass the compiler-free checks, merge, and wait for `ci-state` to record `succeeded` before starting the next repository. This needs PowerShell and a Windows runner and was not attempted from the authoring environment.
-- [ ] **CV-4-06** One `DxUi` revision and commit in every consumer (register H-01, H-02): `RedSalamander`, `RedXe`, `RedPrism`, and `RedMonitor` move to API 5, where `RedTilde` already is. Product work, owned by each repository's plan; this plan tracks it because it removes the largest block of code-convention differences.
+- **CV-4-06** Dropped on 2026-11-18 (D20). It was: one `DxUi` revision and commit in every consumer (register H-01, H-02), with `RedSalamander`, `RedXe`, `RedPrism`, and `RedMonitor` moving to API 5, where `RedTilde` already is. API 6 is coming, so the consumers stay on their current revision under this plan; one revision in every consumer comes with the API 6 adoption, which each consumer's own plan owns.
 - [ ] **CV-4-07** One vcpkg baseline, tool pin, triplet set, and restore model (register C-06, C-07, C-14), moved together like the engine pin.
 
-Gate for the phase: `Get-WorkspaceStatus.ps1` shows one engine SHA and `OK` for every `.ci-engine`, and one `DxUi` commit in every lock.
+Gate for the phase: `Get-WorkspaceStatus.ps1` shows one engine SHA and `OK` for every `.ci-engine`. One `DxUi` commit in every lock waits for API 6 (D20).
 
 ### Phase 5: tooling (each shared script exists once)
 
@@ -386,6 +386,8 @@ The first version of this plan listed thirteen decisions. The governing rule gav
 | **D17** | Refs that tools write into the clones | Bundle and delete the 2026-11-06 backups; keep the tools' own refs (CV-0-11). Done. |
 | **D18** | Licence files (register B-11) | `LICENSE.txt` in every repository, `RedHome` included, is the same MIT text naming "RedSalamander" as the holder. The six product repositories already have that text byte for byte apart from the holder line, so only `RedPrism`'s holder changes. Each repository lists the third-party components it ships in its own `THIRD-PARTY-NOTICES.md`, as `DxUi` does: `RedSalamander`, `RedXe`, and `RedMonitor` move their lists out of `LICENSE.txt`, `RedMonitor`'s list, a copy of `RedSalamander`'s, is rewritten for what it ships, and `RedPrism` and `RedTilde` add one. `RedXe` removes `LICENSE`, which repeats its MIT text (CV-6-03, CV-6-09). |
 | **D19** | Settings reload (register H-15), with H-10's JSON through `yyjson` | One behavior in every settings store. A worker thread waits on the directory change and a stop event, coalesces, and posts one notification; parsing and applying stay on the UI thread, as in `RedXe`. A value of the wrong type or out of range takes that field's default or is clamped, and the rest applies, as in `RedPrism` and `RedTilde`. Only a file that cannot be parsed is invalid: at start it is backed up and the template installed; on a live reload the last good settings stay. Unknown members are ignored on read and kept across a save, as in `RedPrism`. `RedPrism` changes its watcher, `RedXe` its validation and unknown-member handling, and `RedTilde` moves to JSON first (CV-2-12, CV-6-08). |
+| **D20** | `DxUi` API revision of the consumers (register H-01, H-02) | Out of scope for this plan, decided by the owner on 2026-11-18: "API 5 is out of scope API 6 is coming". The consumers do not move to API 5. CV-4-06 is dropped, and H-01 and H-02 wait for the API 6 adoption, which each consumer's own plan owns. The closeout no longer waits for one `DxUi` revision. |
+| **D21** | Merge gate until one global test pass | Decided by the owner on 2026-11-18: "even without test comit and merge if compilation pass / tests will be more global and will come after". A change merges when it compiles: its pull request checks pass, and for a native input every build job of its qualification, or the local profile builds the step names, succeeds with zero warnings. Tests are not a merge gate. A test that fails or is not run is recorded as "tests deferred (D21)" and runs later in one global test pass, which is its own initiative. This replaces every test proof in the steps and in [Validation](#validation) until that pass, and lifts the limits that waited for a green `ci-state`: `RedSalamander`'s prose-only rule (CV-0-07) and CV-4-02. |
 
 ### Owner choices
 
@@ -411,13 +413,15 @@ These are the register rows marked *Choice*: two common end states are possible,
 
 ## Validation
 
+Until the global test pass of D21, "compiles" replaces every test proof below: test results are recorded as they are and do not block a merge.
+
 | Phase | Proof |
 | --- | --- |
 | 0 | `Get-WorkspaceStatus.ps1 -Hygiene` shows zero stale refs, merged branches, local-only branches, and extra worktrees |
 | 1 | Both jobs of the `Validate RedHome` workflow pass |
 | 2 | The fold gate described under Phase 2; `validate.ps1 -CheckSiblings` |
 | 3 | The CV-3-05 acceptance record |
-| 4 | One engine SHA and one `DxUi` commit in `Get-WorkspaceStatus.ps1`; `ci-state` `succeeded` in every repository after its bump |
+| 4 | One engine SHA in `Get-WorkspaceStatus.ps1`; every repository compiles after its bump (D21). One `DxUi` commit waits for API 6 (D20) |
 | 5 | Same `Test-Changes.ps1 -Mode PrePush` selection and result before and after each move; engine tests cover the moved tool |
 | 6 | The register section for the step has no rows left; the command map in [Working-From-RedHome.md](../../../wiki/Working-From-RedHome.md) collapses to one row |
 | 6, build | Part 1: identical compiler and linker settings before and after. Part 2: six profiles with zero warnings, x64 tests in three configurations, `ci-state` `succeeded`. Then one profile in the CV-1-09 report |
@@ -437,4 +441,4 @@ These are the register rows marked *Choice*: two common end states are possible,
 
 ## Closeout criteria
 
-The plan closes when the register holds only rows that stay different by design; when a session started in `RedHome` or in any product repository reaches the same shared skills; when each shared script, module, and policy file has one owner and thin consumers; when every repository runs one engine commit and one `DxUi` revision; and when the lasting rules from this plan live in `AGENTS.md`, `wiki/`, the shared skills, or the owning repository's `Specs/`.
+The plan closes when the register holds only rows that stay different by design or wait for API 6 (D20); when a session started in `RedHome` or in any product repository reaches the same shared skills; when each shared script, module, and policy file has one owner and thin consumers; when every repository runs one engine commit; when every test deferred under D21 is listed for the global test pass, which closing does not wait for; and when the lasting rules from this plan live in `AGENTS.md`, `wiki/`, the shared skills, or the owning repository's `Specs/`.
