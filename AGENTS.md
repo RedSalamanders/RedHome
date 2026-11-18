@@ -41,5 +41,6 @@ Each shared skill is one rule set for every repository. Its `references/` folder
 - [d3d11-win32-host](.agents/skills/d3d11-win32-host/SKILL.md) — Win32 window rules for every host, then D3D11 device selection, flip swap chains, occlusion, WARP, and device loss for idle-loop and `WM_PAINT` hosts (`RedXe`, `RedPrism`, `RedMonitor`, `DxUi` `ControlHost`).
 - [test-evidence](.agents/skills/test-evidence/SKILL.md) — Behavioral tests with independent expectations, hidden non-activating captures, shared-process suite isolation, source-bound receipts, and the performance-evidence workflow.
 - [crash-dumps](.agents/skills/crash-dumps/SKILL.md) — Local minidumps and a pending marker from a fault path that allocates nothing, the next-start prompt, retention, and isolated child-process crash probes.
+- [file-io-safety](.agents/skills/file-io-safety/SKILL.md) — Strict streaming validation before publishing, owned same-directory temporaries with flush and atomic replace, external-identity checks, and completion by request identity.
 
 Validate `RedHome` edits with `pwsh -NoProfile -File .\validate.ps1 -CheckSiblings`.
