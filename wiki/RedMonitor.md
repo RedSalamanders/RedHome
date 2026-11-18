@@ -15,7 +15,7 @@ Independent Windows-native diagnostics viewer and single-header TraceLogging pro
 
 ## Repository-Specific Rules & Skills
 
-- **Skills (`../../RedMonitor/.agents/skills/`)**: Repo-specific skills `build-redmonitor`, `transport-client`, `viewer-lifetime`, `file-safety`, `consumer-adoption`, `test-harness` (shared C++/WIL, `spec-workflow`, `test-evidence`, `crash-dumps`, `file-io-safety`, `app-settings`, and `native-build` skills live in `RedHome/.agents/skills/`).
+- **Skills (`../../RedMonitor/.agents/skills/`)**: Repo-specific skills `transport-client`, `viewer-lifetime`, `consumer-adoption` (shared C++/WIL, `spec-workflow`, `test-evidence`, `crash-dumps`, `file-io-safety`, `app-settings`, and `native-build` skills live in `RedHome/.agents/skills/`).
 - **Compiler Warnings**: Compiles with `/W4 /WX /permissive- /sdl` across all six `x64`/`ARM64` `Debug`/`Release`/`ASan Debug` profiles, as declared by [Directory.Build.props](../../RedMonitor/Directory.Build.props). This is the current exception to the five other repositories' `/Wall` policy.
 - **Live ETW Gate**: `test.ps1 -IncludeLiveEtw` exercises the real ETW transport roundtrip and treats permission denial as a test failure rather than an empty pass.
 
