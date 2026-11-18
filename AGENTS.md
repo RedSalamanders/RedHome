@@ -43,5 +43,6 @@ Each shared skill is one rule set for every repository. Its `references/` folder
 - [crash-dumps](.agents/skills/crash-dumps/SKILL.md) — Local minidumps and a pending marker from a fault path that allocates nothing, the next-start prompt, retention, and isolated child-process crash probes.
 - [file-io-safety](.agents/skills/file-io-safety/SKILL.md) — Strict streaming validation before publishing, owned same-directory temporaries with flush and atomic replace, external-identity checks, and completion by request identity.
 - [app-settings](.agents/skills/app-settings/SKILL.md) — The settings contract owns the fields, field-level fallback, cold recovery from the template, atomic saves, and the coalesced watcher that posts live reloads to the UI thread (plan D19).
+- [native-build](.agents/skills/native-build/SKILL.md) — Root build, restore, and package entry points, the six-profile matrix, pinned dependencies under `.build`, a running-executable preflight that never kills, ARM64 cross-builds, and Release-only packages with a clean-extraction smoke.
 
 Validate `RedHome` edits with `pwsh -NoProfile -File .\validate.ps1 -CheckSiblings`.
