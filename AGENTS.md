@@ -38,6 +38,6 @@ Each shared skill is one rule set for every repository. Its `references/` folder
 - [yyjson](.agents/skills/yyjson/SKILL.md) — Safe `yyjson` document lifetimes, mutable string copying (`*_strcpy`/`*_strncpy`), and validation.
 - [localization](.agents/skills/localization/SKILL.md) — UTF-8 `.rc` `STRINGTABLE`/`MENU` resources, positional `{0}` placeholders, and UIA accessible names.
 - [performance-resources](.agents/skills/performance-resources/SKILL.md) — Zero steady-state hot-path allocations, bounded storage, event-blocked idle states, and paired baselines.
-- [d3d11-win32-host](.agents/skills/d3d11-win32-host/SKILL.md) — Real-time Win32 windowing, per-monitor D3D11 device selection, flip swap chains, occlusion, WARP, and device loss.
+- [d3d11-win32-host](.agents/skills/d3d11-win32-host/SKILL.md) — Win32 window rules for every host, then D3D11 device selection, flip swap chains, occlusion, WARP, and device loss for idle-loop and `WM_PAINT` hosts (`RedXe`, `RedPrism`, `RedMonitor`, `DxUi` `ControlHost`).
 
 Validate `RedHome` edits with `pwsh -NoProfile -File .\validate.ps1 -CheckSiblings`.
