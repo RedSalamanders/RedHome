@@ -37,11 +37,11 @@ Aligning these entry points is a step of the convergence plan; until it lands, u
 
 ## Branches, Pull Requests, And Changelog Folds
 
-- The default branch is `main` everywhere, and it is the only long-lived branch. `RedSalamander`'s old `master` (the private repository's history) is gone from GitHub and from the clone; its code is on `main`, and its history is archived in `D:\Archive\RedSalamanders-20261117\RedSalamander-local-branches.bundle`.
+- The default branch is `main` everywhere, and it is the only long-lived development branch. A supported older line may keep one protected `maintenance/<line>` branch, named in that repository's `AGENTS.md`; fixes land on `main` first. `DxUi` keeps its API 4 line this way, today still under the name `ej/api4-maintenance-4cdf1ce5`; `RedSalamander`'s `DxUi` lock pins a commit that only that branch holds, so never delete it. `RedSalamander`'s old `master` (the private repository's history) is gone from GitHub and from the clone; its code is on `main`, and its history is archived in `D:\Archive\RedSalamanders-20261117\RedSalamander-local-branches.bundle`.
 - One focused branch per change. The prevailing name is `ej/<topic>-<yyyymmdd>`; `RedMonitor` requires the `ej/` prefix.
 - Every change adds one dated fragment under `Changes/` and never edits `CHANGELOG.md`. After the merge, `Tools/Submit-ChangelogFold.ps1` opens its own `changelog/fold-*` pull request.
 - Pull requests run compiler-free checks only. Native qualification starts on `main` after five continuous quiet minutes, so a merged change is `CI_PENDING` until the repository's `ci-state` branch records `succeeded`.
-- When a pull request merges, delete its head branch locally and on the remote, including `changelog/fold-*` branches.
+- When a pull request merges, GitHub deletes its head branch (automatic deletion is on in every repository); delete the local branch too, including `changelog/fold-*` branches.
 - `RedHome` itself has no `Changes/` workflow; its gate is `validate.ps1` locally and the `Validate RedHome` workflow, which also checks out every sibling and runs `validate.ps1 -CheckSiblings` on pull requests, on `main`, and weekly.
 
 ## Worktrees
@@ -55,9 +55,12 @@ Aligning these entry points is a step of the convergence plan; until it lands, u
 
 | Harness | Loads at session start in `RedHome` | Shared skills |
 | --- | --- | --- |
-| Codex | `AGENTS.md` | Discovered natively from `.agents/skills/` |
+| Codex | `AGENTS.md` | Discovered natively from `.agents/skills/`, which Codex reads in every folder from the working directory up to the repository root, and from `~/.agents/skills/` |
 | Claude Code | `CLAUDE.md`, which points to `AGENTS.md` | Loaded natively as `redhome:<skill>` through the `redhome` plugin that `.claude/settings.json` enables (Claude Code does not read `.agents/skills/` itself). The `AGENTS.md` skill index remains the fallback |
-| GitHub Copilot | `.github/copilot-instructions.md`, which points to `AGENTS.md` | Reached through the `AGENTS.md` skill index |
+| GitHub Copilot | `.github/copilot-instructions.md`, which points to `AGENTS.md` | Discovered natively from `.agents/skills/` (Copilot also reads `.github/skills/` and `.claude/skills/`) and from `~/.agents/skills/` or `~/.copilot/skills/` |
+| Antigravity | To be checked: Google's skills codelab does not say whether Antigravity reads `AGENTS.md` | Discovered natively from `.agents/skills/` at the workspace root, and from a global folder whose path differs between Antigravity builds |
+
+In a product repository, Codex, Copilot, and Antigravity see only that repository's own skills, because the shared ones live in `RedHome`. The convergence plan adds one per-machine install that links the `RedHome` skills into their machine-wide folders (CV-3-06); until then, open the session in `RedHome`, or clone `RedHome` beside the repository and point the agent at `../RedHome/AGENTS.md`.
 
 `RedHome` is a Claude Code plugin marketplace (`.claude-plugin/marketplace.json`, marketplace `redsalamanders`, plugin `redhome`) whose plugin root is the repository, so the installed copy carries the skills and this wiki. A repository opts in with the same `.claude/settings.json` as `RedHome`; a single machine can also install it once for every repository with `/plugin install redhome --marketplace RedSalamanders/RedHome`. While editing skills locally, start Claude Code with `--plugin-dir .` to load the working tree instead of the installed copy.
 

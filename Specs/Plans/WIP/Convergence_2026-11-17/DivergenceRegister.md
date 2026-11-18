@@ -15,7 +15,7 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists ever
 | Id | Option | Today | Target | Changes | In | Choice |
 | --- | --- | --- | --- | --- | --- | --- |
 | A-01 | `CLAUDE.md` pointer | Converged: one blob in all six since step 1 was merged. Before: three texts in RS, Xe, Mo and no file in Pr, Ti, Dx | One identical file | None | Merged | |
-| A-02 | Claude Code skill discovery | Converged: one `.claude/settings.json` blob in all six since step 1, and the same file in Home; the marketplace it names is on `RedHome` `main` since #2 (2026-11-17). Acceptance per harness is plan step CV-3-05 | `.claude/settings.json` enabling the `redhome` plugin, identical everywhere | None | Merged | |
+| A-02 | Skill discovery in every harness (D2) | Claude Code: converged; one `.claude/settings.json` blob in all six since step 1, the same file in Home, and the marketplace on `RedHome` `main` since #2. Codex, Antigravity, Copilot: they read `.agents/skills/` natively, so they find the shared skills inside Home only; in a product repository they find only that repository's local skills | Every harness finds the shared skills in every repository from the one Home folder: the plugin for Claude Code, one per-machine install for the others (plan CV-3-06) | Home | 3 | |
 | A-03 | `.github/copilot-instructions.md` | RS, Xe, Mo: three texts. Pr, Ti, Dx: absent | One identical file | All six | 6 | |
 | A-04 | Prose exclusion of `.github/copilot-instructions.md` | Not in any `.ci/project.json` `exclude`, so adding or editing it changes native inputs (`CLAUDE.md`, `.claude/**`, `.agents/**` are excluded) | Excluded by the engine template | Engine, then all six | 6 | |
 | A-05 | Shared-skill pointer sentence | Identical text in all six; placement differs (bullet in RS, no `Skills` heading in Mo) | Directly under `## Skills` | RS, Mo | 6 | |
@@ -133,7 +133,8 @@ The plan's inventory table lists the copies. Each row converges by giving the to
 | G-08 | Tests layout | `<Suite>Tests/<Suite>Tests.vcxproj` (RS, Xe, Pr); flat `Tooling.Tests.*.ps1` (Ti, Mo); `DxUi.*Tests.vcxproj` (Dx) | One layout | Three repositories | 6 | Yes |
 | G-09 | Winget manifests in the repository | `Installer/` in RS and Xe only | Generated from `.ci/project.json` everywhere | RS, Xe | 6 | |
 | G-10 | `RedHome` CI | Its own `validate.yml`, outside the engine | Engine-run once the engine has a documentation kind | Home, engine | 5 | |
-| G-11 | "Automatically delete head branches" | On in Dx, RS, Xe, Pr, Ti. Off in Home, Mo, and the engine repository; Mo still has its merged step 1 branch | On everywhere | Home, Mo, engine | 0 | |
+| G-11 | "Automatically delete head branches" | Converged on 2026-11-18: on in all eight repositories, and the merged head branches left on GitHub are deleted | On everywhere | None | Done | |
+| G-13 | Long-lived branches (D10) | `main` everywhere, plus one maintenance line in Dx: `ej/api4-maintenance-4cdf1ce5`, named like a feature branch, unprotected, and the only branch holding `7fb2ab71`, which RS's `DxUi` lock pins | `main`, plus at most one protected `maintenance/<line>` branch per supported older line, named in that repository's `AGENTS.md` | Dx | 0 | |
 | G-12 | Prose paths in `.ci/project.json` `exclude` | `Update-ProjectPin.ps1` writes `.github/skills/**/*.md` into every list, a folder only RS uses and leaves with A-09. No list names `.github/copilot-instructions.md` (A-04), `.codex/**`, or `.github/agents/**`, so editing those counts as a native input change | One template list that covers every harness path in use | Engine, then all six | 6 | |
 
 ## H. Code conventions
