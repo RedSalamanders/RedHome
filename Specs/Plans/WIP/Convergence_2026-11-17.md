@@ -334,7 +334,10 @@ Each step takes one section of the register to zero rows. One option per pull re
 - [ ] **CV-6-06** Entry points (E-01 to E-03, E-05, E-06, E-10 to E-13): every repository answers the same root commands with the same parameters and the same meaning, and the application harness switches have one vocabulary. Existing names keep working as thin wrappers for one release.
 - [ ] **CV-6-07** CI and project configuration (G-03 to G-09).
 - [ ] **CV-6-08** Code conventions (H-03 to H-13), each in the owning repository's own plan, with the shared skill's `Differences To Converge` row removed in the same change.
-- [ ] **CV-6-09** `RedHome` itself follows the same rules as every other repository: pull requests for `main`, auto-delete of head branches, the same MIT `LICENSE.txt` as the products (B-11, D18), and engine-run validation (G-10).
+- [ ] **CV-6-09** `RedHome` itself follows the same rules as every other repository: pull requests for `main`, auto-delete of head branches, the same MIT `LICENSE.txt` as the products (B-11, D18), and engine-run validation (G-10). Three of the four are done on 2026-11-18; engine-run validation stays open until CV-5-05 gives the engine a documentation kind.
+  - **Licence.** `LICENSE.txt` is copied byte for byte from `DxUi`, so it is the same blob as `DxUi`'s and `RedTilde`'s (`e8f7f5b8`).
+  - **Pull requests for `main`.** The ruleset `RedHome` already had (id `27420787`, "Protect main: PRs required", made on 2026-11-17) was reshaped to the one that `RedSalamander`, `RedXe`, and `RedTilde` carry. It is now named "Main", targets `~DEFAULT_BRANCH`, and lets organisation admins bypass only through a pull request. It keeps blocking deletion and force-push, and it requires a pull request with no required approval. It now also requires the two `Validate RedHome` jobs, in place of the engine checks those repositories require. Compared field by field through the GitHub API, it equals those three rulesets apart from the check names. The products differ among themselves in three places, recorded as register G-14.
+  - **Auto-delete of head branches.** On since CV-0-03.
 
 ### Phase 7: sustain and close
 
