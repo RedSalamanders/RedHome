@@ -37,7 +37,7 @@ Aligning these entry points is a step of the convergence plan; until it lands, u
 
 ## Branches, Pull Requests, And Changelog Folds
 
-- The default branch is `main` everywhere. `RedSalamander` also has a `master` branch that is not an ancestor of `main`; do not base or target work on it unless the owner asks.
+- The default branch is `main` everywhere, and it is the only long-lived branch. `RedSalamander`'s old `master` (the private repository's history) is gone from GitHub and from the clone; its code is on `main`, and its history is archived in `D:\Archive\RedSalamanders-20261117\RedSalamander-local-branches.bundle`.
 - One focused branch per change. The prevailing name is `ej/<topic>-<yyyymmdd>`; `RedMonitor` requires the `ej/` prefix.
 - Every change adds one dated fragment under `Changes/` and never edits `CHANGELOG.md`. After the merge, `Tools/Submit-ChangelogFold.ps1` opens its own `changelog/fold-*` pull request.
 - Pull requests run compiler-free checks only. Native qualification starts on `main` after five continuous quiet minutes, so a merged change is `CI_PENDING` until the repository's `ci-state` branch records `succeeded`.
