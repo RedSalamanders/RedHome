@@ -6,6 +6,8 @@ Each step has the same shape: look, archive, delete, check. Stop at the first su
 
 **State at the review of 2026-11-17 (21:45 CET), read from the clones on the Windows host.** Steps 1, 2, 5, and 7 show as done: the engine clone is at `a094b2e`, every clone has only live remote-tracking refs and no extra worktree, and no engine notice is open. The local branches of step 6 are gone except `RedSalamander` `master`. The archive of step 4 was not found: `D:\Archive` does not exist. Before anything else, either record where the bundles are, or recover the experiment branches. Their commits are still in the object stores: `git fsck --no-reflogs` reports 23 dangling branch tips in `RedTilde`, 22 of them committed between 2026-10-24 and 2026-10-29, and 24 in `DxUi`, 8 of them between 2026-10-25 and 2026-10-27. They stay only until git prunes them, and they are already older than git's two-week grace period, so do not run `git gc` in those clones first. To keep them, give each tip a ref (`git update-ref refs/rescue/<n> <sha>`) and then bundle those refs as in step 4. Step 3 is open for three repositories, not two: the engine repository also has automatic deletion off. `RedSalamander` `master` has since been through steps 4 and 6 (CV-0-06): its bundle is the only file in `D:\Archive\RedSalamanders-20261117`, and the branch is deleted.
 
+**State on 2026-11-18, after the owner accepted D10.** Steps 2, 3, and 6 are done: every clone is pruned to the branches GitHub has, automatic deletion is on in all eight repositories (step 3 now also covers `RedSalamanders/.github`), and the merged head branches left on GitHub (`RedHome` #2 and #3, `RedMonitor` #63) are deleted. Step 4 is half done: instead of `refs/rescue/<n>`, every unreferenced commit in `RedTilde` (28) and `DxUi` (24) has a local ref under `refs/archive/unreferenced-20261118/`, so nothing can be pruned, and no bundle is written yet. The owner then authorized `$archive` below as the one archive folder (plan D14), and step 4 was completed for `RedTilde` and `DxUi` on 2026-11-18 (plan CV-0-04); the commands are kept for the record. To bundle pinned commits with `git bundle create <file> --glob=refs/archive/unreferenced-20261118`, verify it, then delete the refs with `git for-each-ref --format='delete %(refname)' refs/archive/unreferenced-20261118 | git update-ref --stdin`.
+
 ```powershell
 $repos = [ordered]@{
     RedHome       = 'D:\RedHome'
@@ -58,11 +60,12 @@ Expected afterwards (GitHub on 2026-11-17, including `main` and `ci-state`): `Re
 
 ## 3. Turn on automatic deletion of head branches (CV-0-03)
 
-It is on in five repositories and off in two. This is a repository setting, not a deletion.
+It was on in five repositories and off in three; it is on in all eight since 2026-11-18. This is a repository setting, not a deletion.
 
 ```powershell
 gh api -X PATCH repos/RedSalamanders/RedHome    -F delete_branch_on_merge=true --jq .delete_branch_on_merge
 gh api -X PATCH repos/RedSalamanders/RedMonitor -F delete_branch_on_merge=true --jq .delete_branch_on_merge
+gh api -X PATCH repos/RedSalamanders/.github    -F delete_branch_on_merge=true --jq .delete_branch_on_merge
 ```
 
 ## 4. Archive every local branch that GitHub does not have (CV-0-04, CV-0-06)
@@ -144,5 +147,5 @@ foreach ($name in 'RedXe', 'RedPrism', 'RedTilde', 'RedMonitor') {
 
 ## 8. Left for a decision, not deleted
 
-- `DxUi` has two unmerged branches on GitHub: `ej/api4-maintenance-4cdf1ce5` and `ej/dxui-performance-motion-impl-wip`. They look like work in progress. Merge, archive as a tag, or delete them by hand.
+- `DxUi` has two unmerged branches on GitHub. The API 4 line, renamed `maintenance/api4` on 2026-11-18 and protected against deletion and force-push (plan D15), must never be deleted: `RedSalamander`'s `DxUi` lock pins a commit only it holds. `ej/dxui-performance-motion-impl-wip` is unfinished work and is kept (plan D16).
 - The engine repository has two open Dependabot branches for `github/codeql-action`. They are ordinary dependency updates.

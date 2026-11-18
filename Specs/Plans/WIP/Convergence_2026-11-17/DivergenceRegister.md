@@ -8,14 +8,14 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists ever
 
 **Abbreviations.** RS `RedSalamander`, Xe `RedXe`, Pr `RedPrism`, Ti `RedTilde`, Mo `RedMonitor`, Dx `DxUi`, Home `RedHome`.
 
-**Columns.** *Target* is the single end state. *Changes* names the repositories that must move. *In* is the plan phase that converges the row; "PR open" means this plan's first product pull requests already carry it. *Choice* marks rows where two uniform end states are possible and the owner picks one.
+**Columns.** *Target* is the single end state. *Changes* names the repositories that must move. *In* is the plan phase that converges the row; "PR open" means this plan's first product pull requests already carry it. *Choice* marks rows where two uniform end states are possible and the owner picks one; "Default" means the owner took the plan's default on 2026-11-18.
 
 ## A. Agent guidance and discovery
 
 | Id | Option | Today | Target | Changes | In | Choice |
 | --- | --- | --- | --- | --- | --- | --- |
 | A-01 | `CLAUDE.md` pointer | Converged: one blob in all six since step 1 was merged. Before: three texts in RS, Xe, Mo and no file in Pr, Ti, Dx | One identical file | None | Merged | |
-| A-02 | Claude Code skill discovery | Converged: one `.claude/settings.json` blob in all six since step 1, and the same file in Home; the marketplace it names is on `RedHome` `main` since #2 (2026-11-17). Acceptance per harness is plan step CV-3-05 | `.claude/settings.json` enabling the `redhome` plugin, identical everywhere | None | Merged | |
+| A-02 | Skill discovery in every harness (D2) | Claude Code: converged; one `.claude/settings.json` blob in all six since step 1, the same file in Home, and the marketplace on `RedHome` `main` since #2. Codex, Antigravity, Copilot: they read `.agents/skills/` natively, so they find the shared skills inside Home only; in a product repository they find only that repository's local skills | Every harness finds the shared skills in every repository from the one Home folder: the plugin for Claude Code, one per-machine install for the others (plan CV-3-06) | Home | 3 | |
 | A-03 | `.github/copilot-instructions.md` | RS, Xe, Mo: three texts. Pr, Ti, Dx: absent | One identical file | All six | 6 | |
 | A-04 | Prose exclusion of `.github/copilot-instructions.md` | Not in any `.ci/project.json` `exclude`, so adding or editing it changes native inputs (`CLAUDE.md`, `.claude/**`, `.agents/**` are excluded) | Excluded by the engine template | Engine, then all six | 6 | |
 | A-05 | Shared-skill pointer sentence | Identical text in all six; placement differs (bullet in RS, no `Skills` heading in Mo) | Directly under `## Skills` | RS, Mo | 6 | |
@@ -24,8 +24,8 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists ever
 | A-08 | Interactive desktop lease rule | Stated only in RS and Dx | One text, in every `AGENTS.md` or in the shared policy page | Xe, Pr, Ti, Mo | 6 | |
 | A-09 | Skill folder | `.agents/skills/` in five. RS: 11 skills in `.github/skills/`, 1 in `.agents/skills/` | `.agents/skills/` | RS | 2 | |
 | A-10 | Skill front matter | `name` and `description` only in five. RS adds `metadata.author` and `metadata.version` to 8 skills. Home's `improve` carries `license` and `metadata` (CV-2-10) | `name` and `description` only | RS, Home | 2 | |
-| A-11 | Codex `agents/openai.yaml` | Present in Xe (3 skills), Ti (8), RS (3). Absent in Pr, Mo, Dx, Home. Ti's validator requires the file with three interface keys; two of Xe's files lack one of them | All skills or none | Three repositories either way | 2 | Yes |
-| A-12 | Other tool folders and files | `.codex/`, `.github/agents/`, `.vscode/` only in RS. `.agents/guidance.json` with five nested `AGENTS.md` files only in Ti; two nested `AGENTS.md` under `Specs/Mockups` in RS | Each adopted everywhere or removed | RS, Ti or the others | 6 | Yes |
+| A-11 | Codex `agents/openai.yaml` | Present in Xe (3 skills), Ti (8), RS (3). Absent in Pr, Mo, Dx, Home. Ti's validator requires the file with three interface keys; two of Xe's files lack one of them | All skills or none | Three repositories either way | 2 | Default |
+| A-12 | Other tool folders and files | `.codex/`, `.github/agents/`, `.vscode/` only in RS. `.agents/guidance.json` with five nested `AGENTS.md` files only in Ti; two nested `AGENTS.md` under `Specs/Mockups` in RS | Each adopted everywhere or removed | RS, Ti or the others | 6 | Default |
 | A-13 | `capabilities.json` | Ti, Mo, Dx (keys `implemented` in Ti and Mo, `supported` in Dx). Absent in RS, Xe, Pr | Present everywhere with one key vocabulary | RS, Xe, Pr; key rename in one group | 6 | |
 | A-14 | Skill description form | 33 of 53 descriptions do not say when to use the skill: 10 of 11 in Home, 8 of 8 in Ti, 6 of 6 in Mo, 5 of 6 in Dx, 3 of 12 in RS, 1 of 3 in Xe, none in Pr. 13 skills are under 15 lines | What the skill does, then "Use when ...", in every description | Home, Ti, Mo, Dx, RS, Xe | 2 | |
 | A-15 | Subjects with a skill in several repositories | `test-harness` in Pr, Ti, Mo; `settings-store` in Xe and Pr; `file-safety` in Ti and Mo; `consumer-dxui` in Pr and Ti; six build skills, of which RS's is `cpp-build` and the rest `build-<repository>` | One shared skill per subject, with repository facts (plan CV-2-12) | All six | 2 | |
@@ -48,7 +48,7 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists ever
 | B-09 | `README.md` | `## Recording changes` in five (not Mo); Pr has no H1 | Same common sections | Mo, Pr | 6 | |
 | B-10 | `CHANGELOG.md` header | Same in RS, Xe, Pr, Ti; Mo lacks the intro; Dx differs | One header | Mo, Dx | 6 | |
 | B-11 | Licence files | `LICENSE.txt` in all six; Xe also has a different `LICENSE`. Holder "RedSalamander" in five, "RedSalamanders" in Pr. Mo's file is a byte copy of RS's, including RS's third-party list. Home has no licence | One file name, one holder spelling, correct third-party text, and a licence in Home | Xe, Pr, Mo, Home | 6 | Yes |
-| B-12 | Other root files | `THIRD-PARTY-NOTICES.md`, `CONTRIBUTING.md`: Dx only. `.github/CODEOWNERS`: RS, Dx. Pull request template: RS. `.editorconfig`: Xe, Dx (different). `.vsconfig`: Xe | Each present everywhere with one text, or nowhere | Up to five each | 6 | Yes |
+| B-12 | Other root files | `THIRD-PARTY-NOTICES.md`, `CONTRIBUTING.md`: Dx only. `.github/CODEOWNERS`: RS, Dx. Pull request template: RS. `.editorconfig`: Xe, Dx (different). `.vsconfig`: Xe | Each present everywhere with one text, or nowhere | Up to five each | 6 | Default |
 | B-13 | `RedMonitor` consumer contract | `Specs/Core/Core_RedMonitorIntegration.md` is the same 30 lines in Pr and Ti apart from the product name, a 43-line superset in Xe, and absent in RS, which states the rules in `AGENTS.md` and `Build_Toolchain.md`. All repeat `RedMonitor`'s `Specs/Build/Build_Consumption.md` | One text owned by `RedMonitor`; each consumer keeps only its adapter facts and links to it | Xe, Pr, Ti, RS | 6 | |
 
 ## C. Build and toolchain
@@ -63,14 +63,14 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists ever
 | C-06 | vcpkg baseline | `9eec002d…` in Xe, Pr, Mo, Dx; `aeb162b7…` in RS; Ti has no vcpkg | One baseline; Ti stays without vcpkg only if it keeps no vcpkg dependency | RS | 4 | |
 | C-07 | vcpkg tool pin and triplets | Four different `vcpkg-tool.json` commits. Mo uses `*-windows-static-md`; the others the standard triplets | One tool commit and one triplet set | RS, Pr, Mo and the Xe/Dx pair | 4 | |
 | C-08 | `Build/PinnedDxUiPolicy.targets` | Identical in Dx, Xe, Pr, Ti; RS variant; Mo none | The `DxUi` file, consumed through the pin | RS, Mo | 5 | |
-| C-09 | Minimum Windows version | Windows 11 22000.2600 stated in RS and Pr; Winget minimum `10.0.22000.2600` in RS, Pr, Mo; Xe supports Windows 10 (`10.0.19041.0`); Ti declares none | One minimum | Xe or the others; Ti declares it | 6 | Yes |
+| C-09 | Minimum Windows version | Windows 11 22000.2600 stated in RS and Pr; Winget minimum `10.0.22000.2600` in RS, Pr, Mo; Xe supports Windows 10 (`10.0.19041.0`); Ti declares none | One minimum | Xe or the others; Ti declares it | 6 | Default |
 | C-10 | Release whole-program optimization, `/LTCG`, `/OPT:REF`, function-level linking | The same block is copied into the `Directory.Build.targets` of RS, Xe, Pr, Ti, Dx. Mo sets none of it, and its Debug uses `/Zi` where the others use `/ZI` | One block in the shared policy file | Mo; the five drop their copy | 6 part 2 for Mo, then 5 | |
 | C-11 | Where profile values are set | Toolset, SDK, character set, runtime library, and optimization are set in each `.vcxproj` in Xe, Pr, Ti, Dx and centrally in RS and Mo | Central props; a project file holds only project facts | Xe, Pr, Ti, Dx | 6 part 1 | |
 | C-12 | MSVC 14.52 requirement | Enforced by an MSBuild target in five (each its own copy). Mo declares the property and no target checks it | One target in the shared policy file | Mo; the five drop their copy | 6 part 1, then 5 | |
-| C-13 | ASan strategy | RS disables STL annotations and builds `DxUi` with the matching flag. Pr restores sanitized dependency triplets. Xe and Ti do neither. `DxUi`'s own flag defaults to annotations on | One strategy | Three repositories either way | 6 | Yes |
-| C-14 | vcpkg restore model and linkage | MSBuild manifest mode in RS; scripted restore with `VcpkgEnabled=false` in Xe, Pr, Mo, Dx. Static `*-windows-static-md` triplets in Mo; dynamic elsewhere | One model and one linkage | RS, Mo or the others | 4 | Yes |
+| C-13 | ASan strategy | RS disables STL annotations and builds `DxUi` with the matching flag. Pr restores sanitized dependency triplets. Xe and Ti do neither. `DxUi`'s own flag defaults to annotations on | One strategy | Three repositories either way | 6 | Default |
+| C-14 | vcpkg restore model and linkage | MSBuild manifest mode in RS; scripted restore with `VcpkgEnabled=false` in Xe, Pr, Mo, Dx. Static `*-windows-static-md` triplets in Mo; dynamic elsewhere | One model and one linkage | RS, Mo or the others | 4 | Default |
 | C-15 | Compiler host architecture | `PreferredToolArchitecture` in props in RS, Xe, Mo (with three different conditions); from the script environment in Pr and Ti; unset in Dx | One rule in the shared policy file | All six | 6 | |
-| C-16 | Test-hook macro | `ENABLE_TESTS`, off in Release, in RS and Mo. `REDPRISM_ENABLE_TESTS` and `REDTILDE_ENABLE_TESTS`, on by default in Release, in Pr and Ti. None in Xe and Dx | One name and one Release default | Two or four repositories | 6 | Yes |
+| C-16 | Test-hook macro | `ENABLE_TESTS`, off in Release, in RS and Mo. `REDPRISM_ENABLE_TESTS` and `REDTILDE_ENABLE_TESTS`, on by default in Release, in Pr and Ti. None in Xe and Dx | One name and one Release default | Two or four repositories | 6 | Default |
 | C-17 | Root solution file | Present in five. Mo has no `.sln` at its root | Present | Mo | 6 part 1 | |
 | C-18 | Static analysis | `build.ps1 -Analyze` (`/analyze`) only in Pr | Available everywhere | RS, Xe, Ti, Mo, Dx | 6 | |
 | C-19 | Consumer names inside the shared policy file | `NativeBuildPolicy.targets` reads `RedXeVcpkgTriplet`, `RedPrismVcpkgTriplet`, and `RSVcpkgTriplet` by name | One neutral property that each repository sets | The file, then Xe, Pr, RS | 6 part 1 | |
@@ -100,7 +100,7 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists ever
 | E-08 | `RedMonitor` client scripts | Root in Xe, Pr, Ti; `Tools/` in RS | Root, implemented once in `RedMonitor` | RS | 5 | |
 | E-09 | `vcpkg-install.ps1` | Absent in Ti; RS defaults `-Platform` to `All`, the others to `x64` | Same defaults | RS | 5 | |
 | E-10 | Performance entry point and gate | `performance-paired.ps1` in Ti and Dx; `measure-*.ps1` in Xe; none in RS, Pr, Mo. Hosted paired gate (`benchmark.yml`) only in Dx | `performance-paired.ps1` and the hosted gate everywhere | Xe, RS, Pr, Mo; gate in five | 6 | |
-| E-11 | Meaning of a bare `test.ps1` | The affected suites in Xe; all nine suites in Pr; the `Core` suite in Ti; everything in Mo, which has no suite selection | One meaning | Three repositories | 6 | Yes |
+| E-11 | Meaning of a bare `test.ps1` | The affected suites in Xe; all nine suites in Pr; the `Core` suite in Ti; everything in Mo, which has no suite selection | One meaning | Three repositories | 6 | Default |
 | E-12 | Restore entry point | `restore.ps1` only in Mo. Elsewhere restore is `vcpkg-install.ps1` plus `restore-dxui.ps1`, or part of `build.ps1` | `restore.ps1` everywhere, calling the two | RS, Xe, Pr, Ti, Dx | 6 | |
 | E-13 | Application harness switches | Capture: `--screenshot` in Xe and Pr, `--capture --scenario` in Ti. Crash probe: `--crash-test` in Xe, `--crash-probe` in Pr and Ti. Interactive lease: `test.ps1 -Interactive` in Dx, `test-interactive.ps1` in Ti, `Test-Changes.ps1 -Interactive` in RS, none elsewhere | One switch vocabulary and one interactive entry point | Xe, Ti, RS, Dx | 6 | |
 
@@ -130,10 +130,11 @@ The plan's inventory table lists the copies. Each row converges by giving the to
 | G-05 | Winget block | `minimumOSVersion` missing in Ti; `smokeTests` only in Xe; alias mixed case in RS | Same fields everywhere | Ti, four for smoke tests, RS | 6 | |
 | G-06 | Repository-only workflows | RS has ten extra workflows; Pr `native-arm64-feasibility.yml`; Dx `benchmark.yml` | Shared ones become engine templates; the rest carry a recorded reason | RS, Pr, Dx | 6 | |
 | G-07 | CI adapter | Same parameters; RS has six extra `QualificationScope` values; static-phase commands differ in every repository | One static phase calling `validate.ps1` | All six | 6 | |
-| G-08 | Tests layout | `<Suite>Tests/<Suite>Tests.vcxproj` (RS, Xe, Pr); flat `Tooling.Tests.*.ps1` (Ti, Mo); `DxUi.*Tests.vcxproj` (Dx) | One layout | Three repositories | 6 | Yes |
+| G-08 | Tests layout | `<Suite>Tests/<Suite>Tests.vcxproj` (RS, Xe, Pr); flat `Tooling.Tests.*.ps1` (Ti, Mo); `DxUi.*Tests.vcxproj` (Dx) | One layout | Three repositories | 6 | Default |
 | G-09 | Winget manifests in the repository | `Installer/` in RS and Xe only | Generated from `.ci/project.json` everywhere | RS, Xe | 6 | |
 | G-10 | `RedHome` CI | Its own `validate.yml`, outside the engine | Engine-run once the engine has a documentation kind | Home, engine | 5 | |
-| G-11 | "Automatically delete head branches" | On in Dx, RS, Xe, Pr, Ti. Off in Home, Mo, and the engine repository; Mo still has its merged step 1 branch | On everywhere | Home, Mo, engine | 0 | |
+| G-11 | "Automatically delete head branches" | Converged on 2026-11-18: on in all eight repositories, and the merged head branches left on GitHub are deleted | On everywhere | None | Done | |
+| G-13 | Long-lived branches (D10) | Converged on 2026-11-18: `main` everywhere, plus one maintenance line in Dx, renamed from `ej/api4-maintenance-4cdf1ce5` to `maintenance/api4`. The same "maintenance branches" ruleset, which forbids deleting or force-pushing `refs/heads/maintenance/*`, is active in all eight repositories. Dx pull request #265 names the branch in its `AGENTS.md` | `main`, plus at most one protected `maintenance/<line>` branch per supported older line, named in that repository's `AGENTS.md`; the same ruleset in every repository | None once Dx #265 is merged | Done | |
 | G-12 | Prose paths in `.ci/project.json` `exclude` | `Update-ProjectPin.ps1` writes `.github/skills/**/*.md` into every list, a folder only RS uses and leaves with A-09. No list names `.github/copilot-instructions.md` (A-04), `.codex/**`, or `.github/agents/**`, so editing those counts as a native input change | One template list that covers every harness path in use | Engine, then all six | 6 | |
 
 ## H. Code conventions
@@ -146,16 +147,16 @@ Each row is also the `Differences To Converge` entry of a shared skill, which ca
 | H-02 | Unexpected-exception and `std::bad_alloc` policy | API 5 policy in Dx and Ti; four different API 4 rules | The API 5 policy | RS, Xe, Pr, Mo with H-01 | 4 | |
 | H-03 | COM smart pointer | `wil::com_ptr<T>` in RS; `wil::com_ptr_nothrow<T>` in `HRESULT` code elsewhere | `wil::com_ptr_nothrow<T>` | RS | 6 | |
 | H-04 | WIL include guard | RS guards only `<wil/resource.h>` | One block that also wraps `<wil/com.h>` | RS | 6 | |
-| H-05 | Logging helpers | `Debug::` in RS and Mo; `DxUi::Debug` in Dx; none in Xe, Pr, Ti | One family with the same names | Three or four repositories | 6 | Yes |
+| H-05 | Logging helpers | `Debug::` in RS and Mo; `DxUi::Debug` in Dx; none in Xe, Pr, Ti | One family with the same names | Three or four repositories | 6 | Default |
 | H-06 | Resource string helpers | RS and Mo share one set; Pr has its own; Ti a local `LoadStringW` wrapper; Xe has none and no `STRINGTABLE` | One helper set; chrome strings in resources everywhere | Pr, Ti, Xe | 6 | |
-| H-07 | Satellite layout and loader | `Lang\<Module>-<culture>.dll` in RS and Mo; `Languages\<tag>\RedPrism.resources.dll` in Pr; none in Ti, Xe | One layout and loader | Pr or RS and Mo | 6 | Yes |
+| H-07 | Satellite layout and loader | `Lang\<Module>-<culture>.dll` in RS and Mo; `Languages\<tag>\RedPrism.resources.dll` in Pr; none in Ti, Xe | One layout and loader | Pr or RS and Mo | 6 | Default |
 | H-08 | Resource-string gate | RS and Pr only | A gate wherever a `STRINGTABLE` exists | Mo, Ti, Xe | 6 | |
 | H-09 | `yyjson` read flags for configuration | JSON5 and BOM in RS and Mo; comments, trailing commas, BOM in Xe; BOM only in Pr | JSON5 and BOM | Xe, Pr | 6 | |
-| H-10 | Settings format | JSON through `yyjson` in RS, Xe, Pr, Mo; line-based `key=value` text in Ti | JSON through `yyjson` | Ti | 6 | Yes |
+| H-10 | Settings format | JSON through `yyjson` in RS, Xe, Pr, Mo; line-based `key=value` text in Ti | JSON through `yyjson` | Ti | 6 | Default |
 | H-11 | `--self-test` and WARP | Forces WARP in Pr; not in Xe | Forces WARP | Xe | 6 | |
 | H-12 | Host windowing spec name | `UI_Windowing.md` in Pr; `UI_XeneonDisplayWindowing.md` in Xe | `UI_Windowing.md` | Xe | 6 | |
 | H-13 | Stale rule | The former `RedPrism` skill allowed `new (std::nothrow)` only in `Main.cpp`; the source also uses it in `AccessibilityRoot.cpp` | Rule and code agree, stated once | Pr | 6 | |
-| H-14 | Posted-payload helper | Three forks: RS `Common/Helpers.h`, Mo `support/Helpers.h`, Dx `src/Support/PostedPayload.h`. Dx's `InitPostedPayloadWindow` returns `bool` and its `PostMessagePayload` takes an extra token argument; the other two return `void`. Xe, Pr, Ti state the same rule (publish on the UI owner, cancel by identity, reject stale completion) with their own code | One helper with one signature | Two or three repositories | 6 | Yes |
+| H-14 | Posted-payload helper | Three forks: RS `Common/Helpers.h`, Mo `support/Helpers.h`, Dx `src/Support/PostedPayload.h`. Dx's `InitPostedPayloadWindow` returns `bool` and its `PostMessagePayload` takes an extra token argument; the other two return `void`. Xe, Pr, Ti state the same rule (publish on the UI owner, cancel by identity, reject stale completion) with their own code | One helper with one signature | Two or three repositories | 6 | Default |
 | H-15 | Settings reload behavior | Watcher: a worker that coalesces and posts to the UI thread in Xe; a wait beside the message queue with no worker in Pr. Invalid value: whole-candidate validation in Xe; field-level fallback in Pr and Ti. Unknown members: validated in Xe; preserved across a save in Pr | One behavior | One or two repositories each | 6 | Yes |
 | H-16 | Crash artifacts | Dump plus `pending.txt` in Pr; marker plus a `.record` sidecar in Ti; dump plus sidecar in RS. Xe has the handler and a normative spec and no skill | One artifact shape and one retention rule | Three repositories | 6 | |
 

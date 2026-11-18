@@ -33,5 +33,6 @@ This page summarizes shared engineering policies and current repository exceptio
 ## 6. Drive-Root Output Policy
 - Never create scratch, caches, evidence, copied checkouts, or sibling output folders at a drive root.
 - Only `<Project>.Perf` (such as `D:\RedSalamander.Perf`) is permitted at a drive root, and only after explicit user authorization of the exact path. Never traverse junctions during cleanup.
+- One more drive-root path is authorized by the owner (2026-11-18): `D:\Archive\RedSalamanders-20261117`, which holds verified `git bundle` archives of retired branches and backups. Add bundles there; create no other folder under `D:\Archive`.
 
 Return to [Index.md](Index.md).
