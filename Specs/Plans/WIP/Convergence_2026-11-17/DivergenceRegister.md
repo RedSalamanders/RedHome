@@ -15,7 +15,7 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists ever
 | Id | Option | Today | Target | Changes | In | Choice |
 | --- | --- | --- | --- | --- | --- | --- |
 | A-01 | `CLAUDE.md` pointer | Converged: one blob in all six since step 1 was merged. Before: three texts in RS, Xe, Mo and no file in Pr, Ti, Dx | One identical file | None | Merged | |
-| A-02 | Claude Code skill discovery | One `.claude/settings.json` blob in all six since step 1 was merged. It names a marketplace that `RedHome` `main` does not have until `RedHome` #2 is merged | `.claude/settings.json` enabling the `redhome` plugin, identical everywhere | Home | Merged in six; Home with #2 | |
+| A-02 | Claude Code skill discovery | Converged: one `.claude/settings.json` blob in all six since step 1, and the same file in Home; the marketplace it names is on `RedHome` `main` since #2 (2026-11-17). Acceptance per harness is plan step CV-3-05 | `.claude/settings.json` enabling the `redhome` plugin, identical everywhere | None | Merged | |
 | A-03 | `.github/copilot-instructions.md` | RS, Xe, Mo: three texts. Pr, Ti, Dx: absent | One identical file | All six | 6 | |
 | A-04 | Prose exclusion of `.github/copilot-instructions.md` | Not in any `.ci/project.json` `exclude`, so adding or editing it changes native inputs (`CLAUDE.md`, `.claude/**`, `.agents/**` are excluded) | Excluded by the engine template | Engine, then all six | 6 | |
 | A-05 | Shared-skill pointer sentence | Identical text in all six; placement differs (bullet in RS, no `Skills` heading in Mo) | Directly under `## Skills` | RS, Mo | 6 | |
