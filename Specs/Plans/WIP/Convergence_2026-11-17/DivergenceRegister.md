@@ -8,7 +8,7 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists ever
 
 **Abbreviations.** RS `RedSalamander`, Xe `RedXe`, Pr `RedPrism`, Ti `RedTilde`, Mo `RedMonitor`, Dx `DxUi`, Home `RedHome`.
 
-**Columns.** *Target* is the single end state. *Changes* names the repositories that must move. *In* is the plan phase that converges the row; "PR open" means this plan's first product pull requests already carry it. *Choice* marks rows where two uniform end states are possible and the owner picks one; "Default" means the owner took the plan's default on 2026-11-18.
+**Columns.** *Target* is the single end state. *Changes* names the repositories that must move. *In* is the plan phase that converges the row; "PR open" means this plan's first product pull requests already carry it. *Choice* marks rows where two uniform end states are possible and the owner picks one; "Default" means the owner took the plan's default on 2026-11-18, and "Owner" that the owner gave the answer the same day where the plan had no default.
 
 ## A. Agent guidance and discovery
 
@@ -47,7 +47,7 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists ever
 | B-08 | `Specs/Build/Build_UnifiedCI.md` | Six different documents | One skeleton; only adapter sections differ | All six | 6 | |
 | B-09 | `README.md` | `## Recording changes` in five (not Mo); Pr has no H1 | Same common sections | Mo, Pr | 6 | |
 | B-10 | `CHANGELOG.md` header | Same in RS, Xe, Pr, Ti; Mo lacks the intro; Dx differs | One header | Mo, Dx | 6 | |
-| B-11 | Licence files | `LICENSE.txt` in all six; Xe also has a different `LICENSE`. Holder "RedSalamander" in five, "RedSalamanders" in Pr. Mo's file is a byte copy of RS's, including RS's third-party list. Home has no licence | One file name, one holder spelling, correct third-party text, and a licence in Home | Xe, Pr, Mo, Home | 6 | Yes |
+| B-11 | Licence files | `LICENSE.txt` in all six, with the same MIT text apart from the holder: "RedSalamander" in five, "RedSalamanders" in Pr. Xe also has `LICENSE`, the same MIT text without its list. RS, Xe, and Mo append a third-party list to `LICENSE.txt`, and Mo's is a copy of RS's; Dx keeps its list in `THIRD-PARTY-NOTICES.md`; Pr and Ti have none. Home has no licence | The same MIT `LICENSE.txt` naming "RedSalamander" everywhere, Home included, and each repository's own third-party list in `THIRD-PARTY-NOTICES.md` (plan D18) | RS, Xe, Pr, Ti, Mo, Home | 6 | Owner |
 | B-12 | Other root files | `THIRD-PARTY-NOTICES.md`, `CONTRIBUTING.md`: Dx only. `.github/CODEOWNERS`: RS, Dx. Pull request template: RS. `.editorconfig`: Xe, Dx (different). `.vsconfig`: Xe | Each present everywhere with one text, or nowhere | Up to five each | 6 | Default |
 | B-13 | `RedMonitor` consumer contract | `Specs/Core/Core_RedMonitorIntegration.md` is the same 30 lines in Pr and Ti apart from the product name, a 43-line superset in Xe, and absent in RS, which states the rules in `AGENTS.md` and `Build_Toolchain.md`. All repeat `RedMonitor`'s `Specs/Build/Build_Consumption.md` | One text owned by `RedMonitor`; each consumer keeps only its adapter facts and links to it | Xe, Pr, Ti, RS | 6 | |
 
@@ -157,7 +157,7 @@ Each row is also the `Differences To Converge` entry of a shared skill, which ca
 | H-12 | Host windowing spec name | `UI_Windowing.md` in Pr; `UI_XeneonDisplayWindowing.md` in Xe | `UI_Windowing.md` | Xe | 6 | |
 | H-13 | Stale rule | The former `RedPrism` skill allowed `new (std::nothrow)` only in `Main.cpp`; the source also uses it in `AccessibilityRoot.cpp` | Rule and code agree, stated once | Pr | 6 | |
 | H-14 | Posted-payload helper | Three forks: RS `Common/Helpers.h`, Mo `support/Helpers.h`, Dx `src/Support/PostedPayload.h`. Dx's `InitPostedPayloadWindow` returns `bool` and its `PostMessagePayload` takes an extra token argument; the other two return `void`. Xe, Pr, Ti state the same rule (publish on the UI owner, cancel by identity, reject stale completion) with their own code | One helper with one signature | Two or three repositories | 6 | Default |
-| H-15 | Settings reload behavior | Watcher: a worker that coalesces and posts to the UI thread in Xe; a wait beside the message queue with no worker in Pr. Invalid value: whole-candidate validation in Xe; field-level fallback in Pr and Ti. Unknown members: validated in Xe; preserved across a save in Pr | One behavior | One or two repositories each | 6 | Yes |
+| H-15 | Settings reload behavior | Watcher: a worker that coalesces and posts to the UI thread in Xe; a wait beside the message queue with no worker in Pr. Invalid value: whole-candidate validation in Xe; field-level fallback in Pr and Ti. Unknown members: validated in Xe; preserved across a save in Pr | A watcher worker that coalesces and posts to the UI thread; an unusable value takes its field's default or is clamped, and only an unparseable file is invalid; unknown members kept across a save (plan D19) | Pr for the watcher; Xe for validation and unknown members; Ti with H-10 | 6 | Owner |
 | H-16 | Crash artifacts | Dump plus `pending.txt` in Pr; marker plus a `.record` sidecar in Ti; dump plus sidecar in RS. Xe has the handler and a normative spec and no skill | One artifact shape and one retention rule | Three repositories | 6 | |
 
 ## Rows that stay different by design
