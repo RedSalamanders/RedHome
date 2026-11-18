@@ -1,6 +1,6 @@
 ---
 name: wiki-sync
-description: Reconcile RedHome wiki pages against sibling repositories and capture durable multi-repository lessons and session handoffs.
+description: Reconcile RedHome wiki pages against sibling repositories and capture durable multi-repository lessons and session handoffs. Use when a sibling's architecture, domain contracts, DxUi capabilities, skills, active WIP plans, or shared policies change, or when closing out a multi-repository session.
 ---
 
 # Wiki Sync & Session Handoff

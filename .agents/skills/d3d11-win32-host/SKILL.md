@@ -1,6 +1,6 @@
 ---
 name: d3d11-win32-host
-description: Implement or debug Win32 top-level windows, DPI transitions, Direct3D 11 monitor-matched devices, flip-model swap chains, occlusion, WARP, and device loss.
+description: Implement or debug Win32 top-level windows, DPI transitions, Direct3D 11 monitor-matched devices, flip-model swap chains, occlusion, WARP, and device loss. Use when changing window creation, the message loop, sizing, DPI, fullscreen, adapter selection, presentation, or device-loss recovery in a Win32 Direct3D 11 host (RedXe, RedPrism).
 ---
 
 # Direct3D 11 & Win32 Real-Time Host Architecture

@@ -1,6 +1,6 @@
 ---
 name: modern-cpp-windows
-description: Apply RedSalamanders C++23, Unicode, repository warning profiles, header-hygiene, HRESULT, and failure-handling conventions across native Windows code.
+description: Apply RedSalamanders C++23, Unicode, repository warning profiles, header-hygiene, HRESULT, and failure-handling conventions across native Windows code. Use when writing or reviewing C++ in any RedSalamanders repository, fixing compiler warnings, ordering Win32 headers, or deciding how errors and exceptions cross a callback or ABI boundary.
 ---
 
 # Modern C++ for Windows (`stdcpplatest`)

@@ -1,10 +1,6 @@
 ---
 name: improve
-description: Audit a codebase or instruction ecosystem and produce evidence-backed prioritized findings and self-contained handoff plans. Use for requested reviews and improvement planning.
-license: MIT
-metadata:
-  author: shadcn
-  version: "1.1.0"
+description: Audit a codebase or instruction ecosystem and produce evidence-backed prioritized findings and self-contained handoff plans. Use when asked to review or audit a repository, its skills, or its agent guidance, to find improvement opportunities, or to plan improvements for another agent to carry out.
 ---
 
 # Improve
@@ -34,3 +30,7 @@ Lead with the actionable outcome and prioritized findings; distinguish defects f
 Use [the handoff template](references/plan-template.md) for selected plans. Include current context, owning files/contracts, ordered slices, meaningful validation commands/results, boundaries, drift checks and concrete done/stop criteria. Use the resolved output directory and index, not a template's invented root.
 
 For explicitly requested execute, reconcile or issue publication, read [follow-through guidance](references/closing-the-loop.md). Publishing and external messaging still require their own authorization. No audit or suggested plan implies a production qualification result.
+
+## Provenance
+
+This skill is a RedSalamanders fork of `improve` 1.0.0 by shadcn ([shadcn/improve](https://github.com/shadcn/improve), `skills/improve/`), used under the MIT licence. The copyright and permission notice are in [LICENSE.txt](LICENSE.txt). The fork is rewritten for the RedSalamanders repositories and does not track upstream. No skills lock records it, so an installer update cannot replace it; change it here like any other shared skill.
