@@ -15,14 +15,14 @@ Each repository's `AGENTS.md` and `Specs/` still decide product behavior. A skil
 | Hot paths, allocation, idle behaviour, baselines | [performance-resources](../.agents/skills/performance-resources/SKILL.md), then [test-evidence](../.agents/skills/test-evidence/SKILL.md) for the measurement | Their `references/repository-facts.md`; `RedSalamander` [perf-validation](../../RedSalamander/.github/skills/perf-validation/SKILL.md) until its copy is removed |
 | Win32 window, D3D11 device, swap chain, device loss | [d3d11-win32-host](../.agents/skills/d3d11-win32-host/SKILL.md) | `RedSalamander` [win32-wndproc](../../RedSalamander/.github/skills/win32-wndproc/SKILL.md), `RedSalamander` [direct2d-rendering](../../RedSalamander/.github/skills/direct2d-rendering/SKILL.md), `DxUi` [win32-host](../../DxUi/.agents/skills/win32-host/SKILL.md), `DxUi` [embedded-rendering](../../DxUi/.agents/skills/embedded-rendering/SKILL.md), `RedPrism` [hlsl-composition](../../RedPrism/.agents/skills/hlsl-composition/SKILL.md) |
 | Specs, WIP and Done plans, closeout | [spec-workflow](../.agents/skills/spec-workflow/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [tooling-governance](../../RedSalamander/.github/skills/tooling-governance/SKILL.md) |
-| Build, restore, package, toolchain failures | [native-build](../.agents/skills/native-build/SKILL.md) | Its `references/repository-facts.md`. Until their copies are removed: `RedSalamander` [cpp-build](../../RedSalamander/.github/skills/cpp-build/SKILL.md), `RedTilde` [build-redtilde](../../RedTilde/.agents/skills/build-redtilde/SKILL.md), `DxUi` [build-dxui](../../DxUi/.agents/skills/build-dxui/SKILL.md) |
-| Tests, goldens, captures, evidence | [test-evidence](../.agents/skills/test-evidence/SKILL.md) | Its `references/repository-facts.md`; `RedPrism` [numeric-goldens](../../RedPrism/.agents/skills/numeric-goldens/SKILL.md). Until their copies are removed: `RedTilde` [test-harness](../../RedTilde/.agents/skills/test-harness/SKILL.md), `RedSalamander` [perf-validation](../../RedSalamander/.github/skills/perf-validation/SKILL.md) |
+| Build, restore, package, toolchain failures | [native-build](../.agents/skills/native-build/SKILL.md) | Its `references/repository-facts.md`. Until its copy is removed: `RedSalamander` [cpp-build](../../RedSalamander/.github/skills/cpp-build/SKILL.md) |
+| Tests, goldens, captures, evidence | [test-evidence](../.agents/skills/test-evidence/SKILL.md) | Its `references/repository-facts.md`; `RedPrism` [numeric-goldens](../../RedPrism/.agents/skills/numeric-goldens/SKILL.md). Until its copy is removed: `RedSalamander` [perf-validation](../../RedSalamander/.github/skills/perf-validation/SKILL.md) |
 | `DxUi` pin bumps and consumer adapters | [cross-repo-pins](../.agents/skills/cross-repo-pins/SKILL.md) | `DxUi` [consumer-integration](../../DxUi/.agents/skills/consumer-integration/SKILL.md), `RedPrism` [consumer-dxui](../../RedPrism/.agents/skills/consumer-dxui/SKILL.md), `RedTilde` [consumer-dxui](../../RedTilde/.agents/skills/consumer-dxui/SKILL.md) |
 | `RedMonitor` client adoption and transport | [cross-repo-pins](../.agents/skills/cross-repo-pins/SKILL.md) | `RedMonitor` [consumer-adoption](../../RedMonitor/.agents/skills/consumer-adoption/SKILL.md), `RedMonitor` [transport-client](../../RedMonitor/.agents/skills/transport-client/SKILL.md) |
 | Shared CI engine pin, `.ci-engine` health | [cross-repo-pins](../.agents/skills/cross-repo-pins/SKILL.md) | [Shared-CI-Engine.md](Shared-CI-Engine.md) |
-| Settings, preferences, themes | [app-settings](../.agents/skills/app-settings/SKILL.md), then [yyjson](../.agents/skills/yyjson/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [build-preferences-pages](../../RedSalamander/.github/skills/build-preferences-pages/SKILL.md), `RedSalamander` [theming](../../RedSalamander/.github/skills/theming/SKILL.md). Until its copy is removed: `RedTilde` [settings-crashes](../../RedTilde/.agents/skills/settings-crashes/SKILL.md) |
-| Crash dumps and failure diagnostics | [crash-dumps](../.agents/skills/crash-dumps/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [red-salamander-crash-forensics](../../RedSalamander/.agents/skills/red-salamander-crash-forensics/SKILL.md) to investigate a dump. Until its copy is removed: `RedTilde` [settings-crashes](../../RedTilde/.agents/skills/settings-crashes/SKILL.md) |
-| File open/save safety | [file-io-safety](../.agents/skills/file-io-safety/SKILL.md) | Its `references/repository-facts.md`. Until its copy is removed: `RedTilde` [file-safety](../../RedTilde/.agents/skills/file-safety/SKILL.md) |
+| Settings, preferences, themes | [app-settings](../.agents/skills/app-settings/SKILL.md), then [yyjson](../.agents/skills/yyjson/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [build-preferences-pages](../../RedSalamander/.github/skills/build-preferences-pages/SKILL.md), `RedSalamander` [theming](../../RedSalamander/.github/skills/theming/SKILL.md) |
+| Crash dumps and failure diagnostics | [crash-dumps](../.agents/skills/crash-dumps/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [red-salamander-crash-forensics](../../RedSalamander/.agents/skills/red-salamander-crash-forensics/SKILL.md) to investigate a dump |
+| File open/save safety | [file-io-safety](../.agents/skills/file-io-safety/SKILL.md) | Its `references/repository-facts.md` |
 | Plugin ABIs | — | `RedSalamander` [plugin-callbacks](../../RedSalamander/.github/skills/plugin-callbacks/SKILL.md), `RedXe` [plugin-development](../../RedXe/.agents/skills/plugin-development/SKILL.md) |
 | Shared controls, input, accessibility | — | `DxUi` [control-development](../../DxUi/.agents/skills/control-development/SKILL.md), `DxUi` [input-accessibility](../../DxUi/.agents/skills/input-accessibility/SKILL.md), `RedTilde` [desktop-ui](../../RedTilde/.agents/skills/desktop-ui/SKILL.md) |
 | Cross-repository design review | [grill-cross-repo](../.agents/skills/grill-cross-repo/SKILL.md) | Then [spec-workflow](../.agents/skills/spec-workflow/SKILL.md) |
@@ -91,16 +91,14 @@ Each shared skill is one rule set for every repository. `references/` holds the 
 
 ### RedTilde (`.agents/skills/`)
 
+`build-redtilde`, `file-safety`, `settings-crashes`, and `test-harness` are folded into the shared [native-build](../.agents/skills/native-build/SKILL.md), [file-io-safety](../.agents/skills/file-io-safety/SKILL.md), [app-settings](../.agents/skills/app-settings/SKILL.md) with [crash-dumps](../.agents/skills/crash-dumps/SKILL.md), and [test-evidence](../.agents/skills/test-evidence/SKILL.md) (convergence CV-2-12).
+
 | Skill | Use it for |
 | --- | --- |
-| [build-redtilde](../../RedTilde/.agents/skills/build-redtilde/SKILL.md) | Build, restore or package RedTilde and diagnose its Windows compiler and dependency outputs. |
 | [consumer-dxui](../../RedTilde/.agents/skills/consumer-dxui/SKILL.md) | Adopt or update the exact DxUi rich-text pin and its public native APIs in RedTilde. |
 | [desktop-ui](../../RedTilde/.agents/skills/desktop-ui/SKILL.md) | Revise RedTilde native layout, contextual commands, live appearance and keyboard or UIA behavior. |
-| [file-safety](../../RedTilde/.agents/skills/file-safety/SKILL.md) | Implement RedTilde Unicode open/save, dirty prompts, external-conflict handling and recovery. |
 | [markdown-editing](../../RedTilde/.agents/skills/markdown-editing/SKILL.md) | Implement RedTilde rich, source, split and local Markdown editing with shared history and selection. |
 | [media-math](../../RedTilde/.agents/skills/media-math/SKILL.md) | Add or verify local images, native in-document math and supported Mermaid diagrams in RedTilde. |
-| [settings-crashes](../../RedTilde/.agents/skills/settings-crashes/SKILL.md) | Implement RedTilde live settings, local crash reports and restart diagnostics without telemetry. |
-| [test-harness](../../RedTilde/.agents/skills/test-harness/SKILL.md) | Write RedTilde behavioral tests, deterministic hidden app captures and source-bound validation receipts. |
 
 ### RedMonitor (`.agents/skills/`)
 
@@ -114,9 +112,10 @@ Each shared skill is one rule set for every repository. `references/` holds the 
 
 ### DxUi (`.agents/skills/`)
 
+`build-dxui` is folded into the shared [native-build](../.agents/skills/native-build/SKILL.md) (convergence CV-2-12).
+
 | Skill | Use it for |
 | --- | --- |
-| [build-dxui](../../DxUi/.agents/skills/build-dxui/SKILL.md) | Build, test or diagnose the standalone DxUi library and consumer outputs; use for toolchain/configuration failures. |
 | [consumer-integration](../../DxUi/.agents/skills/consumer-integration/SKILL.md) | Add or update a pinned DxUi dependency, MSBuild imports and application adapters in a consumer. |
 | [control-development](../../DxUi/.agents/skills/control-development/SKILL.md) | Implement or revise shared retained controls, their state and layout; not application-specific AV or file-manager behavior. |
 | [embedded-rendering](../../DxUi/.agents/skills/embedded-rendering/SKILL.md) | Implement or inspect host-owned D3D11 integration, content preparation, cached surfaces and composition; not Win32 window presentation. |
