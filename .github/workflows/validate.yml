@@ -22,6 +22,15 @@ jobs:
       - name: Checkout RedHome
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Check out the engine that .ci/project.json pins
+        shell: pwsh
+        working-directory: .
+        run: |
+          $ref = (Get-Content -LiteralPath .ci/project.json -Raw | ConvertFrom-Json).engine.ref
+          git clone --quiet --filter=blob:none --no-checkout https://github.com/RedSalamanders/.github.git .ci-engine
+          git -C .ci-engine checkout --quiet --detach $ref
+          Write-Host "engine at $(git -C .ci-engine rev-parse --short HEAD)"
+
       - name: Run validate.ps1
         shell: pwsh
         run: ./validate.ps1
@@ -54,6 +63,15 @@ jobs:
             git -C "${repo}" checkout --quiet
             echo "${repo}: $(git -C "${repo}" rev-parse --short HEAD), $(git -C "${repo}" ls-files | wc -l) tracked files"
           done
+
+      - name: Check out the engine that .ci/project.json pins
+        shell: pwsh
+        working-directory: RedHome
+        run: |
+          $ref = (Get-Content -LiteralPath .ci/project.json -Raw | ConvertFrom-Json).engine.ref
+          git clone --quiet --filter=blob:none --no-checkout https://github.com/RedSalamanders/.github.git .ci-engine
+          git -C .ci-engine checkout --quiet --detach $ref
+          Write-Host "engine at $(git -C .ci-engine rev-parse --short HEAD)"
 
       - name: Run validate.ps1 -CheckSiblings
         shell: pwsh

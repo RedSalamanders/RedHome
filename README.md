@@ -28,6 +28,10 @@ Tip: Open `RedHome\wiki` in **RedTilde** (`Ctrl+Shift+O` -> select `wiki`) or VS
 Requires PowerShell 7 (`pwsh`) and Git:
 
 ```powershell
+# Once per clone: the shared CI engine that .ci/project.json pins, which checks the agent guidance
+git clone https://github.com/RedSalamanders/.github.git .ci-engine
+git -C .ci-engine checkout --detach (Get-Content .ci/project.json -Raw | ConvertFrom-Json).engine.ref
+
 # Validate all skills, thin pointer files, wiki and plan index coverage, and internal Markdown links
 pwsh -NoProfile -File .\validate.ps1
 

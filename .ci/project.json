@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "repository": "RedSalamanders/RedHome",
+  "kind": "documentation",
+  "engine": {
+    "repository": "RedSalamanders/.github",
+    "ref": "3b19eade3b1228d0d5f05bcfce89f4b7c66ef1da"
+  }
+}

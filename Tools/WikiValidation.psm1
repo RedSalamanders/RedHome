@@ -122,39 +122,6 @@ function Test-WikiIntegrity {
     return $wikiFiles.Count
 }
 
-function Test-PlanIndex {
-    <#
-    .SYNOPSIS
-    Every plan file directly under Specs/Plans/WIP and Specs/Plans/Done is linked from that folder's README.md.
-    #>
-    [CmdletBinding()]
-    param([Parameter(Mandatory)][string]$Root)
-    $failures = [Collections.Generic.List[string]]::new()
-    foreach ($state in @('WIP', 'Done')) {
-        $relative = 'Specs/Plans/{0}' -f $state
-        $dir = Join-Path $Root $relative
-        if (-not [IO.Directory]::Exists($dir)) { continue }
-        $indexPath = Join-Path $dir 'README.md'
-        if (-not [IO.File]::Exists($indexPath)) {
-            $failures.Add(('{0}: missing README.md index' -f $relative))
-            continue
-        }
-        $prose = Remove-MarkdownCode ([IO.File]::ReadAllText($indexPath, [Text.UTF8Encoding]::new($false, $true)))
-        $indexed = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
-        foreach ($m in [regex]::Matches($prose, '\[[^\]]+\]\((?<target>[^)#?\s]+\.md)(?:#[^)]*)?\)')) {
-            $target = $m.Groups['target'].Value
-            if (-not $target.Contains('/')) { [void]$indexed.Add($target) }
-        }
-        foreach ($plan in @(Get-ChildItem -LiteralPath $dir -Filter '*.md' -File -Force | Sort-Object Name)) {
-            if ($plan.Name -ceq 'README.md') { continue }
-            if (-not $indexed.Contains($plan.Name)) {
-                $failures.Add(('{0}/{1}: plan is not linked from {0}/README.md' -f $relative, $plan.Name))
-            }
-        }
-    }
-    if ($failures.Count) { throw ($failures -join "`n") }
-}
-
 function Test-SharedSkillShape {
     <#
     .SYNOPSIS
@@ -204,4 +171,4 @@ function Test-SiblingSkillPointer {
     if ($failures.Count) { throw ($failures -join "`n") }
 }
 
-Export-ModuleMember -Function Test-PointerParity, Test-WikiIntegrity, Test-PlanIndex, Test-SharedSkillShape, Test-SiblingSkillPointer
+Export-ModuleMember -Function Test-PointerParity, Test-WikiIntegrity, Test-SharedSkillShape, Test-SiblingSkillPointer

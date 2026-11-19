@@ -1,6 +1,11 @@
 <#
 .SYNOPSIS
 Validates RedHome skills, thin instruction pointers, wiki and plan index coverage, and Markdown links.
+.DESCRIPTION
+The agent guidance (skill grammar, skill index, instruction pointers, scoped-guidance inventory, plan indexes, and
+references; rules G1 to G13) is checked by the shared CI engine that .ci/project.json pins, through
+Tools/Test-AgentGuidance.ps1 with -Kind Documentation. It needs that engine checked out at .ci-engine; the shim says
+how when it is missing. The shared-skill shape, pointer parity, wiki, and sibling-pointer checks are RedHome's own.
 .PARAMETER CheckSiblings
 Also verifies relative links into sibling repositories (../../RedSalamander, ../../RedXe, etc.) and the shared-skill
 pointer sentence in each sibling AGENTS.md. Requires every sibling to be checked out beside RedHome.
@@ -14,14 +19,12 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-Import-Module (Join-Path $PSScriptRoot 'Tools/SkillValidation.psm1') -Force
 Import-Module (Join-Path $PSScriptRoot 'Tools/WikiValidation.psm1') -Force
 
-$skillCount = Test-RepositorySkills -Root $PSScriptRoot
-Test-AgentSkillIndex -Root $PSScriptRoot
+& (Join-Path $PSScriptRoot 'Tools/Test-AgentGuidance.ps1') -Root $PSScriptRoot -Kind Documentation -CheckSiblings:$CheckSiblings
+$skillCount = @(Get-ChildItem -LiteralPath (Join-Path $PSScriptRoot '.agents/skills') -Directory -Force).Count
 Test-SharedSkillShape -Root $PSScriptRoot
 Test-PointerParity -Root $PSScriptRoot
-Test-PlanIndex -Root $PSScriptRoot
 $wikiCount = Test-WikiIntegrity -Root $PSScriptRoot -CheckSiblings:$CheckSiblings
 if ($CheckSiblings) { Test-SiblingSkillPointer -Root $PSScriptRoot }
 
