@@ -28,7 +28,7 @@ Read the target repository's settings contract and schema first; [references/rep
 
 ## Saving
 
-- Saves are atomic ([file-io-safety](../file-io-safety/SKILL.md)), and a no-op persist does not rewrite the document.
+- Publish settings atomically under the [guarded-save requirement](../file-io-safety/SKILL.md). Defer a conflicting write and preserve the in-memory change. A no-op persist leaves the document untouched.
 - The application's own save records the file state it committed, so its watcher does not reload its own write.
 
 ## Live Reload
@@ -40,8 +40,8 @@ Read the target repository's settings contract and schema first; [references/rep
 
 ## Harness Runs And Tests
 
-- The self-test, screenshots, demos, benchmarks, and crash probes never read or write the user's settings file. They parse the deployed templates or use a file under `%TEMP%` or an isolated data root, and keep writes in memory.
-- The self-test proves the live reload from a file under `%TEMP%`.
+- Self-tests, screenshots, demos, benchmarks and crash probes use deployed templates or settings under the product's authorized, isolated test root. Use in-memory writes where the scenario allows.
+- Prove live reload with a fixture file in that test root. The product harness owns the file, watcher and cleanup.
 - Cover invalid load, external conflict, unchanged writes, and each field with its fallback, with independent assertions on the file and on the running state. Verify invalid settings separately from the crash and restart checks ([crash-dumps](../crash-dumps/SKILL.md)).
 
 ## Repository Facts
@@ -52,7 +52,7 @@ Contracts, schemas, stores, watchers, file names, and product rules for every ap
 
 | Topic | Today (per repository) | Common target |
 | --- | --- | --- |
-| Reload, validation, and unknown members (register H-15, plan D19) | Watcher: a worker that waits on the change and a stop event, coalesces, and posts to the UI thread in RedXe (`RedXe/SettingsWatcher.cpp`) and RedSalamander (`RedSalamander/SettingsHotReload.cpp`); one `FindFirstChangeNotification` waited beside the message queue with a 250 ms timer and no worker in RedPrism; no settings watcher in RedTilde or RedMonitor. Invalid value: the whole candidate is validated and rejected in RedXe; field-level fallback in RedPrism and RedTilde. Unknown members: validated in RedXe; kept across a save in RedPrism. RedSalamander's and RedMonitor's field validation was not compared | The rules of this skill. RedPrism changes its watcher; RedXe its validation and unknown-member handling; RedTilde after it moves to JSON (H-10) |
+| Reload, validation, and unknown members (register H-15, plan D19) | Watcher: a worker that waits on the change and a stop event, coalesces, and posts to the UI thread in RedXe (`RedXe/SettingsWatcher.cpp`) and RedSalamander (`RedSalamander/SettingsHotReload.cpp`); one `FindFirstChangeNotification` waited beside the message queue with a 250 ms timer and no worker in RedPrism; no settings watcher in RedTilde or RedMonitor. Invalid value: the whole candidate is validated and rejected in RedXe; field-level fallback in RedPrism and RedTilde. Unknown members: validated in RedXe; kept across a save in RedPrism. RedSalamander's and RedMonitor's field validation was not compared | The rules of this skill. RedPrism and RedMonitor need the watcher. RedXe changes validation and unknown-member handling. RedTilde follows its JSON migration (H-10). RedSalamander and RedMonitor verify field fallback and unknown-member round trips |
 | Settings format (register H-10) | JSON through `yyjson` in RedSalamander, RedXe, RedPrism, RedMonitor; line-based `key=value` text with a `RedTilde.Settings/1` header in RedTilde | JSON through `yyjson` (owner default) |
 | `yyjson` read flags (register H-09) | See the [yyjson](../yyjson/SKILL.md#differences-to-converge) table | JSON5 and BOM |
-| File and contract names (register H-26) | Files: `<Product>.settings.json` and `<Product>-debug.settings.json` in RedXe and RedSalamander; RedMonitor `RedSalamanderMonitor-debug.settings.json` and, in Release, `RedSalamanderMonitor-7.0.settings.json`, renamed with its S4 settings migration; `settings.json` and `settings.debug.json` in RedPrism; RedTilde's text file. Contract: `Specs/Core/Core_Settings.md` in RedXe, RedPrism and RedMonitor, `Specs/Core/Core_SettingsStore.md` in RedSalamander, part of `Specs/Core/Core_SettingsAndCrashes.md` in RedTilde. Schema file names are register B-05 | `<Product>.settings.json` and `<Product>-debug.settings.json`, and `Specs/Core/Core_Settings.md`, everywhere |
+| File and contract names (register H-26) | Files: `<Product>.settings.json` and `<Product>-debug.settings.json` in RedXe and RedSalamander; RedMonitor `RedSalamanderMonitor-debug.settings.json` and, in Release, `RedSalamanderMonitor-7.0.settings.json`, renamed with its S4 settings migration; `settings.json` and `settings.debug.json` in RedPrism; RedTilde's text file. Contract: `Specs/Core/Core_Settings.md` in RedXe, RedPrism and RedMonitor, `Specs/Core/Core_SettingsStore.md` in RedSalamander, part of `Specs/Core/Core_SettingsAndCrashes.md` in RedTilde. B-05 targets `SettingsStore.schema.json` for shipped schemas (D22) | `<Product>.settings.json` and `<Product>-debug.settings.json`, and `Specs/Core/Core_Settings.md`, everywhere |

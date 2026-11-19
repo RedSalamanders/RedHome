@@ -20,7 +20,9 @@ Read the target repository's build contract and the validation section of the ow
 - Build Debug, Release, and ASan Debug when changing project properties, manifests, or compiler behavior. Build x64 and ARM64 when changing vcpkg, platform mapping, or dependency paths.
 - **ARM64 is a cross-build.** On an x64 host the ARM64 build runs no ARM64 test, and a cross-build success does not establish native runtime support. ARM64 runtime tests require a native ARM64 host.
 - **ASan Debug is real.** Run its tests natively; the deliberate isolated probe must produce an AddressSanitizer diagnostic.
-- **Zero warnings.** `/WX` stays disabled and build validation requires zero warnings: fix every project-code diagnostic.
+- Build acceptance requires zero warnings and zero errors. The five `/Wall` repositories disable `/WX`. RedMonitor currently uses `/W4 /WX`. Preserve the effective profile until the owning build change proves its replacement.
+
+RedSalamander keeps its portable `RedLauncher.exe` on the static CRT. Verify the executable's imports and launch from a clean package on x64 and native ARM64. [WinGet integration](../../../../RedSalamander/Specs/Installer/WingetIntegration.md)
 
 ## Outputs And Dependencies
 
@@ -61,5 +63,5 @@ The command table, parameters, outputs, packaging, and product build rules of ev
 | Restore entry points (registers E-07, E-09, E-12) | `restore.ps1` only in RedMonitor; elsewhere `vcpkg-install.ps1` plus `restore-dxui.ps1` (RedSalamander `Tools/Restore-DxUi.ps1`), or part of `build.ps1`. RedTilde has no `vcpkg-install.ps1`. RedSalamander's `vcpkg-install.ps1` defaults `-Platform` to `All`, the others to `x64` | `restore.ps1` everywhere, calling the two, with the same names and defaults |
 | Test entry point (register E-03) | Root `test.ps1` in five; RedSalamander `Tools/Run-AllTests.ps1` | Root `test.ps1` |
 | Intermediate directory (register C-04) | `.build\Intermediate\...` in four; `.build\obj\...` in RedTilde and RedMonitor | `.build\Intermediate\...` |
-| Where profile values are set (register C-11) | Toolset, SDK, character set, runtime library, and optimization in each `.vcxproj` in RedXe, RedPrism, RedTilde, DxUi; centrally in RedSalamander and RedMonitor | Central props; a project file holds only project facts |
-| vcpkg baseline, tool pin, triplets, and restore model (registers C-06, C-07, C-14) | Two baselines, four tool commits, static `*-windows-static-md` triplets in RedMonitor, MSBuild manifest mode in RedSalamander, no vcpkg in RedTilde | One baseline, tool commit, triplet set, and scripted restore under `.build` (plan CV-4-07) |
+| Where profile values are set (C-11) | RedTilde moved its common settings to root props. RedSalamander and RedMonitor already centralize most values. RedXe, RedPrism and DxUi retain per-project settings. | Centralize common settings and verify meaningful exceptions, including RedLauncher's static CRT (D25). |
+| vcpkg restore model (register C-14) | All five repositories with their own vcpkg manifest share the baseline, tool commit and standard dynamic triplets. RedMonitor packages `yyjson.dll`. RedTilde has no project vcpkg manifest. RedSalamander still uses MSBuild manifest mode. | RedSalamander adopts scripted restore under `.build` and verifies each project's explicit link inputs. Read the manifest and tool lock for the current pin. |

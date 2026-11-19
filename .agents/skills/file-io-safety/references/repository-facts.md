@@ -28,4 +28,4 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). The re
 
 ## RedXe
 
-- The temporary is `<target>.tmp.<pid>.<tick>` in the destination's directory; `CommitTemporaryFile` renames it over the destination with `MOVEFILE_WRITE_THROUGH`, adding `MOVEFILE_REPLACE_EXISTING` when replacing.
+- RedXe's settings store validates the applied stamp on a guard handle, flushes an owned sibling temporary, rechecks the path identity and uses `FileRenameInfoEx` with POSIX semantics while the guard stays open. The documented final check-to-rename window and the classic-rename fallback need coverage under D23. A refused persist retains the in-memory change. `CopyFileAtomically` and `CommitTemporaryFile` refresh the deployed schema. [RedXe settings contract](../../../../../RedXe/Specs/Core/Core_Settings.md)

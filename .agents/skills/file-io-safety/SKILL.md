@@ -16,7 +16,7 @@ Read the target repository's file contract first; [references/repository-facts.m
 ## Save
 
 - **Owned same-directory temporary, flush, atomic replace.** Write the complete content to a temporary file the operation owns, in the destination's directory; flush it; then replace the destination atomically. Never write the destination in place, except on the documented path of the owning contract.
-- **Check the destination's identity.** Before replacing a file the user can also change outside the application, compare its identity and content stamp with the ones recorded at open or last save. A destination that changed requires an explicit overwrite choice.
+- **Guard a replacement against concurrent edits.** For an existing file, validate the identity and content stamp accepted by the caller and protect the destination through publication. Preserve a competing write, replacement or newly created destination and report the conflict to the caller. Keep the pending change available for retry. An explicit overwrite applies to the version the user confirmed. Each product owns the mechanism and its supported-filesystem fallbacks (H-25, D23).
 - **Recovery never overwrites originals.** Recovery copies are per session, kept apart from the user's files.
 
 ## Failure, Cancellation, And Completion
@@ -26,6 +26,7 @@ Read the target repository's file contract first; [references/repository-facts.m
 
 ## Tests
 
+- Test an intervening write, rename, delete and create at the publication boundary. Check the external bytes and the retained in-memory change. Exercise the actual filesystem fallback as well as the primary path.
 - Exercise invalid encoding, boundary sizes, cancellation, and write and replace faults (fault-injection hooks, not real disk failures).
 - Use isolated directories for failure, conflict, and cancel tests; never touch the user's unrelated files ([test-evidence](../test-evidence/SKILL.md)).
 
@@ -37,4 +38,4 @@ File contracts, replace helpers, temporary names, budgets, and fault hooks for e
 
 | Topic | Today (per repository) | Common target |
 | --- | --- | --- |
-| Replace sequence (register H-25) | RedTilde (`Common/Storage.cpp`, `RedTilde/Printing.cpp`): `ReplaceFileW` over an existing destination, `MoveFileExW(MOVEFILE_WRITE_THROUGH)` for a new one, as its contract requires. RedPrism projects and images (`Common/ProjectStore.cpp`, `Common/ImageCodecs.cpp`): `ReplaceFileW` with `REPLACEFILE_IGNORE_MERGE_ERRORS`, falling back to `MoveFileExW(MOVEFILE_REPLACE_EXISTING)` without write-through. RedPrism settings (`Common/SettingsStore.cpp`): `MoveFileExW(MOVEFILE_REPLACE_EXISTING \| MOVEFILE_WRITE_THROUGH)`. RedXe settings (`RedXe/Settings.cpp`): a flushed temporary renamed over the file with POSIX semantics (`FileRenameInfoEx`) while a guard handle on it stays open, as its `Core_Settings.md` requires (`CommitTemporaryFile` with `MoveFileExW` only copies the schema). RedMonitor (`support/LocalFileTransaction.h`): a handle rename (`SetFileInformationByHandle`, `FileRenameInfoEx`), then `MoveFileExW`; the only one with fault-injection hooks | One sequence, the strictest: `ReplaceFileW` over an existing destination after its identity check, `MoveFileExW(MOVEFILE_WRITE_THROUGH)` for a new one, as RedTilde's contract states, with one fault-injection hook per step as in RedMonitor. RedPrism and RedMonitor change; RedXe's guarded rename waits for an owner decision |
+| Guarded replacement (H-25) | RedXe settings hold a guard through a POSIX handle rename where supported. Its contract describes the final name-check window and classic-rename fallback. RedTilde, RedPrism and RedMonitor use different replacement paths. Product-specific mechanisms are in the repository facts. | D23 makes protection against a lost concurrent edit common. Prove the guard or a conflict-preserving refusal on each supported path. RedMonitor's fault hooks can exercise the publish boundary. |
