@@ -6,6 +6,7 @@ This page records which file owns each pin and which API revision each repositor
 
 | Repository (from `RedHome`) | Kind | Shared CI engine pin | `DxUi` | `RedMonitor` client |
 | --- | --- | --- | --- | --- |
+| RedHome | `documentation` | `.ci/project.json` `engine.ref` for the guidance validator | — | — |
 | [../DxUi](DxUi.md) | `sdk` | `.ci/project.json` `engine.ref` | Producer; API revision declared in `capabilities.json` (`5`) | None |
 | [../RedSalamander](RedSalamander.md) | `application` | `.ci/project.json` `engine.ref` | `Dependencies/DxUi.lock.json`, API `4` | `Dependencies/RedMonitor.lock.json`, API `1` |
 | [../RedXe](RedXe.md) | `application` | `.ci/project.json` `engine.ref` | `Dependencies/DxUi.lock.json`, API `4` | `Dependencies/RedMonitor.lock.json`, API `1` |
@@ -13,7 +14,9 @@ This page records which file owns each pin and which API revision each repositor
 | [../RedTilde](RedTilde.md) | `application` | `.ci/project.json` `engine.ref` | `Dependencies/DxUi.lock.json`, API `5` | `Dependencies/RedMonitor.lock.json`, API `1` |
 | [../RedMonitor](RedMonitor.md) | `application` | `.ci/project.json` `engine.ref` | `Dependencies/DxUi.lock.json`, API `4` | Producer; API `1` |
 
-In every repository the `@<40-hex-SHA>` in `.github/workflows/*.yml` callers must equal `engine.ref`, and `<repo>/.ci-engine` must be detached at that same commit.
+For a native product, compare each `RedSalamanders/.github` reusable-workflow caller with `engine.ref`. Actions owned by other projects have their own pins. RedHome checks out its documentation validator at its manifest pin. Verify each local `.ci-engine` is a clean, detached checkout at the manifest SHA. The workspace report describes local clones, which may lag published main.
+
+Convergence decision D20 keeps consumers on their current DxUi API revision until API 6. Compatible pin updates within the existing revision may proceed under the consumer's normal rebuild and qualification rules. [Active plan](../Specs/Plans/WIP/README.md)
 
 ## Why `DxUi` and `.ci-engine` Sync Differently
 

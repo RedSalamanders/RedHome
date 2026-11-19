@@ -4,7 +4,7 @@ How to run a session from `RedHome` so that work in any sibling repository is as
 
 ## Session Start
 
-1. Run `pwsh -NoProfile -File ./Tools/Get-WorkspaceStatus.ps1` (read-only). It reports branch, dirty state, `.ci-engine` against its pin, and the `DxUi` and `RedMonitor` locks for every sibling. Add `-Hygiene` to also see days since the last fetch, local-only and merged branches, stale remote-tracking refs, and extra worktrees. Add `-Harness` to compare what every repository must share: the SHA-256 of each such file as committed, the formatter each format script uses, and every root command with its parameters. A convergence register row is closed when this report shows the repositories agree, not when a pull request says so.
+1. Run `pwsh -NoProfile -File ./Tools/Get-WorkspaceStatus.ps1` for the local checkout, pin and lock inventory. Add `-Hygiene` for local refs and worktrees, or `-Harness` for committed file hashes, formatter sources and root command parameters. Record each source SHA. If the checkout lags or has unpublished edits, compare the published main or PR head directly. For a pin wave check the reusable-workflow callers, manifest and clean detached engine checkout. For a behavior or discovery change, run the acceptance check in the owning plan.
 2. For each repository you will change, read its `AGENTS.md` and `Specs/README.md` completely, then the owning domain spec. The dossier in [Index.md](Index.md) tells you where those are.
 3. Choose skills from [Skill-Catalog.md](Skill-Catalog.md) in this order: the shared skill (its rules, its `references/` patterns, and the `repository-facts.md` rows for the target repository), then the repository-local skill. Check the skill's `Differences To Converge` table before assuming a rule already holds in that repository.
 4. For work that spans repositories, use `grill-cross-repo` before writing specs, `spec-workflow` to record the agreed work, and sequence producers (`DxUi`, `RedMonitor`, `RedSalamanders/.github`) before consumers.
@@ -25,7 +25,7 @@ The entry points that still differ between repositories:
 | Repository | Guidance and spec validation | Formatting | Full commands |
 | --- | --- | --- | --- |
 | `RedSalamander` | `.\Tools\Get-SpecInventory.ps1 -FailOnFindings`, `.\Tools\Get-ToolInventory.ps1 -Validate` | `.\format-all.ps1` (formats in place; `-WhatIf` previews) | [RedSalamander.md](RedSalamander.md) |
-| `RedXe` | `.\validate-skills.ps1` | `.\format.ps1` (formats in place) | [RedXe.md](RedXe.md) |
+| `RedXe` | `.\validate-skills.ps1` | `.\format.ps1 -Check` | [RedXe.md](RedXe.md) |
 | `RedPrism` | `.\validate.ps1` (runs `validate-skills.ps1`, the native test-name inventory, a PowerShell syntax check, and the tooling tests) | `.\format.ps1 -Check` | [RedPrism.md](RedPrism.md) |
 | `RedTilde` | `.\validate.ps1` | `.\format.ps1 -Check` | [RedTilde.md](RedTilde.md) |
 | `RedMonitor` | `.\validate.ps1` | `.\format.ps1 -Check` | [RedMonitor.md](RedMonitor.md) |
@@ -37,18 +37,18 @@ Aligning these entry points is a step of the convergence plan; until it lands, u
 
 ## Branches, Pull Requests, And Changelog Folds
 
-- The default branch is `main` everywhere, and it is the only long-lived development branch. A supported older line may keep one protected `maintenance/<line>` branch, named in that repository's `AGENTS.md`; fixes land on `main` first. `DxUi` keeps its API 4 line this way as `maintenance/api4`, which a ruleset protects against deletion and force-push; `RedSalamander`'s `DxUi` lock pins a commit that only that branch holds. `RedSalamander`'s old `master` (the private repository's history) is gone from GitHub and from the clone; its code is on `main`, and its history is archived in `D:\Archive\RedSalamanders-20261117\RedSalamander-local-branches.bundle`.
+- The default branch is `main` everywhere, and it is the only long-lived development branch. A supported older line may keep one protected `maintenance/<line>` branch, named in that repository's `AGENTS.md`; fixes land on `main` first. `DxUi` keeps its API 4 line this way as `maintenance/api4`, which a ruleset protects against deletion and force-push; `RedSalamander`'s `DxUi` lock pins a commit that only that branch holds. RedSalamander's public `main` includes the source snapshot. Its retired local `master` history is preserved privately in `D:\Archive\RedSalamanders-20261117\RedSalamander-local-branches.bundle`.
 - One focused branch per change. The prevailing name is `ej/<topic>-<yyyymmdd>`; `RedMonitor` requires the `ej/` prefix.
-- Every change adds one dated fragment under `Changes/` and never edits `CHANGELOG.md`. After the merge, `Tools/Submit-ChangelogFold.ps1` opens its own `changelog/fold-*` pull request.
-- Pull requests run compiler-free checks only. Native qualification starts on `main` after five continuous quiet minutes, so a merged change is `CI_PENDING` until the repository's `ci-state` branch records `succeeded`.
-- When a pull request merges, GitHub deletes its head branch (automatic deletion is on in every repository); delete the local branch too, including `changelog/fold-*` branches.
+- Each native product change adds one dated fragment under `Changes/` and never edits `CHANGELOG.md`. After the merge, `Tools/Submit-ChangelogFold.ps1` opens its own `changelog/fold-*` pull request.
+- The shared product PR checks are compiler-free. Main native qualification starts after five continuous quiet minutes. Read the admitted source and result from `ci-state`. A later documentation or changelog fold can advance main without a new native run.
+- GitHub retires merged PR heads automatically. Before retiring a local branch, including a changelog fold, verify its exact tip, upstream merge, owning worktree and unpublished commits or evidence. Record any private material in an approved recovery location. [Phase 0 recovery record](../Specs/Plans/WIP/Convergence_2026-11-17/CleanupRunbook.md)
 - `RedHome` itself has no `Changes/` workflow; its gate is `validate.ps1` locally and the `Validate RedHome` workflow, which also checks out every sibling and runs `validate.ps1 -CheckSiblings` on pull requests, on `main`, and weekly.
 
 ## Worktrees
 
 - Keep one clone per repository beside `RedHome`. Give each feature its own worktree inside that clone so several agents can work in one repository at once.
 - Place worktrees below the owning repository's git-ignored `.build/` folder. The drive-root output policy forbids sibling or drive-root copies of a checkout.
-- Remove the worktree and delete its branch when the pull request merges.
+- Retire a finished worktree from Windows after checking ownership, local changes, ignored build or recovery evidence and references from other work. A merged PR alone does not establish that a worktree is finished.
 - Run `git worktree prune` and `git worktree remove` only from the Windows host. From WSL, a container, or any sandbox that mounts the repository at a different path, the `C:\` and `D:\` worktree paths are invisible and git reports every worktree as `prunable`; pruning there would unregister all of them.
 
 ## How Each Harness Finds Guidance And Skills
@@ -73,6 +73,8 @@ pwsh -NoProfile -File .\Tools\Install-SharedSkills.ps1 -Remove -Apply  # take th
 - It replaces only its own links. A real folder, a file, another link, or a machine-wide folder that is itself a link is reported and left alone.
 - It reports every shared skill whose name a skill in a sibling repository or in a machine-wide folder also uses. Codex does not merge two skills with the same name, so rename one of the pair.
 - Links inside a skill resolve from the linked folder, so a sibling link (`../../../../<Repo>/...`) does not reach the workspace from there. Read the same path inside the repository at hand, as with the plugin.
+
+For a change to discovery, open fresh sessions in both RedHome and a consumer. In Claude Code, Codex, GitHub Copilot and Antigravity, list the shared skills, open the expected skill and read one of its product facts. Record the skill, source/version, product-specific answer and any discovery failure. The convergence plan gives the [full parity matrix](../Specs/Plans/WIP/Convergence_2026-11-17.md#phase-3-discovery-in-every-harness-and-outside-redhome).
 
 Without the install, open the session in `RedHome`, or clone `RedHome` beside the repository and point the agent at `../RedHome/AGENTS.md`.
 

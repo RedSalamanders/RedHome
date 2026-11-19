@@ -31,7 +31,7 @@ Each repository's `AGENTS.md` and `Specs/` still decide product behavior. A skil
 
 ## Shared Skills
 
-Each shared skill is one rule set for every repository. `references/` holds the detailed patterns and `repository-facts.md`, the product-specific paths, helpers, and gates. Every skill that covers code ends with a `Differences To Converge` table; the [convergence plan](../Specs/Plans/WIP/README.md) collects those rows into one register.
+Shared skills with `references/repository-facts.md` collect product-specific paths, helpers and checks there. They end with `Repository Facts` and `Differences To Converge`, in that order. Other skills carry the references their workflow needs. The [convergence plan](../Specs/Plans/WIP/README.md) tracks the differences.
 
 | Shared skill | Reference files |
 | --- | --- |
