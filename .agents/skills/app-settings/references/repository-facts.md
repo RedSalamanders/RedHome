@@ -13,7 +13,7 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). A fact
 | RedMonitor | [Specs/Core/Core_Settings.md](../../../../../RedMonitor/Specs/Core/Core_Settings.md), [Specs/SettingsStore.schema.json](../../../../../RedMonitor/Specs/SettingsStore.schema.json) | `support/SettingsStore.cpp`, imported from RedSalamander's store (its contract calls the broad settings and theme types migration debt) | None | `RedSalamanderMonitor-7.0.settings.json` (Release), `RedSalamanderMonitor-debug.settings.json` (Debug), with fallbacks to the legacy `RedSalamanderMonitor.settings.json` |
 | DxUi | None: settings are consumer-owned | None | None | None |
 
-Preferences pages in RedSalamander (dirty tracking, Apply/OK persistence, Cancel semantics, schema metadata): the repository-local [build-preferences-pages](../../../../../RedSalamander/.github/skills/build-preferences-pages/SKILL.md) skill.
+Preferences pages in RedSalamander (dirty tracking, Apply/OK persistence, Cancel semantics, schema metadata): the repository-local [build-preferences-pages](../../../../../RedSalamander/AGENTS.md#skills-reference) skill.
 
 ## RedXe
 

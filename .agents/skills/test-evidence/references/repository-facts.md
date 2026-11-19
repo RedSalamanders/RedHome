@@ -73,7 +73,7 @@ Choose the needed scope:
 
 ## RedSalamander
 
-The repository-local [perf-validation](../../../../../RedSalamander/.github/skills/perf-validation/SKILL.md) skill is the source of the performance workflow in [SKILL.md](../SKILL.md#performance-evidence) and of the shared-process rules in [patterns.md](patterns.md#shared-process-suites).
+The repository-local [perf-validation](../../../../../RedSalamander/AGENTS.md#skills-reference) skill is the source of the performance workflow in [SKILL.md](../SKILL.md#performance-evidence) and of the shared-process rules in [patterns.md](patterns.md#shared-process-suites).
 
 - **Deterministic validation**: prefer `--commands-selftest` for real UI/window paths, `--compare-selftest` for Compare/search engine paths, and `--fileops-selftest` for file-operation paths.
 - **Protected scenarios**, for example: warm Find Files progress storm; cold folder open with icon churn; FileOps pre-calc cancel; Compare Directories content-progress queue churn.

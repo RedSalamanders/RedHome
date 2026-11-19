@@ -6,7 +6,7 @@ Central AI-agent workspace for the **RedSalamanders** organization. Start sessio
 
 All sibling repositories live beside `RedHome` (`..`):
 
-- **RedSalamander** (C++23 dual-pane DirectX file manager, VFS/Viewer/Terminal plugins): `../RedSalamander`. Clone from https://github.com/RedSalamanders/RedSalamander.git if missing. Read its `AGENTS.md` and `Specs/README.md` before changing it (repo skills live in `.github/skills/`). Context: [wiki/RedSalamander.md](wiki/RedSalamander.md).
+- **RedSalamander** (C++23 dual-pane DirectX file manager, VFS/Viewer/Terminal plugins): `../RedSalamander`. Clone from https://github.com/RedSalamanders/RedSalamander.git if missing. Read its `AGENTS.md` and `Specs/README.md` before changing it and use its [skill index](../RedSalamander/AGENTS.md#skills-reference) for the current package paths. Context: [wiki/RedSalamander.md](wiki/RedSalamander.md).
 - **RedXe** (Win32 + D3D11 XENEON EDGE dashboard, widget/service/action COM plugins): `../RedXe`. Clone from https://github.com/RedSalamanders/RedXe.git if missing. Read its `AGENTS.md` and `Specs/README.md` before changing it. Context: [wiki/RedXe.md](wiki/RedXe.md).
 - **RedPrism** (Win32 + D3D11 + HLSL raster image editor, `.prism` store, numeric goldens): `../RedPrism`. Clone from https://github.com/RedSalamanders/RedPrism.git if missing. Read its `AGENTS.md` and `Specs/README.md` before changing it. Context: [wiki/RedPrism.md](wiki/RedPrism.md).
 - **RedTilde** (Native Windows Markdown editor with Compose/Source/Split, math, and Mermaid): `../RedTilde`. Clone from https://github.com/RedSalamanders/RedTilde.git if missing. Read its `AGENTS.md` and `Specs/README.md` before changing it. Context: [wiki/RedTilde.md](wiki/RedTilde.md).
