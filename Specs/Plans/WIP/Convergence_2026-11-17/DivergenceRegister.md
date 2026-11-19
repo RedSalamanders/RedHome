@@ -112,7 +112,7 @@ The plan's inventory table lists the copies. Each row converges by giving the to
 | Id | Tool | Owner after convergence |
 | --- | --- | --- |
 | F-01 | Changelog suite (four scripts and `Changelog.psm1`; three variants) | Engine |
-| F-02 | `BuildConsole.psm1`, `NativeBuildPolicy.targets`, `Get-CiNativeScope.ps1` | Engine |
+| F-02 | `BuildConsole.psm1`, `NativeBuildPolicy.targets`, `Get-CiNativeScope.ps1` | Engine for `BuildConsole.psm1` (`Ci.BuildConsole.psm1`, engine #93). The `DxUi` consumer interface for `NativeBuildPolicy.targets`, which must equal the pinned `DxUi` copy (taken 2026-11-19; converges with API 6 under D20). None for `Get-CiNativeScope.ps1`, which no workflow calls (retired with CV-5-04) |
 | F-03 | `ScopedTesting.psm1`, `TestRunEvidence.psm1`, `Test-Changes.ps1` (four forks) | Engine |
 | F-04 | Skill grammar and package integrity (six implementations of four dialects, one of them in Home; none in RS; see A-16) | Engine |
 | F-05 | `DxUiPaths.psm1`, `restore-dxui.ps1`, `DxUiRestore.psm1`, `DxUiProvenance.psm1` | `DxUi` consumer interface |
