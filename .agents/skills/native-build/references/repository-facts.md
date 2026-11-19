@@ -62,7 +62,7 @@ Quick build commands:
 
 ### Tooling changes
 
-Read `Specs/Testing/Testing_ToolingGovernance.md`, `Tools/README.md`, and `.github/skills/tooling-governance/SKILL.md` (the repository-local [tooling-governance](../../../../../RedSalamander/.github/skills/tooling-governance/SKILL.md) skill) before changing a build script or helper. Keep stable build entrypoints at the Tools root, place reusable implementation in explicit modules, update `Tools/tool-inventory.json`, and prove that workflow cache keys include every imported module, patch, notice, schema, and version input that can change produced artifacts.
+Read `Specs/Testing/Testing_ToolingGovernance.md`, `Tools/README.md`, and the `tooling-governance` skill from the [RedSalamander skill index](../../../../../RedSalamander/AGENTS.md#skills-reference) before changing a build script or helper. Keep stable build entrypoints at the Tools root, place reusable implementation in explicit modules, update `Tools/tool-inventory.json`, and prove that workflow cache keys include every imported module, patch, notice, schema, and version input that can change produced artifacts.
 
 ### Operation Startrail build evidence
 

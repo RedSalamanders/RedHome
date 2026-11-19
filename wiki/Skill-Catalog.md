@@ -1,6 +1,6 @@
 # Skill Catalog
 
-Every skill available across RedSalamanders, grouped by owner. Pick the row for the task, open the shared skill first, then the repository-local skill. Shared skills live in `RedHome/.agents/skills/`; repository-local skills stay with their repository and are linked here so a session started in `RedHome` reaches them directly.
+Every skill available across RedSalamanders, grouped by owner. Pick the row for the task, open the shared skill first, then the repository-local skill. Shared skills live in `RedHome/.agents/skills/`; this catalog routes to each product's local skills. RedSalamander's links lead to its own index, which follows changes to its package paths.
 
 Each repository's `AGENTS.md` and `Specs/` still decide product behavior. A skill never overrides them.
 
@@ -8,22 +8,22 @@ Each repository's `AGENTS.md` and `Specs/` still decide product behavior. A skil
 
 | Task | Shared skill | Then, in the target repository |
 | --- | --- | --- |
-| C++ style, warnings, header hygiene, error handling | [modern-cpp-windows](../.agents/skills/modern-cpp-windows/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [async-threading](../../RedSalamander/.github/skills/async-threading/SKILL.md) for threading |
+| C++ style, warnings, header hygiene, error handling | [modern-cpp-windows](../.agents/skills/modern-cpp-windows/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [async-threading](../../RedSalamander/AGENTS.md#skills-reference) for threading |
 | Windows handle and COM ownership | [wil-raii](../.agents/skills/wil-raii/SKILL.md) | Its `references/repository-facts.md` |
 | JSON parsing and serialization | [yyjson](../.agents/skills/yyjson/SKILL.md) | Its `references/repository-facts.md`; [app-settings](../.agents/skills/app-settings/SKILL.md) for settings documents |
 | User-visible strings, menus, accessible names | [localization](../.agents/skills/localization/SKILL.md) | Its `references/repository-facts.md` |
-| Hot paths, allocation, idle behaviour, baselines | [performance-resources](../.agents/skills/performance-resources/SKILL.md), then [test-evidence](../.agents/skills/test-evidence/SKILL.md) for the measurement | Their `references/repository-facts.md`; `RedSalamander` [perf-validation](../../RedSalamander/.github/skills/perf-validation/SKILL.md) until its copy is removed |
-| Win32 window, D3D11 device, swap chain, device loss | [d3d11-win32-host](../.agents/skills/d3d11-win32-host/SKILL.md) | `RedSalamander` [win32-wndproc](../../RedSalamander/.github/skills/win32-wndproc/SKILL.md), `RedSalamander` [direct2d-rendering](../../RedSalamander/.github/skills/direct2d-rendering/SKILL.md), `DxUi` [win32-host](../../DxUi/.agents/skills/win32-host/SKILL.md), `DxUi` [embedded-rendering](../../DxUi/.agents/skills/embedded-rendering/SKILL.md), `RedPrism` [hlsl-composition](../../RedPrism/.agents/skills/hlsl-composition/SKILL.md) |
-| Specs, WIP and Done plans, closeout | [spec-workflow](../.agents/skills/spec-workflow/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [tooling-governance](../../RedSalamander/.github/skills/tooling-governance/SKILL.md) |
-| Build, restore, package, toolchain failures | [native-build](../.agents/skills/native-build/SKILL.md) | Its `references/repository-facts.md`. Until its copy is removed: `RedSalamander` [cpp-build](../../RedSalamander/.github/skills/cpp-build/SKILL.md) |
-| Tests, goldens, captures, evidence | [test-evidence](../.agents/skills/test-evidence/SKILL.md) | Its `references/repository-facts.md`; `RedPrism` [numeric-goldens](../../RedPrism/.agents/skills/numeric-goldens/SKILL.md). Until its copy is removed: `RedSalamander` [perf-validation](../../RedSalamander/.github/skills/perf-validation/SKILL.md) |
+| Hot paths, allocation, idle behaviour, baselines | [performance-resources](../.agents/skills/performance-resources/SKILL.md), then [test-evidence](../.agents/skills/test-evidence/SKILL.md) for the measurement | Their `references/repository-facts.md`; `RedSalamander` [perf-validation](../../RedSalamander/AGENTS.md#skills-reference) until its copy is removed |
+| Win32 window, D3D11 device, swap chain, device loss | [d3d11-win32-host](../.agents/skills/d3d11-win32-host/SKILL.md) | `win32-wndproc` and `direct2d-rendering` in the [RedSalamander skill index](../../RedSalamander/AGENTS.md#skills-reference), `DxUi` [win32-host](../../DxUi/.agents/skills/win32-host/SKILL.md), `DxUi` [embedded-rendering](../../DxUi/.agents/skills/embedded-rendering/SKILL.md), `RedPrism` [hlsl-composition](../../RedPrism/.agents/skills/hlsl-composition/SKILL.md) |
+| Specs, WIP and Done plans, closeout | [spec-workflow](../.agents/skills/spec-workflow/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [tooling-governance](../../RedSalamander/AGENTS.md#skills-reference) |
+| Build, restore, package, toolchain failures | [native-build](../.agents/skills/native-build/SKILL.md) | Its `references/repository-facts.md`. Until its copy is removed: `RedSalamander` [cpp-build](../../RedSalamander/AGENTS.md#skills-reference) |
+| Tests, goldens, captures, evidence | [test-evidence](../.agents/skills/test-evidence/SKILL.md) | Its `references/repository-facts.md`; `RedPrism` [numeric-goldens](../../RedPrism/.agents/skills/numeric-goldens/SKILL.md). Until its copy is removed: `RedSalamander` [perf-validation](../../RedSalamander/AGENTS.md#skills-reference) |
 | `DxUi` pin bumps and consumer adapters | [cross-repo-pins](../.agents/skills/cross-repo-pins/SKILL.md) | `DxUi` [consumer-integration](../../DxUi/.agents/skills/consumer-integration/SKILL.md), `RedPrism` [consumer-dxui](../../RedPrism/.agents/skills/consumer-dxui/SKILL.md), `RedTilde` [consumer-dxui](../../RedTilde/.agents/skills/consumer-dxui/SKILL.md) |
 | `RedMonitor` client adoption and transport | [cross-repo-pins](../.agents/skills/cross-repo-pins/SKILL.md) | `RedMonitor` [consumer-adoption](../../RedMonitor/.agents/skills/consumer-adoption/SKILL.md), `RedMonitor` [transport-client](../../RedMonitor/.agents/skills/transport-client/SKILL.md) |
 | Shared CI engine pin, `.ci-engine` health | [cross-repo-pins](../.agents/skills/cross-repo-pins/SKILL.md) | [Shared-CI-Engine.md](Shared-CI-Engine.md) |
-| Settings, preferences, themes | [app-settings](../.agents/skills/app-settings/SKILL.md), then [yyjson](../.agents/skills/yyjson/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [build-preferences-pages](../../RedSalamander/.github/skills/build-preferences-pages/SKILL.md), `RedSalamander` [theming](../../RedSalamander/.github/skills/theming/SKILL.md) |
+| Settings, preferences, themes | [app-settings](../.agents/skills/app-settings/SKILL.md), then [yyjson](../.agents/skills/yyjson/SKILL.md) | Its `references/repository-facts.md`; `build-preferences-pages` and `theming` in the [RedSalamander skill index](../../RedSalamander/AGENTS.md#skills-reference) |
 | Crash dumps and failure diagnostics | [crash-dumps](../.agents/skills/crash-dumps/SKILL.md) | Its `references/repository-facts.md`; `RedSalamander` [red-salamander-crash-forensics](../../RedSalamander/.agents/skills/red-salamander-crash-forensics/SKILL.md) to investigate a dump |
 | File open/save safety | [file-io-safety](../.agents/skills/file-io-safety/SKILL.md) | Its `references/repository-facts.md` |
-| Plugin ABIs | — | `RedSalamander` [plugin-callbacks](../../RedSalamander/.github/skills/plugin-callbacks/SKILL.md), `RedXe` [plugin-development](../../RedXe/.agents/skills/plugin-development/SKILL.md) |
+| Plugin ABIs | — | `RedSalamander` [plugin-callbacks](../../RedSalamander/AGENTS.md#skills-reference), `RedXe` [plugin-development](../../RedXe/.agents/skills/plugin-development/SKILL.md) |
 | Shared controls, input, accessibility | — | `DxUi` [control-development](../../DxUi/.agents/skills/control-development/SKILL.md), `DxUi` [input-accessibility](../../DxUi/.agents/skills/input-accessibility/SKILL.md), `RedTilde` [desktop-ui](../../RedTilde/.agents/skills/desktop-ui/SKILL.md) |
 | Cross-repository design review | [grill-cross-repo](../.agents/skills/grill-cross-repo/SKILL.md) | Then [spec-workflow](../.agents/skills/spec-workflow/SKILL.md) |
 | Audits and improvement plans | [improve](../.agents/skills/improve/SKILL.md) | — |
@@ -54,21 +54,23 @@ Shared skills with `references/repository-facts.md` collect product-specific pat
 
 ## Repository-Local Skills
 
-### RedSalamander (`.github/skills/` and `.agents/skills/`)
+### RedSalamander
+
+Open the named skill from [RedSalamander's skill index](../../RedSalamander/AGENTS.md#skills-reference).
 
 | Skill | Use it for |
 | --- | --- |
-| [async-threading](../../RedSalamander/.github/skills/async-threading/SKILL.md) | Threading model and async operation patterns for Windows applications. |
-| [build-preferences-pages](../../RedSalamander/.github/skills/build-preferences-pages/SKILL.md) | Create or update RedSalamander settings-backed Preferences pages without breaking dirty tracking, Apply/OK persistence, Cancel semantics, schema metadata, localization, accessibility, or tests. |
-| [cpp-build](../../RedSalamander/.github/skills/cpp-build/SKILL.md) | Build RedSalamander C++ projects using the PowerShell wrapper; the independently installed RedMonitor helper is outside this solution. |
-| [direct2d-rendering](../../RedSalamander/.github/skills/direct2d-rendering/SKILL.md) | Direct2D and DirectWrite graphics rendering patterns for Windows. |
-| [file-actions](../../RedSalamander/.github/skills/file-actions/SKILL.md) | File-action ID rules for viewer/editor/user-menu settings, parameterized commands, resolver behavior, and regression coverage. |
-| [icon-cache](../../RedSalamander/.github/skills/icon-cache/SKILL.md) | Shell icon management and caching using IconCache class. |
-| [perf-validation](../../RedSalamander/.github/skills/perf-validation/SKILL.md) | Performance-first development contract for RedSalamander. |
-| [plugin-callbacks](../../RedSalamander/.github/skills/plugin-callbacks/SKILL.md) | Plugin callback patterns with cookie-based context for INavigationMenuCallback, IFileSystemCallback, and IFileSystemSearchCallback interfaces. |
-| [theming](../../RedSalamander/.github/skills/theming/SKILL.md) | Theme system and color key management for RedSalamander. |
-| [tooling-governance](../../RedSalamander/.github/skills/tooling-governance/SKILL.md) | Add, change, move or retire RedSalamander tooling with its inventory, help, callers, compatibility, dependency closure and owning specifications. |
-| [win32-wndproc](../../RedSalamander/.github/skills/win32-wndproc/SKILL.md) | Win32 window procedure and message handling patterns. |
+| `async-threading` | Threading model and async operation patterns for Windows applications. |
+| `build-preferences-pages` | Create or update RedSalamander settings-backed Preferences pages without breaking dirty tracking, Apply/OK persistence, Cancel semantics, schema metadata, localization, accessibility, or tests. |
+| `cpp-build` | Build RedSalamander C++ projects using the PowerShell wrapper; the independently installed RedMonitor helper is outside this solution. |
+| `direct2d-rendering` | Direct2D and DirectWrite graphics rendering patterns for Windows. |
+| `file-actions` | File-action ID rules for viewer/editor/user-menu settings, parameterized commands, resolver behavior, and regression coverage. |
+| `icon-cache` | Shell icon management and caching using IconCache class. |
+| `perf-validation` | Performance-first development contract for RedSalamander. |
+| `plugin-callbacks` | Plugin callback patterns with cookie-based context for INavigationMenuCallback, IFileSystemCallback, and IFileSystemSearchCallback interfaces. |
+| `theming` | Theme system and color key management for RedSalamander. |
+| `tooling-governance` | Add, change, move or retire RedSalamander tooling with its inventory, help, callers, compatibility, dependency closure and owning specifications. |
+| `win32-wndproc` | Win32 window procedure and message handling patterns. |
 | [red-salamander-crash-forensics](../../RedSalamander/.agents/skills/red-salamander-crash-forensics/SKILL.md) | Preserve and investigate RedSalamander dumps, sidecar stacks, fatal dialogs, hangs, timeouts, and failed selftest runs before rerunning a focused scenario. |
 
 ### RedXe (`.agents/skills/`)

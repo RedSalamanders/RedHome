@@ -32,5 +32,5 @@ Product-specific facts for the shared [d3d11-win32-host](../SKILL.md) rules. Eac
 ## Other Hosts
 
 - `DxUi`: [win32-host](../../../../../DxUi/.agents/skills/win32-host/SKILL.md) and [embedded-rendering](../../../../../DxUi/.agents/skills/embedded-rendering/SKILL.md).
-- `RedSalamander`: [win32-wndproc](../../../../../RedSalamander/.github/skills/win32-wndproc/SKILL.md) and [direct2d-rendering](../../../../../RedSalamander/.github/skills/direct2d-rendering/SKILL.md).
+- Use `win32-wndproc` and `direct2d-rendering` from the [RedSalamander skill index](../../../../../RedSalamander/AGENTS.md#skills-reference).
 - `RedPrism` HLSL composition: [hlsl-composition](../../../../../RedPrism/.agents/skills/hlsl-composition/SKILL.md).
