@@ -26,6 +26,7 @@ Dual-pane DirectX/Direct2D/DirectWrite Windows file manager inspired by Open Sal
 ```powershell
 Set-Location ..\RedSalamander
 .\vcpkg-install.ps1
+.\format.ps1 -Check
 .\build.ps1 -Configuration Debug
 .\Test-Changes.ps1 -Explain
 .\Test-Changes.ps1

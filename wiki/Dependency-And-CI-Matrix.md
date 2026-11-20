@@ -16,7 +16,7 @@ This page records which file owns each pin and which API revision each repositor
 
 For a native product, compare each `RedSalamanders/.github` reusable-workflow caller with `engine.ref`. Actions owned by other projects have their own pins. RedHome checks out its documentation validator at its manifest pin. Verify each local `.ci-engine` is a clean, detached checkout at the manifest SHA. The workspace report describes local clones, which may lag published main.
 
-Convergence decision D20 keeps consumers on their current DxUi API revision until API 6. Compatible pin updates within the existing revision may proceed under the consumer's normal rebuild and qualification rules. [Active plan](../Specs/Plans/WIP/README.md)
+Convergence decision D20 keeps consumers on their current DxUi API revision until API 6. Compatible pin updates within the existing revision may proceed under the consumer's normal rebuild and qualification rules. DxUi maintains `maintenance/api4` for API 4 consumers. Each consumer lock determines which installer it restores. [DxUi branch policy](../../DxUi/AGENTS.md) · [Active plan](../Specs/Plans/WIP/README.md)
 
 ## Why `DxUi` and `.ci-engine` Sync Differently
 
