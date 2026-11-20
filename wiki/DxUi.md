@@ -15,6 +15,8 @@ Canonical home of shared DirectX UI controls and rich Markdown/text layout for R
   - Consumers import only `Build/DxUi.Consumer.props`, `Build/DxUi.Consumer.targets`, `Build/DxUi.AddressSanitizer.targets`, and `src/DxUi.vcxproj`, and call only exported helpers in `Tools/ConsumerBuild.psm1`, `Tools/ConsumerUpdate.psm1`, `Tools/VisualStudio.psm1`, `Tools/VcpkgTriplet.psm1`, `Tools/validate_consumer.ps1`, and `vcpkg-install.ps1`.
   - API 5 requires installing the application-owned failure host before constructing controls or entering `DxUi` scopes.
 
+The [source import archive](../../DxUi/Specs/SourceImport/README.md) records attribution, test disposition and migration history. DxUi's validation tools read those records.
+
 ## Repository-Specific Rules & Skills
 
 - **Skills (`../../DxUi/.agents/skills/`)**: Repo-specific skills `control-development`, `embedded-rendering`, `win32-host`, `input-accessibility`, `consumer-integration` (shared skills `performance-resources`, `modern-cpp-windows`, `spec-workflow`, `test-evidence`, `native-build` live in `RedHome/.agents/skills/`).
