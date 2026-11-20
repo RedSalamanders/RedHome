@@ -73,7 +73,7 @@ Choose the needed scope:
 
 ## RedSalamander
 
-The repository-local [perf-validation](../../../../../RedSalamander/AGENTS.md#skills-reference) skill is the source of the performance workflow in [SKILL.md](../SKILL.md#performance-evidence) and of the shared-process rules in [patterns.md](patterns.md#shared-process-suites).
+The former RedSalamander `perf-validation` skill supplied the [performance workflow](../SKILL.md#performance-evidence) and the [shared-process rules](patterns.md#shared-process-suites). RedSalamander owns its behavioral contracts in `Specs/Testing/Testing_PerformanceValidation.md` and `Specs/Testing/Testing_SelfTests.md`.
 
 - **Deterministic validation**: prefer `--commands-selftest` for real UI/window paths, `--compare-selftest` for Compare/search engine paths, and `--fileops-selftest` for file-operation paths.
 - **Protected scenarios**, for example: warm Find Files progress storm; cold folder open with icon churn; FileOps pre-calc cancel; Compare Directories content-progress queue churn.
