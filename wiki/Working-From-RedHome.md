@@ -58,7 +58,7 @@ Aligning these entry points is a step of the convergence plan; until it lands, u
 | Codex | `AGENTS.md` | Discovered natively from `.agents/skills/`, which Codex reads in every folder from the working directory up to the repository root, and from `~/.agents/skills/` |
 | Claude Code | `CLAUDE.md`, which points to `AGENTS.md` | Loaded natively as `redhome:<skill>` after installing the plugin enabled in `.claude/settings.json`. The `AGENTS.md` skill index remains the fallback |
 | GitHub Copilot | `.github/copilot-instructions.md`, which points to `AGENTS.md` | Discovered natively from `.agents/skills/` (Copilot also reads `.github/skills/` and `.claude/skills/`) and from `~/.agents/skills/` or `~/.copilot/skills/` |
-| Antigravity | `AGENTS.md` (Antigravity also reads `GEMINI.md`), from the workspace folder and each parent folder up to the repository root | Discovered natively from `.agents/skills/` at the workspace root, and from `~/.gemini/config/skills/` (the IDE also reads the legacy `~/.gemini/antigravity/skills/`) |
+| Antigravity | `AGENTS.md` (Antigravity also reads `GEMINI.md`), from the workspace folder and each parent folder up to the repository root | Loads skills from the workspace `.agents/skills/`, the global `~/.gemini/config/skills/` directory and the global `~/.gemini/config/skills.json` discovery manifest. The IDE also reads the legacy `~/.gemini/antigravity/skills/`. |
 
 In a product repository, Codex, Copilot, and Antigravity find the shared skills only in their machine-wide folders, because the shared ones live in `RedHome`. Link them there once per machine with `Tools/Install-SharedSkills.ps1`, run from `RedHome`:
 
@@ -69,10 +69,22 @@ pwsh -NoProfile -File .\Tools\Install-SharedSkills.ps1 -Remove -Apply  # take th
 ```
 
 - It links each `.agents/skills/<name>` folder of the main `RedHome` checkout into `~/.agents/skills/` (Codex and Copilot) and `~/.gemini/config/skills/` (Antigravity), for the harnesses it finds. Nothing is copied, so a pull of `RedHome` updates every harness at once. Run `-Apply` again after a skill is added or removed, and start a new session to load the new list.
-- The installer creates Windows directory junctions. Codex, Copilot and the Antigravity App have opened skills through these links. `-LinkType SymbolicLink` creates symbolic links instead and needs Developer Mode or an elevated shell.
+- The installer creates Windows directory junctions. Codex and Copilot discover the shared packages through these links. `-LinkType SymbolicLink` creates symbolic links and needs Developer Mode or an elevated shell.
 - It replaces only its own links. A real folder, a file, another link, or a machine-wide folder that is itself a link is reported and left alone.
 - It reports every shared skill whose name a skill in a sibling repository or in a machine-wide folder also uses. Codex does not merge two skills with the same name, so rename one of the pair.
 - Links inside a skill resolve from the linked folder, so a sibling link (`../../../../<Repo>/...`) does not reach the workspace from there. Read the same path inside the repository at hand, as with the plugin.
+
+If the Antigravity App omits the linked packages, add the absolute path of your main `RedHome` checkout's `.agents/skills` directory to the `entries` array in `~/.gemini/config/skills.json`. Keep any existing entries. The manifest references the same canonical files and needs no link privileges. Check the project's Customizations list in Settings and open a fresh conversation. [Antigravity discovery manifests](https://antigravity.google/docs/customization-discovery#discovery-manifests)
+
+The following manifest uses a checkout at `D:\RedHome`.
+
+```json
+{
+  "entries": [
+    { "path": "D:\\RedHome\\.agents\\skills" }
+  ]
+}
+```
 
 For a change to discovery, open fresh sessions in both RedHome and a consumer. In Claude Code, Codex, GitHub Copilot and Antigravity, list the shared skills, open the expected skill and read one of its product facts. Record the skill, source/version, product-specific answer and any discovery failure. The convergence plan gives the [full parity matrix](../Specs/Plans/WIP/Convergence_2026-11-17.md#phase-3-discovery-in-every-harness-and-outside-redhome).
 
