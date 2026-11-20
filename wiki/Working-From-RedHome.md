@@ -56,7 +56,7 @@ Aligning these entry points is a step of the convergence plan; until it lands, u
 | Harness | Loads at session start in `RedHome` | Shared skills |
 | --- | --- | --- |
 | Codex | `AGENTS.md` | Discovered natively from `.agents/skills/`, which Codex reads in every folder from the working directory up to the repository root, and from `~/.agents/skills/` |
-| Claude Code | `CLAUDE.md`, which points to `AGENTS.md` | Loaded natively as `redhome:<skill>` through the `redhome` plugin that `.claude/settings.json` enables (Claude Code does not read `.agents/skills/` itself). The `AGENTS.md` skill index remains the fallback |
+| Claude Code | `CLAUDE.md`, which points to `AGENTS.md` | Loaded natively as `redhome:<skill>` after installing the plugin enabled in `.claude/settings.json`. The `AGENTS.md` skill index remains the fallback |
 | GitHub Copilot | `.github/copilot-instructions.md`, which points to `AGENTS.md` | Discovered natively from `.agents/skills/` (Copilot also reads `.github/skills/` and `.claude/skills/`) and from `~/.agents/skills/` or `~/.copilot/skills/` |
 | Antigravity | `AGENTS.md` (Antigravity also reads `GEMINI.md`), from the workspace folder and each parent folder up to the repository root | Discovered natively from `.agents/skills/` at the workspace root, and from `~/.gemini/config/skills/` (the IDE also reads the legacy `~/.gemini/antigravity/skills/`) |
 
@@ -69,7 +69,7 @@ pwsh -NoProfile -File .\Tools\Install-SharedSkills.ps1 -Remove -Apply  # take th
 ```
 
 - It links each `.agents/skills/<name>` folder of the main `RedHome` checkout into `~/.agents/skills/` (Codex and Copilot) and `~/.gemini/config/skills/` (Antigravity), for the harnesses it finds. Nothing is copied, so a pull of `RedHome` updates every harness at once. Run `-Apply` again after a skill is added or removed, and start a new session to load the new list.
-- The links are directory junctions, which need no privilege and which Codex and Copilot follow. `-LinkType SymbolicLink` creates symbolic links instead and needs Developer Mode or an elevated shell.
+- The installer creates Windows directory junctions. Codex, Copilot and the Antigravity App have opened skills through these links. `-LinkType SymbolicLink` creates symbolic links instead and needs Developer Mode or an elevated shell.
 - It replaces only its own links. A real folder, a file, another link, or a machine-wide folder that is itself a link is reported and left alone.
 - It reports every shared skill whose name a skill in a sibling repository or in a machine-wide folder also uses. Codex does not merge two skills with the same name, so rename one of the pair.
 - Links inside a skill resolve from the linked folder, so a sibling link (`../../../../<Repo>/...`) does not reach the workspace from there. Read the same path inside the repository at hand, as with the plugin.
@@ -78,14 +78,14 @@ For a change to discovery, open fresh sessions in both RedHome and a consumer. I
 
 Without the install, open the session in `RedHome`, or clone `RedHome` beside the repository and point the agent at `../RedHome/AGENTS.md`.
 
-`RedHome` is a Claude Code plugin marketplace (`.claude-plugin/marketplace.json`, marketplace `redsalamanders`, plugin `redhome`) whose plugin root is the repository, so the installed copy carries the skills and this wiki. A repository opts in with the same `.claude/settings.json` as `RedHome`; a single machine can also install it once for every repository with `/plugin install redhome --marketplace RedSalamanders/RedHome`. While editing skills locally, start Claude Code with `--plugin-dir .` to load the working tree instead of the installed copy.
+`RedHome` provides the `redsalamanders` marketplace and the `redhome` plugin. Each repository enables the plugin in `.claude/settings.json`. In a local Claude Code installation, register the marketplace with `claude plugin marketplace add RedSalamanders/RedHome` if needed. Run `claude plugin install redhome@redsalamanders --scope project` once per checkout or install it once at user scope with `--scope user`. Open a fresh session after setup. To test an edit to the plugin itself, start Claude Code from RedHome with `--plugin-dir .`. [Claude Code install scopes](https://code.claude.com/docs/en/discover-plugins#choose-an-install-scope)
 
 ## When RedHome Is Not Beside The Repository
 
-A session started inside one repository (a hosted coding agent, a fresh machine, CI) sees only that repository.
+A hosted coding agent, a fresh checkout or a CI job can start with only the product repository.
 
 - Each repository's `AGENTS.md` names `../RedHome/AGENTS.md`, the skill package directory, and the clone URL. Clone `RedHome` beside the repository when the environment allows it.
-- In Claude Code the `redhome` plugin still supplies the shared skills there. Sibling links inside a skill (`../../../../<Repo>/...`) resolve only in the `RedHome` workspace layout; in a product repository read the same path inside that repository.
+- An installed Claude Code plugin supplies shared skills in a local single-repository session. Claude Code cloud sessions use plugins provisioned through managed settings. Use the repository's RedHome pointer when the plugin is unavailable and the host supports a sibling checkout. In a product checkout, resolve skill links to that product's files from its own repository root. [Claude Code plugin availability](https://code.claude.com/docs/en/discover-plugins)
 - In any other harness, the shared skills are there only on a machine where `Install-SharedSkills.ps1` linked them. Without them, the repository's own `AGENTS.md`, `Specs/`, and local skills still fully define product behavior and validation. Only the shared how-to detail is missing; do not guess it, and say so in the handoff.
 - Nothing in any build, test, or CI path may depend on `RedHome`. It is unpinned and absent from CI by design.
 
