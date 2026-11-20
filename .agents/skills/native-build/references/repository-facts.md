@@ -181,7 +181,7 @@ The executable build summary is printed exactly once after all selected build/pa
 
 ### Required validation loop
 
-For perf-sensitive work, building is only the first step; the workflow is in [test-evidence](../../test-evidence/SKILL.md#performance-evidence). After a successful build: run the deterministic selftest or scenario for the changed subsystem; confirm a new archived run appears under `Specs/TestRuns/`; compare the baseline and candidate runs before claiming an improvement; if the work finishes a plan, move that plan to `Specs/Plans/Done/` and update the authoritative subsystem spec or repo guidance with the lasting requirement. See `Specs/Testing/Testing_PerformanceValidation.md`, `Specs/TestRuns/README.md`, and the RedSalamander `perf-validation` skill from the [product skill index](../../../../../RedSalamander/AGENTS.md#skills-reference).
+For perf-sensitive work, follow the [test-evidence workflow](../../test-evidence/SKILL.md#performance-evidence). After a successful build, run the deterministic selftest or scenario for the changed subsystem and confirm that its archived run appears under `Specs/TestRuns/`. Compare the baseline and candidate runs before claiming an improvement. When the work finishes a plan, move it to `Specs/Plans/Done/` and update the authoritative subsystem spec or repo guidance with the lasting requirement. RedSalamander owns the scenarios and evidence rules in `Specs/Testing/Testing_PerformanceValidation.md` and `Specs/TestRuns/README.md`.
 
 ## RedXe
 
