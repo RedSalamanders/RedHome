@@ -26,6 +26,15 @@ Read the target repository's validation contract for its gates, and the owning d
 - Ordinary tests never acquire the clipboard, the foreground, or the cursor. A test that needs them is an interactive test: it runs only with the user's agreement at the time, under the repository's interactive desktop lease ([Shared-Engineering-Policies.md](../../../wiki/Shared-Engineering-Policies.md#5-scoped-testing--qualification-test-changesps1)).
 - Capture the application's own render through its harness capture switch, never the desktop, and never with Computer Use or a manual screenshot. GUI images come from non-activating synthetic harness fixtures.
 
+## Allowed Write Locations Only (Fail Closed)
+
+- **Critical Normative Rule**: Every test executable, harness, capture driver, and script **DOES NOT HAVE THE RIGHT** to create, modify, or delete files outside explicitly authorized locations ([Shared-Engineering-Policies.md](../../../wiki/Shared-Engineering-Policies.md#6-critical-normative-rule-allowed-write-locations-only-fail-closed)):
+  1. The owning repository working tree and repository-local `.build/` (never committed);
+  2. An explicitly owner-authorized `<Project>.Perf` drive-root workspace carrying its verified runner ownership marker (or `D:\Archive\RedSalamanders-20261117`);
+  3. An explicitly declared dedicated `selftest` root in an authorized machine manifest (e.g., `X:\<Project>.Perf\config\machine-resources.json`), strictly inside a unique per-run subfolder (`...-run-<guid>`) with cleanup on exit and without traversing junctions or reparse points.
+- Never write to arbitrary drive roots, `%USERPROFILE%`, Desktop, Documents, undeclared personal/work OneDrive folders, WSL/UNC media or user network shares (such as `\\rubygloom\Multimedia`), or sibling repositories outside task scope.
+- Matching directory names, bare environment variables (`*TEST_ROOT`), or low disk space never grant authorization. Validate the explicit manifest `selftest` root or repository/`.build`/`<Project>.Perf` ownership boundary and fail closed before creating any directory or file.
+
 ## Shared-Process Suites
 
 A suite that runs many cases in one process (a self-test executable, a commands suite) proves each case only if every case leaves the process as it found it. The rules (restore and verify state, process-scoped window lookup, quiet baselines before counters, idempotent UI Automation state changes, reproducing order-dependent failures with their predecessor cluster) are in [references/patterns.md](references/patterns.md#shared-process-suites).

@@ -33,9 +33,20 @@ This page summarizes shared engineering policies and current repository exceptio
 
 For the convergence initiative, D21 permits recording deferred tests after the applicable warning-free compilation and PR checks. Bind every deferral to source, scope, owner and replay. [Convergence test ledger](../Specs/Plans/WIP/Convergence_2026-11-17/DeferredTests.md)
 
-## 6. Drive-Root Output Policy
+## 6. Critical Normative Rule: Allowed Write Locations Only (Fail Closed)
+- **Critical Normative Rule**: Code, tools, tests, scripts, and AI agents **DO NOT HAVE THE RIGHT** to create, modify, or delete files outside explicitly authorized locations:
+  1. The owning repository working tree and repository-local `.build/` (never committed);
+  2. An explicitly owner-authorized `<Project>.Perf` drive-root workspace (such as `D:\RedSalamander.Perf`) carrying its verified runner ownership marker, or the explicitly authorized recovery folder `D:\Archive\RedSalamanders-20261117`;
+  3. An explicitly declared dedicated `selftest` root in an authorized machine manifest (e.g., `X:\<Project>.Perf\config\machine-resources.json`), strictly inside a unique per-run subfolder (`...-run-<guid>`) with cleanup on exit and never traversing junctions or reparse points.
+- **Explicitly prohibited destinations**: arbitrary drive roots, `%USERPROFILE%`, Desktop, Documents, undeclared personal/work OneDrive folders, media/user network shares (such as `\\rubygloom\Multimedia`), or sibling repositories outside task scope.
+- **Fail closed**: Matching directory names, bare environment variables (`*TEST_ROOT`), or low disk space never grant authorization; every test runner, capture harness, and script MUST fail closed before creating or writing any file.
 - Never create scratch, caches, evidence, copied checkouts, or sibling output folders at a drive root.
-- Only `<Project>.Perf` (such as `D:\RedSalamander.Perf`) is permitted at a drive root, and only after explicit user authorization of the exact path. Never traverse junctions during cleanup.
+- Only `<Project>.Perf` (such as `D:\RedSalamander.Perf`) is permitted at a drive root, and only after explicit user authorization of the exact path. Never traverse junctions during cleanup or leave compatibility junctions at forbidden old drive-root paths.
 - D14 authorizes the specific private recovery folder `D:\Archive\RedSalamanders-20261117`. Preserve its historical bundles under their original names. Any newly authorized archive uses a fresh name and verified exact refs. [Phase 0 recovery record](../Specs/Plans/WIP/Convergence_2026-11-17/CleanupRunbook.md)
+
+## 7. `_camelCase` Private & Protected Member Naming + `.clang-tidy` Enforcement (`H-27`)
+- **Mandatory member naming**: Private and protected non-static class/struct data members MUST use `_camelCase` (a leading `_` followed strictly by a lowercase ASCII letter `[a-z]`, pattern `_[a-z][A-Za-z0-9]*`). Trailing `name_` and unprefixed bare member names are forbidden for private/protected members.
+- **Member-scope ONLY**: Strictly ban `_Uppercase`, `__double`, and leading `_` at file, namespace, or global scope (`bugprone-reserved-identifier` / ISO C++ `[lex.name]`). Public `struct`/DTO data members remain `camelCase`.
+- **Mandatory enforcement**: Enforce via a repository-root `.clang-tidy` enabling `readability-identifier-naming` and `bugprone-reserved-identifier` (see [modern-cpp-windows](../.agents/skills/modern-cpp-windows/SKILL.md) and [cpp-style.md](../.agents/skills/modern-cpp-windows/references/cpp-style.md)). `RedTilde` adopts first (`H-27`); sibling repositories migrate in focused per-repo PRs. [Divergence register H-27](../Specs/Plans/WIP/Convergence_2026-11-17/DivergenceRegister.md#h-code-conventions)
 
 Return to [Index.md](Index.md).

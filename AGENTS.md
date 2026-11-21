@@ -17,12 +17,17 @@ All sibling repositories live beside `RedHome` (`..`):
 ## Shared Docs
 
 - [wiki/Index.md](wiki/Index.md) — Cross-project wiki hub (synthesizes and routes; never overrides a repo's `Specs/` or lock files).
-- [wiki/Shared-Engineering-Policies.md](wiki/Shared-Engineering-Policies.md) — Shared WIL/C++ rules, native compiler profiles and repository exceptions, `Changes/` fragments, scoped testing, desktop-focus lease, and drive-root output policy.
+- [wiki/Shared-Engineering-Policies.md](wiki/Shared-Engineering-Policies.md) — Shared WIL/C++ rules, native compiler profiles and exceptions, `Changes/` fragments, scoped testing, desktop-focus lease, **Allowed Write Locations Only (Fail Closed)**, and **`_camelCase` member naming + `.clang-tidy` (`H-27`)**.
 - [wiki/Ecosystem-Architecture.md](wiki/Ecosystem-Architecture.md) — Graphics, UI-host, plugin-ABI, and settings comparison across apps.
 - [wiki/Glossary.md](wiki/Glossary.md) — Canonical RedSalamanders vocabulary.
 - [wiki/Working-From-RedHome.md](wiki/Working-From-RedHome.md) — Session start, per-repository command map, branch and worktree conventions, and harness discovery.
 - [wiki/Skill-Catalog.md](wiki/Skill-Catalog.md) — Every shared and repository-local skill, routed by task.
 - [Specs/Plans/WIP/README.md](Specs/Plans/WIP/README.md) — Active cross-repository plans (currently the convergence plan).
+
+## Mandatory Ecosystem Rules
+
+- **Allowed Write Locations Only (Fail Closed)**: Code, tools, tests, scripts, and AI agents **DO NOT HAVE THE RIGHT** to create, modify, or delete files outside (1) the owning repository working tree / `.build/`, (2) an explicitly owner-authorized marked `<Project>.Perf` root (or `D:\Archive\RedSalamanders-20261117`), or (3) a manifest-declared `selftest` root's unique `...-run-<guid>` subfolder with cleanup on exit and no junction traversal. Never write to arbitrary drive roots, `%USERPROFILE%`, Desktop, Documents, undeclared OneDrive folders, network shares (`\\rubygloom\Multimedia`), or out-of-scope siblings; fail closed before writing ([policy](wiki/Shared-Engineering-Policies.md#6-critical-normative-rule-allowed-write-locations-only-fail-closed)).
+- **`_camelCase` Member Naming + `.clang-tidy` (`H-27`)**: Private/protected non-static class/struct members MUST use `_camelCase` (`_[a-z][A-Za-z0-9]*`, member-scope only; banning `name_`, bare fields, `_Uppercase`, `__`, and global `_name`; public `struct`/DTO fields remain `camelCase`), enforced via repository-root `.clang-tidy` (`readability-identifier-naming` + `bugprone-reserved-identifier`; [policy](wiki/Shared-Engineering-Policies.md#7-_camelcase-private--protected-member-naming--clang-tidy-enforcement-h-27)).
 
 ## Shared Skills
 

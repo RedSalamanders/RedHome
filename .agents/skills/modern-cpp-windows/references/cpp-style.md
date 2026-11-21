@@ -60,12 +60,45 @@ buf[(r.size < max) ? r.size : max] = L'\0';
 
 | Type | Style | Example |
 |------|-------|---------|
-| Classes | PascalCase | `ColorTextView` |
+| Classes / Structs | PascalCase | `ColorTextView` |
 | Public methods | PascalCase | `RenderText()` |
 | Private methods | camelCase | `calculateLayout()` |
-| Variables | camelCase | `textLayout` |
-| Members | `_` prefix | `_scrollY` |
+| Locals / Parameters | camelCase | `textLayout` |
+| Public `struct` / DTO fields | camelCase | `scrollOffset` |
+| Private & protected non-static members | Strict `_camelCase` (`_[a-z][A-Za-z0-9]*`) | `_scrollY` |
 | Constants | kName | `kMaxBufferSize` |
+
+- **Strict `_camelCase` rule**: Private and protected non-static class/struct data members MUST start with `_` followed strictly by a lowercase ASCII letter `[a-z]`.
+- **Member-scope only**: Leading `_` is permitted **only** on private/protected class or struct data members.
+- **Banned forms**:
+  - Trailing underscore `name_` (e.g., `handle_`)
+  - Unprefixed bare private/protected fields (e.g., `scrollY`) or Hungarian/Microsoft prefixes (`m_name`)
+  - `_Uppercase` anywhere (e.g., `_Handle`, `_Impl`) — reserved identifier
+  - `__double` underscore anywhere (e.g., `__value`, `foo__bar`) — reserved identifier
+  - Leading `_` at file, namespace, or global scope (e.g., `namespace { int _counter; }`, file-static `_instance`) — reserved identifier (`bugprone-reserved-identifier` / ISO C++ `[lex.name]`)
+- **Public DTOs**: Public `struct`/DTO data members remain `camelCase` without a leading underscore.
+
+### Canonical `.clang-tidy` Configuration (`H-27`)
+
+Enforce member naming and reserved-identifier hygiene via a repository-root `.clang-tidy`:
+
+```yaml
+Checks: '-*,bugprone-reserved-identifier,readability-identifier-naming'
+HeaderFilterRegex: '^(?:Common|RedTilde|RedPrism|RedXe|RedMonitor|RedSalamander|DxUi|src|include|Tests)/.*'
+CheckOptions:
+  - key: readability-identifier-naming.PrivateMemberCase
+    value: camelBack
+  - key: readability-identifier-naming.PrivateMemberPrefix
+    value: '_'
+  - key: readability-identifier-naming.ProtectedMemberCase
+    value: camelBack
+  - key: readability-identifier-naming.ProtectedMemberPrefix
+    value: '_'
+  - key: readability-identifier-naming.PublicMemberCase
+    value: camelBack
+  - key: readability-identifier-naming.IgnoreMainLikeFunctions
+    value: true
+```
 
 ## Code Style
 
