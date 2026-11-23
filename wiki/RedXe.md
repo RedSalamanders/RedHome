@@ -25,6 +25,9 @@ Per-monitor-v2 DPI Win32 + Direct3D 11 dashboard foundation for **XENEON EDGE** 
 
 ## Key Commands
 
+The pinned engine runs scoped testing. RedXe's manifest maps suites and profiles, and native reports retain each
+suite's exit and capability skips. See the [build and validation contract](../../RedXe/Specs/Build/Build_Process.md#scoped-iteration-and-qualification).
+
 ```powershell
 Set-Location ..\RedXe
 .\build.ps1
