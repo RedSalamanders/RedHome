@@ -24,6 +24,9 @@ Native Windows Markdown writing studio (**"Words, beautifully in flow"**) built 
 
 ## Key Commands
 
+The pinned shared engine runs scoped testing. The product manifest owns suite selection, and `test.ps1` retains
+per-case receipts plus the fresh suite reports used for reuse. See the [validation contract](../../RedTilde/Specs/Testing/Testing_Validation.md).
+
 ```powershell
 Set-Location ..\RedTilde
 .\validate.ps1
