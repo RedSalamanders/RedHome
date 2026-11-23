@@ -25,7 +25,9 @@ Dual-pane DirectX/Direct2D/DirectWrite Windows file manager inspired by Open Sal
 
 ```powershell
 Set-Location ..\RedSalamander
-.\vcpkg-install.ps1
+Import-Module .\Tools\Modules\Build\VcpkgInstallSafety.psm1
+$vcpkg = Initialize-RSVcpkgToolContext -RepoRoot $PWD.Path
+.\vcpkg-install.ps1 -Platform x64 -VcpkgExe $vcpkg.Executable -VcpkgRoot $vcpkg.RegistryRoot
 .\format.ps1 -Check
 .\build.ps1 -Configuration Debug
 .\Test-Changes.ps1 -Explain
