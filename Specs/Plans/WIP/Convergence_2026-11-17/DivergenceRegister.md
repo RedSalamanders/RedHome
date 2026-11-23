@@ -96,7 +96,7 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists ever
 | E-01 | Validation | `validate.ps1`: Pr, Ti, Mo, Dx. `validate-skills.ps1`: Xe, Pr, Dx. `validate-specs.ps1`: Dx only (RS uses `Tools/Get-SpecInventory.ps1`) | All three at every root | All six | 6 | |
 | E-02 | Formatting entry point | All six native products support `format.ps1 -Check`. RS #233 adds the entry point and keeps `format-all.ps1` as a compatibility wrapper for one release. | `format.ps1 -Check` with the scope of D-05 | Ti for D-05 | 6 | |
 | E-03 | Tests | Root `test.ps1` in five; RS uses `Tools/Run-AllTests.ps1` | Root `test.ps1` | RS | 6 | |
-| E-04 | `Test-Changes.ps1` parameters | Identical in Xe, Pr, Ti. Mo has only `-Explain`, `-Mode`, `-Force`. RS differs in `-BaseRef` default and extras. Dx adds `-ParallelSuites` and a separate `Test-PrePush.ps1` | One parameter set from the engine planner | Mo, RS, Dx | 5 | |
+| E-04 | `Test-Changes.ps1` parameters | Dx, Mo, Xe, Pr and Ti use the shared parameter set. RS retains its fork and `-BaseRef` default. | One parameter set from the engine planner | RS | 5 | |
 | E-05 | `build.ps1` parameters | Only `Configuration`, `Platform`, `ProductionOnly` are common; `-Clean`, `-Rebuild`, `-MaxCpuCount`, `-BuildNumber` vary | One common set | Ti, Mo, Dx, RS | 6 | |
 | E-06 | Packaging | `package.ps1` in Xe, Pr, Ti, Mo; RS packages through `build.ps1 -Zip`. Output: `.build/packages` (Xe, Pr, Mo), `.build/package` (Ti), `.build/AppPackages` (RS) | `package.ps1` writing `.build/packages` | RS, Ti | 6 | |
 | E-07 | `DxUi` scripts | `restore-dxui.ps1` at the root in Xe, Pr, Ti, Mo; `Tools/Restore-DxUi.ps1` in RS. `Update-DxUi.ps1` only in RS (`Tools/`) and Xe (root) | Same names at the root, implemented once in `DxUi` | RS, Pr, Ti, Mo | 5 | |
@@ -115,7 +115,7 @@ The plan's inventory table lists the copies. Each row converges by giving the to
 | --- | --- | --- |
 | F-01 | Changelog commands and module | Implemented in the engine. Mo #71, Xe #106, Ti #127 and Pr #42 use shims. Dx needs the module-shim pin and RS needs its first wave pin. |
 | F-02 | `BuildConsole.psm1`, `NativeBuildPolicy.targets`, `Get-CiNativeScope.ps1` | Engine for `BuildConsole.psm1` (`Ci.BuildConsole.psm1`, engine #93). The `DxUi` consumer interface for `NativeBuildPolicy.targets`, which must equal the pinned `DxUi` copy (taken 2026-11-19; converges with API 6 under D20). None for `Get-CiNativeScope.ps1`, which no workflow calls (retired with CV-5-04) |
-| F-03 | `ScopedTesting.psm1`, `TestRunEvidence.psm1`, `Test-Changes.ps1` (four forks) | Engine |
+| F-03 | `ScopedTesting.psm1`, `TestRunEvidence.psm1`, `Test-Changes.ps1` | Engine. Five products adopted the shims. RS owns its remaining adoption and keeps `Run-AllTests.ps1` for runtime. |
 | F-04 | Guidance grammar and package integrity | Implemented in engine #95 and adopted by Home. Six product adoptions remain under CV-5-05. |
 | F-05 | `DxUiPaths.psm1`, `restore-dxui.ps1`, `DxUiRestore.psm1`, `DxUiProvenance.psm1` | `DxUi` consumer interface |
 | F-06 | `Update-RedMonitorClient.ps1` and `Verify-RedMonitorClient.ps1` | RedMonitor owns the producer package, file hashes and consumer lock transition. This work can proceed independently of the DxUi API 6 adoption. |
