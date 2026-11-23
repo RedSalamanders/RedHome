@@ -30,7 +30,12 @@ Set-Location ..\RedPrism
 .\format.ps1 -Check
 .\build.ps1 -Platform x64 -Configuration Debug
 .\Test-Changes.ps1 -Explain
-.\test.ps1 -Platform x64 -Configuration Debug
+.\Test-Changes.ps1 -Mode PrePush -Explain
 ```
+
+The shared scoped runner reads `Tests/test-scopes.json` and uses the engine selected by `.ci/project.json`.
+PrePush plans x64 Debug, Release and ASan Debug runtime tests and the matching ARM64 cross-builds. IO and Runtime
+use the session clipboard. Run them with RedPrism's direct test entry point after desktop admission.
+[Validation contract](../../RedPrism/Specs/Testing/Testing_Validation.md)
 
 Return to [Index.md](Index.md).
