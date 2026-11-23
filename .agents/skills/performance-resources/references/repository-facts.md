@@ -2,8 +2,6 @@
 
 Product-specific facts that the common rules in [SKILL.md](../SKILL.md) do not cover. Unlinked paths are relative to the named repository's root. Each repository's `AGENTS.md` and `Specs/` win on any conflict.
 
-Repository-local skill for RedSalamander: [perf-validation](../../../../../RedSalamander/AGENTS.md#skills-reference) (mandatory perf-first workflow).
-
 | Repository | Fact | Where it is defined | Kept because |
 | --- | --- | --- | --- |
 | DxUi | Contract and rules: read [the owning contract](../../../../../DxUi/Specs/Core/Core_PerformanceAndResources.md) and [AGENTS.md](../../../../../DxUi/AGENTS.md). | `Specs/Core/Core_PerformanceAndResources.md`, `AGENTS.md` | Repository entry points. |
@@ -19,4 +17,4 @@ Repository-local skill for RedSalamander: [perf-validation](../../../../../RedSa
 | RedXe | Rendering changes keep the WARP smoke test green and verify upload/draw counters when those counters are part of the contract. `measure-runtime.ps1` is the Release x64 receipt collector. | `Specs/Core/Core_PerformanceAndResources.md`, `measure-runtime.ps1` | Product test gate and script. |
 | RedTilde | Paired runs use `performance-paired.ps1`. | [Core_PerformanceAndResources.md](../../../../../RedTilde/Specs/Core/Core_PerformanceAndResources.md) and `Specs/Testing/Testing_Performance.md` | Product runner and performance scenarios. |
 | RedMonitor | Release performance uses paired, alternating baseline and candidate runs on the same fixture and machine. | [Core_PerformanceAndResources.md](../../../../../RedMonitor/Specs/Core/Core_PerformanceAndResources.md) and `Specs/Testing/Testing_Validation.md` | Product measurement and validation. |
-| RedSalamander | Performance work uses archived selftests under `Specs/TestRuns/` and the repository-local [perf-validation](../../../../../RedSalamander/AGENTS.md#skills-reference) skill. | `AGENTS.md` ("Performance Validation is Mandatory"), `Specs/Testing/Testing_PerformanceValidation.md` | Product workflow. |
+| RedSalamander | Performance work uses archived selftests under `Specs/TestRuns/` and the shared [test-evidence workflow](../../test-evidence/SKILL.md#performance-evidence). | [Repository guidance](../../../../../RedSalamander/AGENTS.md#performance-validation-is-mandatory), [performance validation contract](../../../../../RedSalamander/Specs/Testing/Testing_PerformanceValidation.md) | Product workflow. |
