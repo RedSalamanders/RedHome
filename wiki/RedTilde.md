@@ -20,7 +20,7 @@ Native Windows Markdown writing studio (**"Words, beautifully in flow"**) built 
 ## Repository-Specific Rules & Skills
 
 - **Skills (`../../RedTilde/.agents/skills/`)**: Repo-specific skills `consumer-dxui`, `markdown-editing`, `desktop-ui`, `media-math` (shared `spec-workflow`, `test-evidence`, `crash-dumps`, `file-io-safety`, `app-settings`, and `native-build` live in `RedHome/.agents/skills/`).
-- **Truthful Capability Ledger**: Public support vs open upstream/IME/AT/large-file gates lives in [capabilities.json](../../RedTilde/capabilities.json) and [RemainingWork_2026-11-04.md](../../RedTilde/Specs/Plans/WIP/RemainingWork_2026-11-04.md).
+- **Capability ledger**. [capabilities.json](../../RedTilde/capabilities.json) records supported features and outstanding gates. The [active plan index](../../RedTilde/Specs/Plans/WIP/README.md) tracks current work. The [Done index](../../RedTilde/Specs/Plans/Done/README.md) links to the archived v1.0.0 qualification plans.
 
 ## Key Commands
 
