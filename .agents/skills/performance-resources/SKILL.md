@@ -26,7 +26,7 @@ Read the target repository's performance contract (`Specs/Core/Core_PerformanceA
 
 ## Repository Facts
 
-Product-specific paths, scripts, gates, and measurement rules (hosted paired gate, WARP self-test, log writer, repository-local skill) live in [references/repository-facts.md](references/repository-facts.md), including the sibling [perf-validation](../../../../RedSalamander/AGENTS.md#skills-reference) skill that is mandatory in `RedSalamander`. How to measure, archive, and report a change is in [test-evidence](../test-evidence/SKILL.md#performance-evidence).
+Product-specific paths, scripts, and gates live in [references/repository-facts.md](references/repository-facts.md). Use [test-evidence](../test-evidence/SKILL.md#performance-evidence) to measure, archive, and report a change. RedSalamander's mandatory performance requirements are in its [repository guidance](../../../../RedSalamander/AGENTS.md#performance-validation-is-mandatory) and [performance validation contract](../../../../RedSalamander/Specs/Testing/Testing_PerformanceValidation.md).
 
 ## Differences To Converge
 
@@ -39,4 +39,3 @@ All repositories converge on one rule set. Each difference below has one common 
 | Hosted paired gate | DxUi only: manual `.github/workflows/benchmark.yml` (`paired-benchmark` job). No paired job in the other five `.github/workflows/` folders. | Each repository with `performance-paired.ps1` has a manual `.github/workflows/benchmark.yml` following DxUi. RedTilde, RedXe, RedPrism, RedMonitor, RedSalamander add it. |
 | Per-phase measurement | DxUi: dirty preparation separate from composition. RedTilde: source transaction, preparation/submission, and GPU completion recorded separately (`Testing_Performance.md`). Others: not stated. | One rule in the contract: record each phase separately. Name the phases per repository in its contract. |
 | Rendering gate name | RedPrism: WARP `--self-test`. RedXe: WARP smoke test and hidden production `--self-test`. DxUi, RedTilde, RedMonitor, RedSalamander: not stated. | `--self-test` on a hidden WARP host for every repository with a D3D11 renderer. RedXe aligns its wording. |
-| Repository-local skill | RedSalamander keeps `perf-validation` in its [skill index](../../../../RedSalamander/AGENTS.md#skills-reference). Its workflow, its shared-process suite rules, and its product facts are folded into [test-evidence](../test-evidence/SKILL.md) (plan CV-2-12); the local copy is still there. | RedSalamander removes its local copy once `test-evidence` has been read from that repository. |
