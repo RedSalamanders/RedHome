@@ -6,7 +6,7 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). The co
 
 | Repository | Build contract | Build | Restore | Package | Banner and log |
 | --- | --- | --- | --- | --- | --- |
-| RedSalamander | [Specs/Build/Build_Toolchain.md](../../../../../RedSalamander/Specs/Build/Build_Toolchain.md) | `build.ps1` | MSBuild manifest mode, `vcpkg-install.ps1`, `Tools/Restore-DxUi.ps1` | `build.ps1 -Zip`, `Installer/zip/build-zip.ps1` (`.build\AppPackages`) | `.build\logs\msbuild-*.log` |
+| RedSalamander | [Specs/Build/Build_Toolchain.md](../../../../../RedSalamander/Specs/Build/Build_Toolchain.md) | `build.ps1` | Pinned bootstrap and `vcpkg-install.ps1`, `Tools/Restore-DxUi.ps1` | `build.ps1 -Zip`, `Installer/zip/build-zip.ps1` (`.build\AppPackages`) | `.build\logs\msbuild-*.log` |
 | RedXe | [Specs/Build/Build_Process.md](../../../../../RedXe/Specs/Build/Build_Process.md), [Build_Packaging.md](../../../../../RedXe/Specs/Build/Build_Packaging.md) | `build.ps1` | `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1`, `winget-manifest.ps1` (`.build/packages`) | The RedXe build-signal banner; `.build/logs/` |
 | RedPrism | [Specs/Build/Build_Toolchain.md](../../../../../RedPrism/Specs/Build/Build_Toolchain.md), [Build_Packaging.md](../../../../../RedPrism/Specs/Build/Build_Packaging.md) | `build.ps1` | `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1` (`.build/packages/`) | The framed pixel-art banner of `Build/BuildPresentation.psm1` |
 | RedTilde | [Specs/Build/Build_Toolchain.md](../../../../../RedTilde/Specs/Build/Build_Toolchain.md) | `build.ps1` | `restore-dxui.ps1` (no project vcpkg manifest) | `package.ps1` (`.build/package`) | Build logs kept apart from test receipts |
@@ -18,6 +18,11 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). The co
 Quick build commands:
 
 ```powershell
+# Prepare the selected platform before the first build
+Import-Module .\Tools\Modules\Build\VcpkgInstallSafety.psm1
+$vcpkg = Initialize-RSVcpkgToolContext -RepoRoot $PWD.Path
+.\vcpkg-install.ps1 -Platform x64 -VcpkgExe $vcpkg.Executable -VcpkgRoot $vcpkg.RegistryRoot
+
 # Build entire solution (default)
 .\build.ps1
 
