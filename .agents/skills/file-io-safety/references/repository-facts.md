@@ -28,6 +28,11 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). The re
 - Text export observes the destination before the overwrite prompt and sends the accepted identity to the worker. The worker denies writes while replacing and preserves competing creations. [RedMonitor #135](https://github.com/RedSalamanders/RedMonitor/pull/135)
 - Exercise invalid encoding, boundary sizes, cancellation and write/replace faults. `support/LocalFileTransaction.h` has the fault hooks (for example `FailNextLocalFileTransactionFlush`).
 
+## RedPrism
+
+- Guard the accepted versions of image exports and settings files through publication. Keep the submitted edits and newer external file on conflict. Use non-replacing publication when creating a new destination.
+- For project archives, guard the accepted archive through rename. For project folders, verify the accepted tree and validate the recovery tree before retiring it. The product contract owns the archive and folder recovery checks. [RedPrism #88](https://github.com/RedSalamanders/RedPrism/pull/88)
+
 ## RedXe
 
 - RedXe's settings store validates the applied stamp on a guard handle, flushes an owned sibling temporary, rechecks the path identity and uses `FileRenameInfoEx` with POSIX semantics while the guard stays open. The documented final check-to-rename window and the classic-rename fallback need coverage under D23. A refused persist retains the in-memory change. `CopyFileAtomically` and `CommitTemporaryFile` refresh the deployed schema. [RedXe settings contract](../../../../../RedXe/Specs/Core/Core_Settings.md)

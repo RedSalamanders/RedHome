@@ -399,7 +399,7 @@ The automatic hosted run reached admission. A manual run at the exact folded sou
 
 RedMonitor `bb653ceda2cda12d03b993a2db1cb208d26ec9ee` passed six zero-warning builds and x64 Regression in Debug, Release and ASan Debug. The watcher fixture used a message-only window to verify startup, directory creation, file changes and stop. Three separate hidden WARP chrome runs passed using isolated settings. The earlier `6a7280d` x64 build produced a C4464 include warning in the test target. The subsequent review corrected its include path. [#163](https://github.com/RedSalamanders/RedMonitor/pull/163) merged at `f259134d0cb4a1ab50b83438a666f58e586793a6`. [#164](https://github.com/RedSalamanders/RedMonitor/pull/164) folded at `a3795028c7e6e71b664ea8f0b340035f7563fc56`.
 
-The [manual Release replay](https://github.com/RedSalamanders/RedMonitor/actions/runs/45488926725) was dispatched at the folded source. RedMonitor owns the isolated live viewer edit and native ARM64 diagnostic replays. The Release filename migration remains under the product's S4 settings work (H-26).
+The manual run at the folded source passed both native Release regressions, the test gate, both production jobs and completion. RedMonitor owns the isolated live viewer edit and native ARM64 diagnostic replays. The Release filename migration remains under the product's S4 settings work (H-26). [Manual Release replay](https://github.com/RedSalamanders/RedMonitor/actions/runs/45488926725)
 
 ### JSON5 settings and resource helpers · 24 November 2026
 
@@ -440,7 +440,19 @@ RedPrism `2994c78a9d55ab85edbc8786c0ffc8c3e8f1fa8f` passed six zero-warning buil
 
 The hosted Release run at `8791d975620da5c24ecfd9f7e4cfff9432b76136` passed admission and completed the x64 build with zero warnings and errors. The x64 regression finished with 2,742 passes, 3 failures and 349 skips. Commands failed its typed queue-publication and guarded transfer-admission contract. FileOperations failed its stopping-status and pending-exit cases. The runner retained the first failures and failed retries. [Exact x64 job](https://github.com/RedSalamanders/RedSalamander/actions/runs/45471248383/job/138720229031)
 
-The RedSalamander qualification operator owns the ARM64 result, regression repairs and production validation. D25 native launcher startup remains pending. [Qualification](https://github.com/RedSalamanders/RedSalamander/actions/runs/45471248383)
+The ARM64 Release build also passed with zero warnings and errors. `Run-AllTests.ps1` returned exit 1, and the hosted desktop fixture retained a foreground-boundary retirement failure after an unrelated console took focus. The aggregate native test gate and production were skipped. The RedSalamander qualification operator owns the repairs and replays, including D25 native launcher startup. [Exact ARM64 job](https://github.com/RedSalamanders/RedSalamander/actions/runs/45471248383/job/138720229055)
+
+### RedTilde manual paired benchmark · 24 November 2026
+
+The first `696593f` review failed the compiler-free workflow classification gate. [Engine #117](https://github.com/RedSalamanders/.github/pull/117) merged at `4bcae89e6753fd90692aa64a0ac1095ca5283c33` after its Windows and Linux behavior checks passed. The actual RedTilde adapter accepted manual dispatch and refused a scheduled fixture. [#222](https://github.com/RedSalamanders/RedTilde/pull/222) established the same-pin baseline `9280551024b994797928816f3a46daffa4610afe`. The corrected [#221](https://github.com/RedSalamanders/RedTilde/pull/221) review `5177fe7ab43f1b76382aa6ba809a2322c8eb386a` passed Static and required checks, and merged at `0e5835f699ffa88b6fbf359afacee4c790a430a4`.
+
+The pilot compares the baseline with [#223](https://github.com/RedSalamanders/RedTilde/pull/223)'s folded source `e899e0c36ae7c5b4a0967b718d872c8dc6c75b67` using x64 native Release and WARP. The workflow emits a public summary and encrypts the full evidence to the dispatch recipient. RedTilde owns the numerical and quiet-host review. [Hosted pilot](https://github.com/RedSalamanders/RedTilde/actions/runs/45495097850)
+
+### RedPrism guarded writes · 24 November 2026
+
+RedPrism `d1ea611827e99593ce6549722c232dd12f18035e` passed six standard zero-warning builds. Host and the isolated image, settings and project publication controls passed in x64 Debug, Release and ASan Debug. They cover accepted destination versions, competing edits and new names, and archive and project-folder recovery. The earlier x64 Release verifier could not attribute one MSVC CRT routine to its runtime ISA guard. The final candidate verified that wide-character search contribution against its PDB and retained the guarded control flow reference.
+
+[#88](https://github.com/RedSalamanders/RedPrism/pull/88) merged at `91b9884b1ccb75b58394079b2644ac4cbcab4c91` and [#89](https://github.com/RedSalamanders/RedPrism/pull/89) folded at `9c183f01aea31803a7eff7ed7487c3d1d34a1623`. RedPrism owns the native ARM64 runtime and full IO and Runtime replay with clipboard isolation.
 
 ## Checks before the next merge
 
