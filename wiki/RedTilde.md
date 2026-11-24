@@ -30,6 +30,7 @@ per-case receipts plus the fresh suite reports used for reuse. See the [validati
 ```powershell
 Set-Location ..\RedTilde
 .\validate.ps1
+.\validate-specs.ps1
 .\format.ps1 -Check
 .\build.ps1 -Configuration Debug
 .\Test-Changes.ps1 -Explain
