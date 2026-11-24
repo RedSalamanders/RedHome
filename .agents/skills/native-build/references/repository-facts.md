@@ -193,7 +193,7 @@ For perf-sensitive work, follow the [test-evidence workflow](../../test-evidence
 
 ## RedXe
 
-Read the validation section of the owning normative spec before choosing the final build matrix. Use `Specs/UI/UI_XeneonDisplayWindowing.md` for display, window, fullscreen, fallback, manifest-DPI, and resize work.
+Read the validation section of the owning normative spec before choosing the final build matrix. Use `Specs/UI/UI_Windowing.md` for display, window, fullscreen, fallback, manifest-DPI and resize work.
 
 ```powershell
 .\vcpkg-install.ps1 -Platform All        # Optional up-front install
