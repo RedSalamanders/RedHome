@@ -27,6 +27,8 @@ Windows-native GPU/CPU raster image editor built with Win32, Direct3D 11, DXGI, 
 
 ```powershell
 Set-Location ..\RedPrism
+.\validate.ps1
+.\validate-specs.ps1
 .\validate-skills.ps1
 .\format.ps1 -Check
 .\build.ps1 -Platform x64 -Configuration Debug
