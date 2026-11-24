@@ -24,7 +24,7 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). Artifa
 
 ## RedTilde
 
-- Dumps are `RedTilde-<yyyyMMdd>-<HHmmss>-<pid>-<16 hex digits>.dmp`, each with a `.record` sidecar, and the marker is `pending.txt`. Retention keeps the ten newest dumps and removes the sidecar with its dump.
+- Dumps are `RedTilde-report-<yyyyMMdd>-<HHmmss>-<pid>-<16 hex digits>.dmp`. Protocol-2 reports add a `.record` sidecar. The `pending.txt` marker names the dump and the next healthy interactive launch claims it once. Retention keeps the newest ten new dumps by write time and removes their previous pairs. Legacy dumps and unrelated files remain intact. [RedTilde #182](https://github.com/RedSalamanders/RedTilde/pull/182)
 - The next start reads `pending.txt` when it is not headless, then removes it.
 - Initialize crash-path state before UI/workers; use fixed buffers and preloaded DbgHelp at a fault. Keep dump retention/marker inspection in healthy startup. Never upload automatically or attempt recovery writes in the fault handler. Crash probes run in isolated child processes/data roots.
 - Verify the dump and pending marker, ordinary restart behavior and real ASan detection separately (and invalid settings, which the settings rules cover).
