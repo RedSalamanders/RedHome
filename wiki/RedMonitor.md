@@ -24,12 +24,14 @@ Independent Windows-native diagnostics viewer and single-header TraceLogging pro
 - Open the root `RedMonitor.sln` after dependency restore for all six profiles. The root build command uses `RedMonitor.proj` and records the exact native build receipt. Every native project checks the required MSVC family before preparing the build. [Build contract](../../RedMonitor/Specs/Build/Build_Consumption.md)
 - **Live ETW Gate**: `test.ps1 -IncludeLiveEtw` exercises the real ETW transport roundtrip and treats permission denial as a test failure rather than an empty pass.
 - **Scoped testing**: The pinned engine reads `Tests/test-scopes.json`. Live ETW is explicit. Release PrePush adds the contained installation smoke. PrePush runs tests on x64 and builds the three ARM64 profiles for native qualification on their own runner. [RedMonitor validation contract](../../RedMonitor/Specs/Testing/Testing_Validation.md)
+- Five native projects live in suite folders under `Tests/`. The solution targets and test executable names are stable. [Suite layout change](https://github.com/RedSalamanders/RedMonitor/pull/147)
 
 ## Key Commands
 
 ```powershell
 Set-Location ..\RedMonitor
 .\validate.ps1
+.\validate-specs.ps1
 .\Tests\Tooling.Tests.ps1
 .\build.ps1 -Platform x64 -Configuration Debug
 .\test.ps1 -Platform x64 -Configuration Debug
