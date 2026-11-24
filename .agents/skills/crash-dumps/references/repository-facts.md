@@ -15,11 +15,11 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). Artifa
 
 ## RedPrism
 
-- `CrashDumps::InstallCrashHandler(directory)` is the first thing `RunApplication` does after parsing the command line. The unhandled-exception filter, `std::terminate`, the invalid-parameter handler, the pure-call handler and `SIGABRT` all end in one filter that writes `RedPrism-<yyyyMMdd-HHmmss>-<pid>.dmp` and `pending.txt` into `%LocalAppData%\RedPrism\Crashes`, then the process exits with the exception code (`0xE000000n` for the CRT paths).
+- `CrashDumps::InstallCrashHandler(directory)` installs the exception, terminate, invalid-parameter, pure-call and `SIGABRT` handlers before startup work. One filter writes a `RedPrism-report-*.dmp` and publishes `pending.txt` in the local crash directory. The process exits with the failure code. [RedPrism #70](https://github.com/RedSalamanders/RedPrism/pull/70)
 - The crash path uses fixed `wchar_t[kPathCapacity]` buffers, `swprintf_s`, `CreateFileW`, `MiniDumpWriteDump`.
-- The next start shows a message box naming the dump and offering its folder.
+- A healthy ordinary start claims the pending marker once and offers to select the local dump in Explorer.
 - `--crash-probe <directory>` installs the handler with that directory and raises an access violation; keep it before any window or COM initialization. The companion `--crash-probe-worker` creates two private-pool threads (and their implicit MTA cookie), verifies the per-thread terminate handler and overlapping faults, and still produces one dump/marker. In an AddressSanitizer build the probe raises `0xE0000005` rather than an access violation.
-- Pruning (`PruneDumps`, ten newest) and the prompt run on an ordinary start only.
+- Ordinary startup retains the newest ten owned dumps and preserves legacy reports. Harnesses use an isolated directory under `.build/crash-probe-artifacts`.
 - In-process tests (`HostTests` `crash.*`) cover the writer without an exception, pruning and the marker.
 
 ## RedTilde
