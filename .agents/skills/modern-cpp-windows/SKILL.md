@@ -10,7 +10,7 @@ Applies across `DxUi`, `RedSalamander`, `RedXe`, `RedPrism`, `RedTilde`, and `Re
 ## Compiler, Warnings & Formatting
 
 - Compile as UTF-8 source (`/utf-8`) targeting wide-character Unicode Win32 APIs in `stdcpplatest` mode with `/permissive-` and `/sdl`. Keep `.rc` files UTF-8 with `#pragma code_page(65001)`.
-- Warning profile: `/Wall` with `/WX` disabled and zero-warning acceptance. See the [shared policy summary](../../../wiki/Shared-Engineering-Policies.md) and the target's build manifests before changing flags. `RedMonitor` still uses `/W4 /WX` (see Differences To Converge).
+- Warning profile: `/Wall` with `/WX` disabled and zero-warning acceptance. See the [shared policy summary](../../../wiki/Shared-Engineering-Policies.md) and the target's build manifests before changing flags.
 - Fix actionable warnings in first-party code (`static_cast`, explicit signed/unsigned narrowing guards, deleted special members when subclassing non-copyable types (`C4625`/`C4626`/`C5026`/`C5027`), removing unused parameters/locals). Reserve narrow `#pragma warning(push)` suppressions for third-party/SDK headers with an inline reason. Details: [compiler-warnings](references/compiler-warnings.md).
 - Naming: `PascalCase` types and public methods, `camelCase` locals/private helpers/public `struct`/DTO data members, `kConstantName` constants. One variable declaration per line.
   - Private and protected non-static class/struct data members MUST use strict `_camelCase` (`_[a-z][A-Za-z0-9]*`, leading `_` followed strictly by a lowercase ASCII letter `[a-z]`). Trailing `name_` and bare unprefixed private/protected fields are forbidden.
@@ -59,7 +59,6 @@ Product-specific paths, helpers and test gates: [references/repository-facts.md]
 
 | Topic | Today (per repository) | Common target |
 | --- | --- | --- |
-| Warning profile | `RedMonitor`: `/W4 /WX`. `DxUi`, `RedSalamander`, `RedXe`, `RedPrism`, `RedTilde`: `/Wall`, `/WX` disabled, zero warnings. | `/Wall`, `/WX` disabled, zero warnings. `RedMonitor` changes. |
 | `std::bad_alloc` | `RedSalamander`: fatal, `std::terminate()`. `RedMonitor`: fatal. `RedPrism`: `E_OUTOFMEMORY` in the `JobScheduler` worker runner and at explicit `noexcept` admission boundaries, only when the caller fails the operation. `DxUi` API 5 / `RedTilde`: host-owned minidump diagnostics and termination. | Follow the current product contract at each boundary. Reconcile host-owned fatal diagnostics with the published API 6 contract during consumer adoption (D20). |
 | Unexpected-exception policy | DxUi and RedTilde use the API 5 host-owned fatal diagnostics. RedSalamander, RedXe, RedPrism and RedMonitor consume API 4 and follow their product contracts. | D20 assigns cross-revision adoption to each consumer's API 6 plan. Use the failure contract published for that revision and qualify the rebuilt consumer. |
 | COM smart pointer | RedSalamander, RedMonitor and parts of DxUi's `ControlHost` use `wil::com_ptr<T>` in HRESULT paths. | Follow the [WIL ownership rule](../wil-raii/SKILL.md) and register H-03 when migrating these paths to `wil::com_ptr_nothrow<T>`. |

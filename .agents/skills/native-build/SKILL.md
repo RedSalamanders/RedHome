@@ -20,7 +20,7 @@ Read the target repository's build contract and the validation section of the ow
 - Build Debug, Release, and ASan Debug when changing project properties, manifests, or compiler behavior. Build x64 and ARM64 when changing vcpkg, platform mapping, or dependency paths.
 - **ARM64 is a cross-build.** On an x64 host the ARM64 build runs no ARM64 test, and a cross-build success does not establish native runtime support. ARM64 runtime tests require a native ARM64 host.
 - **ASan Debug is real.** Run its tests natively; the deliberate isolated probe must produce an AddressSanitizer diagnostic.
-- Build acceptance requires zero warnings and zero errors. The five `/Wall` repositories disable `/WX`. RedMonitor currently uses `/W4 /WX`. Preserve the effective profile until the owning build change proves its replacement.
+- Build with `/Wall` and `/WX` disabled. Build acceptance requires zero warnings and errors across all six profiles.
 
 RedSalamander keeps its portable `RedLauncher.exe` on the static CRT. Verify the executable's imports and launch from a clean package on x64 and native ARM64. [WinGet integration](../../../../RedSalamander/Specs/Installer/WingetIntegration.md)
 
