@@ -7,7 +7,7 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md) and [pa
 | Repository | Validation contract | Run evidence | Evidence folder | Root test entry point |
 | --- | --- | --- | --- | --- |
 | RedPrism | [Specs/Testing/Testing_Validation.md](../../../../../RedPrism/Specs/Testing/Testing_Validation.md) | [Specs/Testing/Testing_RunEvidence.md](../../../../../RedPrism/Specs/Testing/Testing_RunEvidence.md); benchmarks in [Testing_Benchmarks.md](../../../../../RedPrism/Specs/Testing/Testing_Benchmarks.md) | `Measurements/` for new evidence. Historical records retain their paths. | `test.ps1` (all nine suites), `-Suites`, `-Full` |
-| RedTilde | [Specs/Testing/Testing_Validation.md](../../../../../RedTilde/Specs/Testing/Testing_Validation.md); performance in [Testing_Performance.md](../../../../../RedTilde/Specs/Testing/Testing_Performance.md) | [Specs/Testing/Testing_RunEvidence.md](../../../../../RedTilde/Specs/Testing/Testing_RunEvidence.md) | `Measurements/` | `test.ps1` (`Core`), `-Suite`, `-Suites`, `-Full`; `test-interactive.ps1`; `performance-paired.ps1` |
+| RedTilde | [Specs/Testing/Testing_Validation.md](../../../../../RedTilde/Specs/Testing/Testing_Validation.md); performance in [Testing_Performance.md](../../../../../RedTilde/Specs/Testing/Testing_Performance.md) | [Specs/Testing/Testing_RunEvidence.md](../../../../../RedTilde/Specs/Testing/Testing_RunEvidence.md) | `Measurements/` | `test.ps1` selects affected scopes and accepts `-Suite`, `-Suites`, `-Full` and `-Interactive`. `performance-paired.ps1` runs paired performance checks. |
 | RedMonitor | [Testing_Validation.md](../../../../../RedMonitor/Specs/Testing/Testing_Validation.md) | [Testing_RunEvidence.md](../../../../../RedMonitor/Specs/Testing/Testing_RunEvidence.md) | `Measurements/` | `test.ps1` (everything), `-IncludeLiveEtw` |
 | RedSalamander | [Specs/Testing/Testing_PerformanceValidation.md](../../../../../RedSalamander/Specs/Testing/Testing_PerformanceValidation.md), [Testing_SelfTests.md](../../../../../RedSalamander/Specs/Testing/Testing_SelfTests.md) | [Specs/Testing/Testing_ValidationEvidence.md](../../../../../RedSalamander/Specs/Testing/Testing_ValidationEvidence.md), `Specs/TestRuns/README.md` | `Specs/TestRuns/`, `Measurements/` | No root `test.ps1`: `Tools/Run-AllTests.ps1`, `Test-Changes.ps1` |
 | RedXe | The owning domain spec of the change (its `AGENTS.md`, "Before declaring a change complete") | [Specs/Testing/Testing_RunEvidence.md](../../../../../RedXe/Specs/Testing/Testing_RunEvidence.md) | `Measurements/` | `test.ps1` (affected suites), `-Full`; `measure-runtime.ps1`, `measure-av-views.ps1` |
@@ -51,7 +51,7 @@ Product rules:
 ## RedTilde
 
 - Native test filenames use `Scope.Tests.Behavior.cpp/.h` (its validation contract).
-- Capture: `--capture --scenario`; crash probe: `--crash-probe`; interactive captures and focus tests: `test-interactive.ps1`, under the interactive desktop lease.
+- Use `--capture --scenario` for captures, `--crash-probe` for isolated faults and `test.ps1 -Interactive` for focus tests under the desktop lease.
 - For S5, follow [the performance contract](../../../../../RedTilde/Specs/Testing/Testing_Performance.md) and use `performance-paired.ps1`.
 
 ## RedMonitor
@@ -89,7 +89,7 @@ Report Git discovery, content hashing, canonicalization, impact matching, schema
 ## RedXe
 
 - Before declaring a change complete: build the affected configuration, run `test.ps1 -Full` (or `Test-Changes.ps1 -Mode PrePush`), and satisfy the validation contract in the owning domain spec. Rendering changes keep the WARP smoke test green. `test.ps1 -Full` also validates crash capture in an isolated child process (register A-18 records the conflict with scoped testing).
-- Capture: `--screenshot`; crash probe: `--crash-test`; hidden production `--self-test`; `--warp`.
+- Use `--capture <png>` for captures, `--crash-probe <directory>` for isolated faults and `--self-test --warp` for a hidden production smoke. The prior `--screenshot` and `--crash-test` forms remain available.
 
 ## DxUi
 
