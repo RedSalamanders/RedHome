@@ -415,7 +415,15 @@ RedXe `f2ad98eb8f8fe92c58aad5fb7153bfbec2c29ac6` passed six zero-warning builds 
 
 ### RedXe native chrome resources · 24 November 2026
 
-RedXe `1eb49757140bfc3e8b41228761f897d821a43686` passed six zero-warning builds and x64 Settings and HostSmoke in all three profiles. A resource-only load on the x64 host opened all six executables as data, verified 19 compiled strings and checked the three tray menu entries and their command IDs. The source gate refused a missing argument index in an isolated fixture. The initial `a9339717` Static run refused a new subprocess path, so the checks now run inside the approved root validator. [#178](https://github.com/RedSalamanders/RedXe/pull/178) merged at `54e81a51a797881f0dcc49fa7f034ecd4a2e62e9` and [#179](https://github.com/RedSalamanders/RedXe/pull/179) folded at `33ca03f499451cd3737df0e0ccae1547479623bd`. The manual Release replay at `33ca03f499451cd3737df0e0ccae1547479623bd` passed native x64 and ARM64 regression and the combined test gate. Production is running on both architectures. RedXe owns the interactive tray and notice checks under D21. [Manual Release replay](https://github.com/RedSalamanders/RedXe/actions/runs/45498385242)
+RedXe `1eb49757140bfc3e8b41228761f897d821a43686` passed six zero-warning builds and x64 Settings and HostSmoke in all three profiles. A resource-only load on the x64 host opened all six executables as data, verified 19 compiled strings and checked the three tray menu entries and their command IDs. The source gate refused a missing argument index in an isolated fixture. The initial `a9339717` Static run refused a new subprocess path, so the checks now run inside the approved root validator. [#178](https://github.com/RedSalamanders/RedXe/pull/178) merged at `54e81a51a797881f0dcc49fa7f034ecd4a2e62e9` and [#179](https://github.com/RedSalamanders/RedXe/pull/179) folded at `33ca03f499451cd3737df0e0ccae1547479623bd`. The manual Release replay at `33ca03f499451cd3737df0e0ccae1547479623bd` passed native x64 and ARM64 regression, the combined test gate, both production jobs and completion. This source includes the event-driven window scheduler, JSON5 settings, optional field defaults and native chrome resources. RedXe owns the physical display and paired resource measurements and the interactive tray and notice checks under D21. [Manual Release replay](https://github.com/RedSalamanders/RedXe/actions/runs/45498385242)
+
+### RedXe native CLI and notice resources · 25 November 2026
+
+RedXe `0249acf6fa8cd38692ac6f7cb23d70abc58dbb8c` passed six zero-warning builds plus x64 Settings and HostSmoke in all three profiles. Data-only inspection verified 41 strings in each of the six application and six HostPlugin test artifacts. The executable and test compile the same resource include with UTF-8 and preserve the CLI output and positional argument templates. [#180](https://github.com/RedSalamanders/RedXe/pull/180) merged at `f4e7be11f007f6e75655663b6fc8aac46346b0fe`. [#181](https://github.com/RedSalamanders/RedXe/pull/181) folded at `d0243ce5dcad33ac1689c9c1d9801ec93cf4d1ae`. RedXe owns the full HostPlugin, ARM64 runtime and interactive notice replay at the new source.
+
+### RedMonitor member naming · 25 November 2026
+
+RedMonitor `b4a98368a03477143c096c4a81f981f794a7cbb7` passed six zero-warning builds, x64 Regression in all three profiles and the real ASan detection probe. Clang-tidy 22.1.3 passed the positive naming control, detected all three negative controls and checked 17 Release translation units. Its parser stopped in the recursive `MenuFlyoutItem` default initializer in the pinned API 4 DxUi header for two viewer translation units. RedMonitor owns that Clang replay after the pinned-header blocker is resolved. [#166](https://github.com/RedSalamanders/RedMonitor/pull/166) merged at `6daa89d19c43130b84d2ddc259bb5f0ce5798831`. [#167](https://github.com/RedSalamanders/RedMonitor/pull/167) folded at `ee450e167d698a1eef9929d62ae12fb558a4fbef`.
 
 ### RedXe optional settings · 24 November 2026
 
@@ -460,11 +468,19 @@ The pilot built and measured the baseline and [#223](https://github.com/RedSalam
 
 [RedTilde #224](https://github.com/RedSalamanders/RedTilde/pull/224) at `3da949406d807f058c257cfc11ecf4f9edd1925d` passed compiler-free validation, the required PR checks and 4,808 tooling assertions. It merged at `14010ee7789dc4073fb2882bf77d674b4d26bda9`. [#225](https://github.com/RedSalamanders/RedTilde/pull/225) folded at `815201d9bbb4718db0d4f78b8f19158c14e09be9`. The repaired auditor passed 8,425 checks on the original A/A and A/B studies from the checksum-verified packet. Six of twelve metrics in each study had unstable controls. The pilot remains inconclusive. RedTilde owns the next fixed-scope cohort with quiet-host preflight.
 
+### RedPrism device-loss recovery · 25 November 2026
+
+RedPrism `b74cba5bc87f0085490ae5ffcef6788c17f5a6a2` passed all six warning-free builds with test hooks, the required PR checks, and x64 Host and Captures in Debug, Release and ASan Debug. The retained interrupted Debug capture and the Release test admission refusal were followed by fresh builds with the correct test hooks. [#91](https://github.com/RedSalamanders/RedPrism/pull/91) merged at `55a5e2d8114b5b856d15c62db9f2176030c2f92d`. [#92](https://github.com/RedSalamanders/RedPrism/pull/92) folded at `055b76f34a6f3d99027ecb223c6971c697da740e`.
+
+The full hidden Runtime fixture exercises the injected `DXGI_ERROR_DEVICE_HUNG` Present. RedPrism owns the x64 and native ARM64 runs under the hosted clipboard and desktop boundary. The manual replay targets the folded source. [Native replay](https://github.com/RedSalamanders/RedPrism/actions/runs/45507323069)
+
 ### RedPrism guarded writes · 24 November 2026
 
 RedPrism `d1ea611827e99593ce6549722c232dd12f18035e` passed six standard zero-warning builds. Host and the isolated image, settings and project publication controls passed in x64 Debug, Release and ASan Debug. They cover accepted destination versions, competing edits and new names, and archive and project-folder recovery. The earlier x64 Release verifier could not attribute one MSVC CRT routine to its runtime ISA guard. The final candidate verified that wide-character search contribution against its PDB and retained the guarded control flow reference.
 
 [#88](https://github.com/RedSalamanders/RedPrism/pull/88) merged at `91b9884b1ccb75b58394079b2644ac4cbcab4c91` and [#89](https://github.com/RedSalamanders/RedPrism/pull/89) folded at `9c183f01aea31803a7eff7ed7487c3d1d34a1623`. RedPrism owns the native ARM64 runtime and full IO and Runtime replay with clipboard isolation.
+
+The next hosted replay admitted `70293c3b117a19ed8dd02da9ebffbf32fc7ab2ff`. The x64 Release build passed. Hidden WARP exited 5 in `RunFilesSelfTest`. The adjustment panel held white 128 in memory and the expected archive was absent. The fixture assigned a path without opening an archive or accepting its file version, so ordinary Save reached the folder-project guard without an accepted folder version. RedPrism owns the fixture repair and exact-source x64 and ARM64 Runtime replay. Retain x64 evidence artifact `14973480839`. [Failed x64 job](https://github.com/RedSalamanders/RedPrism/actions/runs/45497949743/job/138813662907)
 
 ## Checks before the next merge
 
