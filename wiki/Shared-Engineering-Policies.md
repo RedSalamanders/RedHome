@@ -4,8 +4,8 @@ This page summarizes shared engineering policies and current repository exceptio
 
 ## 1. Native Compiler & Warning Policy (`2026-10-28`)
 - **Compiler**: Visual Studio 2026 (`v145`, default MSVC `14.52.x`), Windows 11 SDK `10.0.26100`, `/std:c++latest`, `/permissive-`, `/sdl`, `/utf-8`, Unicode Win32 APIs.
-- **Warnings**: `RedSalamander`, `RedXe`, `RedPrism`, `RedTilde`, and `DxUi` use `/Wall` with `/WX` disabled; their build acceptance gates **reject any warning or error**. `RedMonitor` currently uses `/W4 /WX`, as declared in its [Directory.Build.props](../../RedMonitor/Directory.Build.props). Preserve that exception unless a separate RedMonitor change aligns and validates its profiles. Fix actionable diagnostics rather than adding blanket suppressions.
-- **Symbols & ICF (the five `/Wall` repositories)**:
+- All six native repositories use `/Wall` with `/WX` disabled. Build admission requires zero warnings and errors. Keep reviewed exceptions scoped to the affected inputs. [RedMonitor #107](https://github.com/RedSalamanders/RedMonitor/pull/107)
+- The common symbol and ICF profile applies across RedSalamander, RedXe, RedPrism, RedTilde and DxUi. RedMonitor still uses `/Zi` in Debug and tracks its Release optimization and Debug symbol alignment under C-10.
   - `Debug`: `/ZI` (Edit and Continue PDB), `/OPT:NOICF`, `/MDd`.
   - `ASan Debug`: `/Zi`, real AddressSanitizer instrumentation, `/OPT:NOICF`, `/MDd`.
   - `Release`: `/Gy /GL` + `/OPT:REF /OPT:ICF /LTCG`, `/MD`.

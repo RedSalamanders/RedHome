@@ -17,7 +17,7 @@ Independent Windows-native diagnostics viewer and single-header TraceLogging pro
 ## Repository-Specific Rules & Skills
 
 - **Skills (`../../RedMonitor/.agents/skills/`)**: Repo-specific skills `transport-client`, `viewer-lifetime`, `consumer-adoption` (shared C++/WIL, `spec-workflow`, `test-evidence`, `crash-dumps`, `file-io-safety`, `app-settings`, and `native-build` skills live in `RedHome/.agents/skills/`).
-- **Compiler Warnings**: Compiles with `/W4 /WX /permissive- /sdl` across all six `x64`/`ARM64` `Debug`/`Release`/`ASan Debug` profiles, as declared by [Directory.Build.props](../../RedMonitor/Directory.Build.props). This is the current exception to the five other repositories' `/Wall` policy.
+- All six profiles use `/Wall /permissive- /sdl` with `/WX` disabled and a zero-warning build gate. [Build contract](../../RedMonitor/Specs/Build/Build_Consumption.md)
 - Open the root `RedMonitor.sln` after dependency restore for all six profiles. The root build command uses `RedMonitor.proj` and records the exact native build receipt. Every native project checks the required MSVC family before preparing the build. [Build contract](../../RedMonitor/Specs/Build/Build_Consumption.md)
 - **Live ETW Gate**: `test.ps1 -IncludeLiveEtw` exercises the real ETW transport roundtrip and treats permission denial as a test failure rather than an empty pass.
 - **Scoped testing**: The pinned engine reads `Tests/test-scopes.json`. Live ETW is explicit. Release PrePush adds the contained installation smoke. PrePush runs tests on x64 and builds the three ARM64 profiles for native qualification on their own runner. [RedMonitor validation contract](../../RedMonitor/Specs/Testing/Testing_Validation.md)

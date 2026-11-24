@@ -3,7 +3,7 @@
 Common detail for every repository. The rules summary is in [SKILL.md](../SKILL.md).
 
 
-**Objective: zero actionable warnings under `/Wall`** (`/WX` disabled). `RedMonitor` still builds `/W4 /WX`; see Differences To Converge in [SKILL.md](../SKILL.md).
+**Objective: zero actionable warnings under `/Wall`** (`/WX` disabled).
 
 ## Critical Rule
 
