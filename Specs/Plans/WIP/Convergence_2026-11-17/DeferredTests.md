@@ -381,6 +381,12 @@ RedXe `de8db65e1a712ef965f128237641671ef6997b18` validated 39 specification docu
 
 RedMonitor `5100816f3cd0cd937a1babfc3d5a82f50fdad959` passed six zero-warning builds after explicitly deleting copy and move for its window owner. All three x64 Regression runs and the non-activating WARP chrome probe passed, including ordinary HWND destruction. [#157](https://github.com/RedSalamanders/RedMonitor/pull/157) merged at `051c58b3afbc61764d51154f98fa439d05dad687` and [#158](https://github.com/RedSalamanders/RedMonitor/pull/158) folded at `49785a3f83e6445ce2f95e32485f81655daaef95`. RedMonitor owns native ARM64 runtime replay.
 
+RedMonitor `d0e91c389c6a605656aa8080af9943fb4a4ea729` passed six zero-warning builds, six x64 Regression and WARP chrome runs across three profiles, and the required GitHub checks. [#159](https://github.com/RedSalamanders/RedMonitor/pull/159) merged at `667f250f1db1436381b2d4d5b8807ca85c299433` and [#160](https://github.com/RedSalamanders/RedMonitor/pull/160) folded at `86bd655fae7577c11038b3bc50903f677e51e751`. RedMonitor owns the native ARM64 runtime and physical multi-adapter topology replays.
+
+### RedXe visibility scheduling review
+
+RedXe `228ac6cc0d3d5f1dfaa9312692e1a4249f8418bd` passed the x64 Debug and Release HostSmoke and functional HostPlugin cases, including cloak suspension and resume and repeated frames with a full-page native widget. Each 60-second Matrix soak failed the 4 MiB private-growth guard. The Debug run `20261124T194140242Z-45828-83a248dabf414e2e91e97fcf32285952` recorded 7,135,232 bytes peak. The Release run `20261124T194640984Z-48168-62cf8ab0f68a4f45bee228856255a732` recorded 5,914,624 bytes peak. RedXe owns the same-machine Release comparison against `99b02ad65c4f222dea7d37cafca7db1eeb2d2c97` and the physical display-transition replay. [RedXe #171](https://github.com/RedSalamanders/RedXe/pull/171)
+
 ## Common harness commands · 24 November 2026
 
 RedXe `42c5e6871e19608277c025120a299cb26f156d11` passed all six zero-warning builds, executable and launcher hashes, three x64 Settings and HostSmoke runs, formatting and root validation. The shared capture switch produced a PNG. The legacy capture reached the missing-widget check. The shared and legacy crash probes produced the expected reports in isolated build directories. [#157](https://github.com/RedSalamanders/RedXe/pull/157) merged at `a083b1fe` and [#158](https://github.com/RedSalamanders/RedXe/pull/158) folded at `34baf886`. RedXe owns native ARM64 runtime replay.
