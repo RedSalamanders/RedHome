@@ -11,6 +11,7 @@ Independent Windows-native diagnostics viewer and single-header TraceLogging pro
 - **Client tooling**: RedMonitor publishes the canonical update and offline verification scripts with SHA-256 hashes. Adopting consumers keep their root commands. The tooling revision lives in the existing client lock beside the header and notice hashes. [Producer manifest](https://github.com/RedSalamanders/RedMonitor/blob/93fdb0a19acbd48ed59182f4aa42d214cacda6b1/Tools/ClientSdk/manifest.json)
 - **Standalone Viewer (`src/` & `support/`)**:
   - Receives the Red-family ETW TraceLogging stream, renders bounded colored logs with Direct2D/DirectWrite/Direct3D 11 and an exact pinned `DxUi` (`API 4`) archive, and opens/exports streaming UTF-8/UTF-16LE text files off the UI thread.
+  - Settings saves hold a guard for the accepted file version through replacement. A different version raises a revision conflict and a competing new file is preserved. [Settings contract](../../RedMonitor/Specs/Core/Core_Settings.md)
   - `support/` holds a private statically linked MIT migration closure (never exposed to consumers and never linked against `RedSalamander`'s `Common.dll`).
   - Never stops a foreign ETW session; preserves wire GUID, field names/types, severity/filter mapping, and bounded oldest eviction with immutable UI snapshots.
 
