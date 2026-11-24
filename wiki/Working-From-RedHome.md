@@ -27,8 +27,8 @@ The entry points that still differ between repositories:
 | `RedSalamander` | `.\Tools\Get-SpecInventory.ps1 -FailOnFindings`, `.\Tools\Get-ToolInventory.ps1 -Validate` | `.\format.ps1 -Check` | [RedSalamander.md](RedSalamander.md) |
 | `RedXe` | `.\validate-skills.ps1` | `.\format.ps1 -Check` | [RedXe.md](RedXe.md) |
 | `RedPrism` | `.\validate.ps1` (runs `validate-skills.ps1`, the native test-name inventory, a PowerShell syntax check, and the tooling tests) | `.\format.ps1 -Check` | [RedPrism.md](RedPrism.md) |
-| `RedTilde` | `.\validate.ps1` | `.\format.ps1 -Check` | [RedTilde.md](RedTilde.md) |
-| `RedMonitor` | `.\validate.ps1` | `.\format.ps1 -Check` | [RedMonitor.md](RedMonitor.md) |
+| `RedTilde` | `.\validate.ps1` or `.\validate-skills.ps1` for guidance | `.\format.ps1 -Check` | [RedTilde.md](RedTilde.md) |
+| `RedMonitor` | `.\validate.ps1` or `.\validate-skills.ps1` for guidance | `.\format.ps1 -Check` | [RedMonitor.md](RedMonitor.md) |
 | `DxUi` | `.\validate.ps1` (also `validate-skills.ps1`, `validate-specs.ps1`) | `.\format.ps1 -Check` | [DxUi.md](DxUi.md) |
 | `RedSalamanders/.github` | `./Tests/Test-Engine.ps1 -TestRoot <marked root>` | n/a | [Shared-CI-Engine.md](Shared-CI-Engine.md) |
 | `RedHome` | `pwsh -NoProfile -File .\validate.ps1 -CheckSiblings` | n/a | [README.md](../README.md) |
