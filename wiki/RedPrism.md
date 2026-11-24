@@ -8,6 +8,7 @@
 Windows-native GPU/CPU raster image editor built with Win32, Direct3D 11, DXGI, DirectWrite, build-time HLSL, `libzip` (`.prism` format-7 project archives), `Clipper2` (selection booleans), `yyjson`, WIC, and `DxUi`:
 
 - **`Application` & `Renderer`**: Single HWND, single D3D11 device + flip-model swap chain, idle-loop `Present` (chrome layout -> canvas -> chrome). Settled documents execute **zero** composition passes per frame.
+- Healthy startup claims the pending crash marker once, offers to select the local dump in Explorer and retains the newest ten owned reports alongside legacy files. [Crash contract](../../RedPrism/Specs/Core/Core_CrashHandling.md)
 - **`CanvasRenderer` & `GpuBrushCoverage`**: Document-space HLSL layer passes, coverage textures, clipping stacks, sparse-raster residency, and `BrushCoverage.hlsl` compute kernel.
 - **GPU & CPU Execution**:
   - `JobScheduler` (`Common/Jobs.*`): Bounded class/priority job scheduler (`std::bad_alloc` in worker runner translates to `E_OUTOFMEMORY`).
