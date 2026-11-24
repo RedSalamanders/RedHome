@@ -118,8 +118,8 @@ The plan's inventory table lists the copies. Each row converges by giving the to
 | F-03 | `ScopedTesting.psm1`, `TestRunEvidence.psm1`, `Test-Changes.ps1` | Engine. Five products adopted the shims. RS owns its remaining adoption and keeps `Run-AllTests.ps1` for runtime. |
 | F-04 | Guidance grammar and package integrity | Engine #95. Adopted by Home, Ti, Mo, Xe, Dx and Pr. RS remains under CV-5-05. |
 | F-05 | `DxUiPaths.psm1`, `restore-dxui.ps1`, `DxUiRestore.psm1`, `DxUiProvenance.psm1` | `DxUi` consumer interface |
-| F-06 | `Update-RedMonitorClient.ps1` and `Verify-RedMonitorClient.ps1` | RedMonitor owns the producer package, file hashes and consumer lock transition. This work can proceed independently of the DxUi API 6 adoption. |
-| F-07 | `vcpkg-install.ps1`, `VcpkgTriplet.psm1`, `VisualStudio.psm1`, `Install-ClangFormat.ps1` | Shared installer, compiler discovery, triplet and formatter tooling belongs in the pinned engine (CV-5-07/I63 T7). DxUi-specific restore stays with its consumer package. Keep the PowerShell 5.1 bootstrap until all supported consumer locks contain the producer fix or its supported backport. |
+| F-06 | `Update-RedMonitorClient.ps1` and `Verify-RedMonitorClient.ps1` | RedMonitor #93 publishes the manifest and immutable tools. RedPrism #56, RedTilde #172 and RedXe #123 adopted the package while preserving the root commands and native pin. RedSalamander owns its remaining adoption. |
+| F-07 | `vcpkg-install.ps1`, `VcpkgTriplet.psm1`, `VisualStudio.psm1`, `Install-ClangFormat.ps1` | Engine #103 published shared compiler discovery and triplet generation. The shared installer and product rollouts remain in CV-5-07/I63 T7. DxUi-specific restore stays with its consumer package. Keep the PowerShell 5.1 bootstrap until all supported consumer locks contain the producer fix or its supported backport. |
 | F-08 | `.github/actions/setup-msvc` (`action.yml` in three variants, `Setup.ps1` in five) | Engine |
 
 ## G. CI and project configuration
