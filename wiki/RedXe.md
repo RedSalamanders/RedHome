@@ -8,6 +8,7 @@
 Per-monitor-v2 DPI Win32 + Direct3D 11 dashboard foundation for **XENEON EDGE** (screen-edge app-bar dock, multi-page placement grid, DirectWrite `FluentIcons.h` host chrome with zero GDI/chrome HWNDs):
 
 - **Host Core (`RedXe/`)**: `Application` (HWND & idle-loop rendering), `Renderer` (D3D11 device, flip swap chain, WARP fallback, device-loss recovery), `DashboardHost` (widget grid & frame scheduling), `PluginHost` (process-scoped modules, data providers, acquisition/network/launch/device-lane workers, JSONL logger), `PluginManager` (per-page COM instances; failed widgets degrade to placeholder tiles), `SettingsStore` + `SettingsWatcher` (`yyjson`), `TrayIcon`, `CrashHandler`.
+- Crash reports stay local. Healthy startup claims the pending notice once and retains the newest ten owned dump and call-stack pairs alongside legacy reports. [Crash contract](../../RedXe/Specs/Core/Core_CrashHandling.md)
 - **COM Plugin ABI (`Common/PlugInterfaces/`)**: `sizeof`/`offsetof`-pinned interfaces (`Factory.h`, `Host.h`, `Widget.h`, `Data.h`, `Service.h`, `Action.h`). GPU widgets allocate/rasterize only in `OnDeviceCreated`, `OnTargetSizeChanged`, or `IRedXePreparedGpuWidget::Prepare`; `Render` is strictly allocation-free.
 - **Bundled Plugins (`Plugins/`)**:
   - `MatrixRain` (default low-resource D3D11 rain), `RotatingTriangle`, `GdiOrbit` (opt-in child-HWND GDI example), `5H4D3R5` (14 build-time HLSL shaders/atmosphere), `ProcessViewer`, `Launcher`, `Weather`.

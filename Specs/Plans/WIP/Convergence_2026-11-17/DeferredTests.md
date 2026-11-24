@@ -201,9 +201,31 @@ The engine's seven PR checks passed on `72416bc0ba2c4e6c03137ae580d5890887257be7
 
 [RedMonitor #123](https://github.com/RedSalamanders/RedMonitor/pull/123) at `5ff5d2a56546e665ea23e078e0319a96dc3c6580` passed six zero-warning builds and all 211 artifact hashes. Debug, Release and ASan Debug x64 passed the local store controls and both isolated crash probes. Each child recorded one MDMP dump and the matching pending marker. A headless startup preserved both markers, and the console test verified retention and a single interactive claim. ASan detection passed separately. The final twelve scope controls passed in a short physical checkout. The earlier path-limited tooling logs are retained.
 
-The feature merged at `270938b8`, and [#124](https://github.com/RedSalamanders/RedMonitor/pull/124) folded at `5555ff99`. RedMonitor owns both native Release replays and the interactive restart prompt with a controlled local data directory. [Hosted Release run](https://github.com/RedSalamanders/RedMonitor/actions/runs/45358185890)
+The feature merged at `270938b8`, and [#124](https://github.com/RedSalamanders/RedMonitor/pull/124) folded at `5555ff99`. The hosted run passed both native Release regression and production jobs at that folded source. RedMonitor owns the visible restart-prompt replay with a controlled local data directory and the native ARM64 Debug and ASan Debug diagnostic replays. [Hosted Release run](https://github.com/RedSalamanders/RedMonitor/actions/runs/45358185890)
 
 [RedXe #141](https://github.com/RedSalamanders/RedXe/pull/141) at `a9a9824abc7e9f58fd7b1e56e34b37c917dfbc60` passed the fifteen synthetic installer tests, the actual read-only setup checks and six zero-warning native builds. The legacy entry point delegates to the engine and retains its wait-budget override. The merge `970ec819` and [fold #142](https://github.com/RedSalamanders/RedXe/pull/142) `745be9ad` retain separate qualification at their published sources.
+
+## Reviewed setup rollout · 24 November 2026
+
+| Product and reviewed source | Outcome | Replay owner |
+| --- | --- | --- |
+| RedPrism `164a5f37745f73be574aa90f43d6073e4458c215` | Six zero-warning builds, fourteen installer controls, thirty profile checks and six archive refusal controls passed. [#68](https://github.com/RedSalamanders/RedPrism/pull/68) merged at `e40dcb43`. [#69](https://github.com/RedSalamanders/RedPrism/pull/69) folded at `928db82c`. | RedPrism owns native runtime and package replay with `dd0ab778` and the ARM64 WARP teardown failure recorded at `4ce16c1b`. [Earlier ARM64 failure](https://github.com/RedSalamanders/RedPrism/actions/runs/45308740096/job/138159087463) |
+| DxUi `4649ac61274205df26ffa555409a90a72cd21da1` | Six zero-warning builds, 24 matching executable and symbol identities and all required checks passed. [#303](https://github.com/RedSalamanders/DxUi/pull/303) merged at `eea383c5` and [#304](https://github.com/RedSalamanders/DxUi/pull/304) folded at `ab09dbd0`. Both native Release jobs passed shared MSVC setup at `eea383c5`. [Release setup](https://github.com/RedSalamanders/DxUi/actions/runs/45360453875) | DxUi owns the folded Debug diagnostic and Release regression replays, including the separate Rendering and Menu failures. [Folded Debug](https://github.com/RedSalamanders/DxUi/actions/runs/45361787794) · [Benchmark workflow migration](https://github.com/RedSalamanders/DxUi/pull/305) |
+
+The DxUi #286 paired benchmark review remains open under D21.
+
+## RedXe crash retention · 24 November 2026
+
+[RedXe #143](https://github.com/RedSalamanders/RedXe/pull/143) at `3f2d1bbc8d1d0ad7f4f957fc68d652cafac4be76` passed all six zero-warning builds and required PR checks. The three x64 HostSmoke configurations passed the fatal-process and stack-overflow probes, MDMP validation, retention of ten new pairs, legacy preservation and the single-claim marker control. The earlier ASan copied-executable fixture exited with `0xC0000106` in the longer path and passed after the fixture moved to a shorter owned directory. Raw probe dumps are retained locally. The feature merged at `5b5697d7`.
+
+[RedXe #144](https://github.com/RedSalamanders/RedXe/pull/144) folded at `26e0b3a6`. RedXe owns native ARM64 HostSmoke and an isolated normal startup replay that verifies the prompt, folder action and second restart.
+
+## Guarded document and settings saves · 24 November 2026
+
+| Product and reviewed source | Outcome | Replay owner |
+| --- | --- | --- |
+| RedTilde `959479ef540986721ca1ee68e1e4f779497914b9` | All six builds and required checks passed. All 149 Editor and Settings cases passed per x64 profile. Each Storage run passed 35 cases, including both new guards. `Storage.SymbolicSavePreservesEntryAndResolvesFinalTarget` failed creating its fixture with Win32 1314. ASan detected the deliberate heap-use-after-free. [#186](https://github.com/RedSalamanders/RedTilde/pull/186) merged at `eafd4c67` and [#187](https://github.com/RedSalamanders/RedTilde/pull/187) folded at `39cbdeba`. | RedTilde replays the symbolic link case with creation privileges, native ARM64, the real picker and applicable provider and recovery paths. |
+| RedMonitor `57b028f9ca671b83e3eb5ef1145ad8a7d4dd7cae` | All six builds, 211 artifact hashes, all three x64 regressions and required checks passed. Tests exercised write denial, real classic replacement, refusal on the second check, and a racing creation. [#125](https://github.com/RedSalamanders/RedMonitor/pull/125) merged at `b376af8b` and [#126](https://github.com/RedSalamanders/RedMonitor/pull/126) folded at `31397243`. | RedMonitor owns native ARM64 settings replay, remaining publish-boundary controls and the document-export adoption. |
 
 ## Checks before the next merge
 

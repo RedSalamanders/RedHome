@@ -31,10 +31,10 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). Artifa
 
 ## RedXe
 
-- Dumps are `RedXe-<yyyyMMdd>-<HHmmss>-p<pid>-t<tid>.dmp`; the marker `last_crash.txt` holds the dump path. DbgHelp is loaded when the handler is installed.
-- Its contract forbids uploading, transmitting, or automatically deleting dumps, and asks for `SetThreadStackGuarantee` so a real stack overflow keeps room for a bounded capture.
-- The next start removes the marker before a one-shot prompt that identifies the saved dump. The titled and fullscreen windows own the prompt; a dock does not.
-- `test.ps1 -Full` validates crash capture by launching an isolated child process; it requires no desktop automation and must not write to the user's normal crash directory.
+- A completed `RedXe-report-*.dmp` and its matching `RedXe-report-*.txt` call-stack report stay in the local store. `last_crash.txt` records the dump path. The healthy startup retains the newest ten owned pairs and preserves legacy reports. [RedXe #143](https://github.com/RedSalamanders/RedXe/pull/143)
+- DbgHelp loads at handler installation, and `SetThreadStackGuarantee` reserves space for a stack-overflow capture.
+- The next ordinary start claims the marker once before the prompt. The titled and fullscreen windows own their prompt; the dock uses its separate unowned notice.
+- The HostSmoke suite uses isolated fatal-process and stack-overflow children. Probe directories and raw dump retention stay under the repository's `.build` and outside CI uploads.
 
 ## RedMonitor
 

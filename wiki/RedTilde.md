@@ -11,7 +11,7 @@ Native Windows Markdown writing studio (**"Words, beautifully in flow"**) built 
 - **Unicode File Safety & Recovery (`Common/`)**:
   - Preserves UTF-8 BOM and original EOLs; rejects invalid UTF-8, NUL bytes, or files exceeding current bounded unit limits before replacing the open document.
   - Ordinary saves write to a staged file in the destination directory and atomically replace. Symlinks save through to their followed target. Multiple hardlinks create an independent durable recovery copy before in-place overwrite so all aliases survive.
-  - External modification conflicts prompt `Reload`, `Save As`, `Overwrite`, or `Cancel`. Debounced crash snapshots under `%LOCALAPPDATA%\RedTilde` restore into a dirty untitled/copy state requiring `Save As` so original files are never silently overwritten.
+  - External modification conflicts prompt `Reload`, `Save As`, `Overwrite`, or `Cancel`. The save guard binds `Overwrite` to the version the user accepted. Recovery snapshots restore as dirty untitled documents or copies that require `Save As`. [File safety](../../RedTilde/Specs/Core/Core_FileSafety.md)
   - Optional persistent **Files** workspace pane (`Ctrl+Shift+O` / `Ctrl+Shift+E`) retains per-file edits, selection, and undo history across switches.
 - **Safe Media, Math & Mermaid**:
   - Never executes HTML, scripts, or Mermaid directives. Links stay inert until confirmed external dispatch. Remote HTTP(S) images are disabled by default (opt-in bounded anonymous fetch in Settings).

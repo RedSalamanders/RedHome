@@ -15,7 +15,7 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). The re
 
 - Stage/validate before replacing the current document. Preserve BOM/EOLs, reject NUL/invalid UTF-8 and the actual editor capacity.
 - Save with an owned same-directory temporary, flush and atomic replace; failed or cancelled operations preserve dirty state/path. The contract then uses `ReplaceFileW` for an existing destination or `MoveFileExW` for a new destination. An existing document whose `ReplaceFileW` returns `ERROR_NOT_SUPPORTED`, `ERROR_INVALID_FUNCTION` or `ERROR_CALL_NOT_IMPLEMENTED` may use the contract's recovery-protected in-place writer, as a hardlink save does.
-- Check external identity and require an explicit overwrite choice. Worker completion must match the session and saved snapshot; edits after admission remain dirty.
+- Bind a replacement to the external file version the user accepted, including the picker confirmation and explicit overwrite. Hold the guard through publication. A competing creation or unprotectable version leaves the pending save available. Worker completion must match the session and snapshot. Later edits remain dirty. [RedTilde #186](https://github.com/RedSalamanders/RedTilde/pull/186)
 - Recovery is per-session and never overwrites originals.
 - Use isolated directories for failure/conflict/cancel tests; never touch the user's unrelated files.
 
@@ -24,6 +24,7 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). The re
 - Retain strict streaming UTF-8/UTF-16LE validation and byte/line budgets: retention of 100,000 lines and 64 MiB of UTF-16 text, and 100,000 search matches (its contract).
 - Open streams on an owned cancellable worker; a failed or cancelled open never replaces the document. Export writes strict UTF-8 with a BOM through a sibling temporary and an atomic replace.
 - File workers publish by request identity. Cancel/failure preserves the current document or destination.
+- Settings commits hold a write-denying guard for the accepted version, recheck before primary replacement and classic fallback, and use non-replacing publication for a new file. [RedMonitor #125](https://github.com/RedSalamanders/RedMonitor/pull/125)
 - Exercise invalid encoding, boundary sizes, cancellation and write/replace faults. `support/LocalFileTransaction.h` has the fault hooks (for example `FailNextLocalFileTransactionFlush`).
 
 ## RedXe
