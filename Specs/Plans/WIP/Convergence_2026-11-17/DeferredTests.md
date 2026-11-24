@@ -226,7 +226,7 @@ The folded DxUi Debug run at `ab09dbd08b3ca4512f0886b080dd19cfbcc9480c` failed b
 
 [RedXe #144](https://github.com/RedSalamanders/RedXe/pull/144) folded at `26e0b3a6`. At that source the ARM64 Release regression passed. The x64 regression stopped at the scope-rule check for inputs of the shared HostSmoke executable, so production skipped. RedXe owns x64 Release and production replay, the native ARM64 diagnostic profiles, and an isolated normal startup replay that verifies the prompt, folder action and second restart. [Hosted Release](https://github.com/RedSalamanders/RedXe/actions/runs/45366761801) · [Scope correction](https://github.com/RedSalamanders/RedXe/pull/149)
 
-At `39791321bca61460656673a81fd7aa87c3105c3e`, x64 stopped earlier at a restore fixture that expected the earlier inline triplet source. ARM64 regression passed. [RedXe #149](https://github.com/RedSalamanders/RedXe/pull/149) corrected both the HostSmoke scope and triplet checks. The complete independent tooling suite passed at `74abfb3feff434261c73b7c035542a04083ca557`. [#150](https://github.com/RedSalamanders/RedXe/pull/150) folded at `4e0d5c9c`. RedXe owns both Release regression and production jobs at the folded source. [Restore check failure](https://github.com/RedSalamanders/RedXe/actions/runs/45376464904) · [Folded replay](https://github.com/RedSalamanders/RedXe/actions/runs/45383527932)
+At `39791321bca61460656673a81fd7aa87c3105c3e`, x64 stopped earlier at a restore fixture that expected the earlier inline triplet source. ARM64 regression passed. [RedXe #149](https://github.com/RedSalamanders/RedXe/pull/149) corrected both the HostSmoke scope and triplet checks. The complete independent tooling suite passed at `74abfb3feff434261c73b7c035542a04083ca557`. [#150](https://github.com/RedSalamanders/RedXe/pull/150) folded at `4e0d5c9c`. Native x64 and ARM64 Release regression and the shared test gate passed at the folded source. The production receipts belong to the same run. [Restore check failure](https://github.com/RedSalamanders/RedXe/actions/runs/45376464904) · [Folded replay](https://github.com/RedSalamanders/RedXe/actions/runs/45383527932)
 
 ## Guarded document and settings saves · 24 November 2026
 
@@ -248,7 +248,19 @@ At `39791321bca61460656673a81fd7aa87c3105c3e`, x64 stopped earlier at a restore 
 
 RedTilde's root benchmark command froze an exact x64 Release baseline at `d64c628076575d61f9118c694954a1d5a90375ef` with the original compiler log SHA-256 matching its manifest. The compiler profile and benchmark command use the same source log in the configured intermediate directory. The synthetic compatibility controls and 4,772 reference and audit assertions passed. [RedTilde #194](https://github.com/RedSalamanders/RedTilde/pull/194) · [Fold #195](https://github.com/RedSalamanders/RedTilde/pull/195)
 
-[Engine #114](https://github.com/RedSalamanders/.github/pull/114) at `219a76fe20a8bcc42df9d664142cba11b4d9dc29` verified the declared `-EnableTests` switch, the existing build number argument and receipt reuse. Windows and Linux engine checks passed. It merged at `fb9e281d`. RedTilde and RedPrism own native test and production profile adoption.
+## Explicit Release test hooks · 24 November 2026
+
+[Engine #114](https://github.com/RedSalamanders/.github/pull/114) at `219a76fe20a8bcc42df9d664142cba11b4d9dc29` verified the declared `-EnableTests` switch, the existing build number argument and receipt reuse. Windows and Linux engine checks passed. It merged at `fb9e281d`.
+
+RedTilde `f09441bf127a496c09f961f74a930b6de225e32d` passed all six zero-warning builds and verified the test-hook mode and target architecture in each. The production x64 portable ZIP passed clean-extraction smoke. Direct tests refused the production image, packaging refused the test-enabled Release, and the shared scoped Release command passed all 21 Settings cases. x64 Debug and Release Editor, Settings and Crash passed. [RedTilde #196](https://github.com/RedSalamanders/RedTilde/pull/196) merged at `8b43996e` and [#197](https://github.com/RedSalamanders/RedTilde/pull/197) folded at `569f2e51`.
+
+The combined x64 ASan Debug Editor run exceeded its 90-second timeout. Its retained test run is `20261124T113658777Z-26740-db3cd6948a4b4b5981974d606eab8128`. The same-source isolated Editor run passed all 128 cases. Settings, crash handling and the ASan detection probe passed in a separate run on that source. RedTilde owns native ARM64 runtime for the new test mode. RedPrism owns its implementation and native qualification.
+
+## Isolated MSVC code analysis · 24 November 2026
+
+RedMonitor `d60189a19499a1034265436bd309b6239091f32e` passed six standard builds, 211 artifact hashes, three x64 Regression profiles and the required PR checks. The separate x64 Debug analysis linked under `.build/analysis`. MSBuild reported 51 warnings and zero errors, and the diagnostic command returned failure. SHA-256 matched for the ordinary executable, build receipt, resolved DxUi props and pinned archive. [RedMonitor #137](https://github.com/RedSalamanders/RedMonitor/pull/137) merged at `6859bae2` and [#138](https://github.com/RedSalamanders/RedMonitor/pull/138) folded at `5f026b66`.
+
+Direct MSBuild testing identified tracking state cleanup before the `BeforeClean` hook. RedMonitor's follow-up rejects invalid output before `_PrepareForClean` and preserved an owned tracking file outside the analysis output in the negative case. The follow-up's six-profile and runtime replay stays with RedMonitor. RedXe and RedTilde verified the same cleanup ordering in their local candidates. Each product retains its analyzer diagnostics separately from standard build acceptance.
 
 ## Root dependency restore · 24 November 2026
 
