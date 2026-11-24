@@ -161,7 +161,8 @@ Engine `33dfa7ae` includes the module shim, guidance validator and shared change
 
 - [RedXe #129](https://github.com/RedSalamanders/RedXe/pull/129) reviewed `c42d3d70` and merged at `e6b560ae`. All six builds passed with zero warnings. Settings suites passed on x64 Debug, Release and ASan Debug. A clean setup and an upgrade from a released document passed. The upgrade kept the settings bytes and both schema paths resolved to the current schema.
 - The first skipped-build runner expected the commit-count version. The replay with the compiled build stamp passed. The packaging fixture also hit Windows Git's path limit in its nested clone. It passed with Git long paths enabled for the test process. The first transcripts are retained.
-- The x64 production ZIP passed clean-extraction smoke and contained the exact canonical schema and both templates. ZIP SHA-256 `53a3a00f327df5129df3328b85e4ff34e7b7dc58571db4726e5c5871b3d81e8d`. The ARM64 Release output staged the same schema bytes. RedXe owns native ARM64 runtime and production evidence under D21. [Changelog fold](https://github.com/RedSalamanders/RedXe/pull/130)
+- The x64 production ZIP passed clean-extraction smoke and contained the exact canonical schema and both templates. ZIP SHA-256 `53a3a00f327df5129df3328b85e4ff34e7b7dc58571db4726e5c5871b3d81e8d`. The ARM64 Release cross-build staged the same schema bytes. [Changelog fold](https://github.com/RedSalamanders/RedXe/pull/130)
+- The subsequent published source `745be9ad85ff7d9f3e1187ea8ec4ba3ce7f3ab53` passed native Release regression and production on x64 and ARM64. The ARM64 logs show the settings and schema suite and the legacy-package-schema rejection. This closes the native replay for D22 at that source. [Hosted Release](https://github.com/RedSalamanders/RedXe/actions/runs/45356438735)
 
 - Both hosted native Release regressions and production jobs passed at RedMonitor `668bb824`. This source predates the deterministic ETW fixture change. [Hosted Release](https://github.com/RedSalamanders/RedMonitor/actions/runs/45333405934)
 
@@ -213,6 +214,8 @@ The feature merged at `270938b8`, and [#124](https://github.com/RedSalamanders/R
 | DxUi `4649ac61274205df26ffa555409a90a72cd21da1` | Six zero-warning builds, 24 matching executable and symbol identities and all required checks passed. [#303](https://github.com/RedSalamanders/DxUi/pull/303) merged at `eea383c5` and [#304](https://github.com/RedSalamanders/DxUi/pull/304) folded at `ab09dbd0`. Both native Release jobs passed shared MSVC setup at `eea383c5`. [Release setup](https://github.com/RedSalamanders/DxUi/actions/runs/45360453875) | DxUi owns the folded Debug diagnostic and Release regression replays, including the separate Rendering and Menu failures. [Folded Debug](https://github.com/RedSalamanders/DxUi/actions/runs/45361787794) · [Benchmark workflow migration](https://github.com/RedSalamanders/DxUi/pull/305) |
 
 The DxUi #286 paired benchmark review remains open under D21.
+
+[RedMonitor #127](https://github.com/RedSalamanders/RedMonitor/pull/127) at `bf421958774217830688430f974bfeb1b68859b0` and [RedTilde #188](https://github.com/RedSalamanders/RedTilde/pull/188) at `442a35f1993c774b5beed22ff959990706602b7c` adopted `dd0ab778` after read-only setup checks on both architectures, six zero-warning builds each and all required checks. [RedMonitor #128](https://github.com/RedSalamanders/RedMonitor/pull/128) folded at `78e6e072`. [RedTilde #189](https://github.com/RedSalamanders/RedTilde/pull/189) folded at `2c4bb763`. Each product retains hosted runtime and production replay at its own published source.
 
 ## RedXe crash retention · 24 November 2026
 
