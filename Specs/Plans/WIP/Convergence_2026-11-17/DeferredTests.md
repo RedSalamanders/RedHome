@@ -254,7 +254,7 @@ RedTilde's root benchmark command froze an exact x64 Release baseline at `d64c62
 
 RedTilde `f09441bf127a496c09f961f74a930b6de225e32d` passed all six zero-warning builds and verified the test-hook mode and target architecture in each. The production x64 portable ZIP passed clean-extraction smoke. Direct tests refused the production image, packaging refused the test-enabled Release, and the shared scoped Release command passed all 21 Settings cases. x64 Debug and Release Editor, Settings and Crash passed. [RedTilde #196](https://github.com/RedSalamanders/RedTilde/pull/196) merged at `8b43996e` and [#197](https://github.com/RedSalamanders/RedTilde/pull/197) folded at `569f2e51`.
 
-The combined x64 ASan Debug Editor run exceeded its 90-second timeout. Its retained test run is `20261124T113658777Z-26740-db3cd6948a4b4b5981974d606eab8128`. The same-source isolated Editor run passed all 128 cases. Settings, crash handling and the ASan detection probe passed in a separate run on that source. RedTilde owns native ARM64 runtime for the new test mode. RedPrism owns its implementation and native qualification.
+The combined x64 ASan Debug Editor run exceeded its 90-second timeout. Its retained test run is `20261124T113658777Z-26740-db3cd6948a4b4b5981974d606eab8128`. The same-source isolated Editor run passed all 128 cases. Settings, crash handling and the ASan detection probe passed in a separate run on that source. Folded source `569f2e51d012024df45bc56d352de3eaecc6a690` passed native x64 and ARM64 Release regression, the test gate and both production jobs. RedTilde retains the ARM64 diagnostic runtime replay. RedPrism owns its implementation and qualification. [Folded native run](https://github.com/RedSalamanders/RedTilde/actions/runs/45388943414)
 
 ## Isolated MSVC code analysis · 24 November 2026
 
@@ -265,6 +265,16 @@ Direct MSBuild testing found that `BeforeClean` runs after tracking-state cleanu
 RedTilde `c5369d52b745e1f21f96e9cbf189399e4f09c334` passed the same tracking-file control, six standard builds, three x64 Settings and Crash runs and the required hosted checks. Analysis retained 146 warnings and preserved the normal executable, PDB, receipt, props and pinned archive. The local mocked build hit its 30-second limit. Hosted tooling passed on the exact head. [RedTilde #198](https://github.com/RedSalamanders/RedTilde/pull/198) merged at `7b569a06` and [#199](https://github.com/RedSalamanders/RedTilde/pull/199) folded at `5af0c23e`.
 
 RedXe `7333d3b2c3973037469f23dfd94a18542e6a9272` passed six standard profiles, the executable and provenance hashes, three x64 Settings and HostSmoke runs, the cleanup control and required checks. The initial analysis approach recursively cleaned a pinned archive. The merged approach cleans only owned projects, retained 632 analyzer warnings with zero errors and preserved the archive and normal output hashes. [RedXe #151](https://github.com/RedSalamanders/RedXe/pull/151) merged at `086efeb3`.
+
+## Root test and validation commands · 24 November 2026
+
+RedMonitor `c7b1faef4d24c207e1d639aa5c2df74598c34aa4` passed x64 Debug affected selection, the full profile including live ETW and the direct regression path used by the hosted adapter. The first deeper checkout failed the tooling scope at Git's changelog fixture path limit. The same source passed all three commands in a shorter owned worktree. [RedMonitor #141](https://github.com/RedSalamanders/RedMonitor/pull/141) merged at `b723abfd`. RedMonitor owns the published native Release replay.
+
+RedXe `0ae206ab6f8b4c29f134287f4cdc8e34e7c17062` passed direct root validation and the Static adapter with the pinned engine. A missing comparison base failed as expected. Both paths restored the caller's build guard. [RedXe #153](https://github.com/RedSalamanders/RedXe/pull/153) merged at `fbea8ac7` and [#154](https://github.com/RedSalamanders/RedXe/pull/154) folded at `d909c481`.
+
+RedTilde's first affected-command run at `195e6c1bd9f45a7ba72dce124dc2b534f2ead43c` selected and ran Storage. It passed 35 cases. `Storage.SymbolicSavePreservesEntryAndResolvesFinalTarget` could not create the owned symlink and reported Win32 1314. The retained run is `20261124T125901452Z-62984-04e819bd69db49c39e93c2df04fc8f48`. RedTilde owns the exact-profile checks and native replay under D21.
+
+Engine `0bac99d97f815d68d4e3fbaab41f14088ee4eb00` published the optional WinGet locale metadata and explicit date support. The engine verified both nested executables, metadata quoting, date refusal and the schema's rejection of an identity override. The installed WinGet client also validated the generated three-file manifest. [Engine #116](https://github.com/RedSalamanders/.github/pull/116)
 
 ## Root dependency restore · 24 November 2026
 
