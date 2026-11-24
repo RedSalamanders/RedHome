@@ -6,9 +6,9 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). A fact
 
 | Repository | Contract and schema | Store | Watcher | Files |
 | --- | --- | --- | --- | --- |
-| RedXe | [Specs/Core/Core_Settings.md](../../../../../RedXe/Specs/Core/Core_Settings.md), [Specs/Settings.schema.json](../../../../../RedXe/Specs/Settings.schema.json); performance in [Core_PerformanceAndResources.md](../../../../../RedXe/Specs/Core/Core_PerformanceAndResources.md) | `RedXe/Settings.cpp` (and `RedXe/SettingsV4.cpp`); templates in `Settings/` | `RedXe/SettingsWatcher.cpp` | `RedXe.settings.json`, `RedXe-debug.settings.json` |
+| RedXe | [Specs/Core/Core_Settings.md](../../../../../RedXe/Specs/Core/Core_Settings.md), [Specs/SettingsStore.schema.json](../../../../../RedXe/Specs/SettingsStore.schema.json); performance in [Core_PerformanceAndResources.md](../../../../../RedXe/Specs/Core/Core_PerformanceAndResources.md) | `RedXe/Settings.cpp` (and `RedXe/SettingsV4.cpp`); templates in `Settings/` | `RedXe/SettingsWatcher.cpp` | `RedXe.settings.json`, `RedXe-debug.settings.json` |
 | RedPrism | [Specs/Core/Core_Settings.md](../../../../../RedPrism/Specs/Core/Core_Settings.md) | `Common/SettingsStore.*`; the application side `RedPrism/ApplicationSettings.cpp`; the startup load `RedPrism/Main.cpp` | In `RedPrism/ApplicationSettings.cpp` | `settings.json`, `settings.debug.json` under `%LocalAppData%\RedPrism` |
-| RedTilde | [Specs/Core/Core_SettingsAndCrashes.md](../../../../../RedTilde/Specs/Core/Core_SettingsAndCrashes.md) | `Common/Settings.cpp` | None | A versioned UTF-8 `key=value` document under `%LOCALAPPDATA%\RedTilde`; tests select an isolated data directory |
+| RedTilde | [Specs/Core/Core_Settings.md](../../../../../RedTilde/Specs/Core/Core_Settings.md), [SettingsStore.schema.json](../../../../../RedTilde/SettingsStore.schema.json) | `Common/Settings.cpp` | `SettingsWatcher` in `Common/Settings.cpp` | `RedTilde.settings.json` and `RedTilde-debug.settings.json` |
 | RedSalamander | [Specs/Core/Core_SettingsStore.md](../../../../../RedSalamander/Specs/Core/Core_SettingsStore.md), [Specs/SettingsStore.schema.json](../../../../../RedSalamander/Specs/SettingsStore.schema.json) | `Common/Common/SettingsStore.cpp` | `RedSalamander/SettingsHotReload.cpp` | `<App>.settings.json`, `<App>-debug.settings.json` |
 | RedMonitor | [Specs/Core/Core_Settings.md](../../../../../RedMonitor/Specs/Core/Core_Settings.md), [Specs/SettingsStore.schema.json](../../../../../RedMonitor/Specs/SettingsStore.schema.json) | `support/SettingsStore.cpp`, imported from RedSalamander's store (its contract calls the broad settings and theme types migration debt) | None | `RedSalamanderMonitor-7.0.settings.json` (Release), `RedSalamanderMonitor-debug.settings.json` (Debug), with fallbacks to the legacy `RedSalamanderMonitor.settings.json` |
 | DxUi | None: settings are consumer-owned | None | None | None |
@@ -43,7 +43,7 @@ Read the settings contract, the performance contract, and the canonical schema b
 ## RedTilde
 
 - Settings have field-level fallback and atomic persistence; errors leave editing available. Apply changes live and honor high contrast.
-- H-10: the document is line-based text, not JSON, until RedTilde moves to JSON through `yyjson`.
+- Read finite JSON5 with a BOM. The cold loader migrates the legacy text document when the selected JSON file is absent. The watcher coalesces changes for the UI thread, and saves preserve unknown members. Tests use the isolated `--data-dir`.
 - Verify invalid settings separately from the dump, the pending marker, and the ordinary restart ([crash-dumps](../../crash-dumps/SKILL.md)).
 
 ## RedSalamander
