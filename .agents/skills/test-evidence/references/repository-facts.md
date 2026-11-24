@@ -18,11 +18,12 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md) and [pa
 | Repository | Fact | Where it is defined | Kept because |
 | --- | --- | --- | --- |
 | RedPrism | Every suite's `wmain` starts with `RedPrismTestFailureReports::RouteAwayFromDialogs()`, so a failed CRT or STL check ends the run with its report and exit code 3. A new suite answers `--failure-report-self-test` and is added to the list of suites in `Tests/BuildProcessTests/FailureReportTests.ps1`, which runs the switch of each one. | `Tests/Support/Support.Tests.FailureReports.h` | Helper and test list are RedPrism's |
-| RedPrism | The self-test runs on a keyboard of its own: input code reads modifiers with `KeyboardState::Held` / `Read`, never `GetKeyState` / `GetKeyboardState`, and self-test drivers hold keys with `KeyboardState::Write` (`HandleAccelerator` does). | `RedPrism/KeyboardState.h` | Only RedPrism has the type (register H-23) |
+| RedPrism | Input code reads modifiers through `KeyboardState::Held` and `Read`. Hidden self-test drivers set the expected state through `KeyboardState::Write`. | `RedPrism/KeyboardState.h` | Application-owned modifier state |
 | RedXe | `RedXeFailureReports::RouteAwayFromDialogs`; `test.ps1` runs `--failure-report-self-test` | `Common/FailureReports.h` | Helper name |
 | DxUi | `DxUiTestFailureReports::RouteAwayFromDialogs`; suites answer `--failure-report-self-test` | `Tests/Support/Support.Tests.FailureReports.h` | Helper name |
 | RedSalamander, RedMonitor | `RedSalamander::TestSupport::RouteFailureReportsAwayFromDialogs`, the same file in both, modeled on DxUi's. RedSalamander runs `--failure-report-self-test` from `Tools/Tests/FailureReportRouting.Tests.ps1`; RedMonitor has no such switch (register H-22) | `Tests/TestSupport/TestSupport.Tests.FailureReports.h` | Helper name |
-| RedTilde | No test-process routing; the application's crash handler sets its own handlers | `Common/CrashHandler.cpp` | Register H-22 |
+| RedTilde | `RedTildeTestFailureReports::RouteAwayFromDialogs` runs before crash-handler installation in the applicable test modes. `test.ps1` invokes `--failure-report-self-test` when all four native groups run. | `RedTilde/Main.cpp`, `Tests/Application.Tests.FailureReports.h`, `test.ps1` | One native test executable with four case groups |
+| RedTilde | Hidden editor and print-preview cases use `ScopedSynthetic` and write the expected modifiers through `KeyboardState::Write`. | `RedTilde/KeyboardState.h`, `Tests/Application.Tests.Core.cpp`, `Tests/Application.Tests.Printing.cpp` | Application-owned modifier state |
 
 ## RedPrism
 
