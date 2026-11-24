@@ -12,6 +12,7 @@ Independent Windows-native diagnostics viewer and single-header TraceLogging pro
 - **Standalone Viewer (`src/` & `support/`)**:
   - Receives the Red-family ETW TraceLogging stream, renders bounded colored logs with Direct2D/DirectWrite/Direct3D 11 and an exact pinned `DxUi` (`API 4`) archive, and opens/exports streaming UTF-8/UTF-16LE text files off the UI thread.
   - Settings saves hold a guard for the accepted file version through replacement. A different version raises a revision conflict and a competing new file is preserved. [Settings contract](../../RedMonitor/Specs/Core/Core_Settings.md)
+  - Text export binds overwrite confirmation to the observed destination version. The worker preserves intervening edits and competing new files, and reports a conflict to the viewer. [Export contract](../../RedMonitor/Specs/Core/Core_Architecture.md)
   - `support/` holds a private statically linked MIT migration closure (never exposed to consumers and never linked against `RedSalamander`'s `Common.dll`).
   - Never stops a foreign ETW session; preserves wire GUID, field names/types, severity/filter mapping, and bounded oldest eviction with immutable UI snapshots.
 
