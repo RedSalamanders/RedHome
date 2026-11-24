@@ -13,7 +13,7 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). The co
 | RedMonitor | [Specs/Build/Build_Consumption.md](../../../../../RedMonitor/Specs/Build/Build_Consumption.md) | `build.ps1` | `restore.ps1`, `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1` (`.build/packages`) | |
 | DxUi | [Specs/Build/Build_ToolchainAndConsumption.md](../../../../../DxUi/Specs/Build/Build_ToolchainAndConsumption.md) | `build.ps1` (the single `DxUi.lib`) | `restore.ps1`, `vcpkg-install.ps1` | Library qualification artifacts | |
 
-RedMonitor's `build.ps1 -Analyze` writes the MSVC diagnostic log and binaries under `.build/analysis`.
+RedMonitor, RedTilde and RedXe use `build.ps1 -Analyze` for a separate MSVC diagnostic build under `.build/analysis`.
 Use the ordinary profile receipts for standard native acceptance.
 
 ## RedSalamander
