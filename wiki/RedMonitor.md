@@ -34,6 +34,7 @@ Set-Location ..\RedMonitor
 .\validate-specs.ps1
 .\Tests\Tooling.Tests.ps1
 .\build.ps1 -Platform x64 -Configuration Debug
+.\build.ps1 -Rebuild -Platform x64 -Configuration Debug -MaxCpuCount 2
 .\test.ps1 -Platform x64 -Configuration Debug
 .\Test-Changes.ps1 -Explain
 .\Test-Changes.ps1 -Mode PrePush -Explain

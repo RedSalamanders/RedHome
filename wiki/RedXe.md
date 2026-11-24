@@ -36,6 +36,7 @@ Set-Location ..\RedXe
 .\test.ps1
 .\test.ps1 -Full
 .\validate-skills.ps1
+.\validate-specs.ps1
 .\package.ps1 -Platform x64
 ```
 
