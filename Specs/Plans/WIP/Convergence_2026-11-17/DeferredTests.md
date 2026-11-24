@@ -407,6 +407,12 @@ RedTilde `79411c58c33e386823e7d3a9c271a4a08cf4a56b` passed all six zero-warning 
 
 RedXe `f2ad98eb8f8fe92c58aad5fb7153bfbec2c29ac6` passed six zero-warning builds and selected Settings and HostSmoke in all three x64 profiles. The settings checks exercised JSON5 dock source bytes, the BOM-preserving widget write, duplicate decoded keys and a non-finite value's diagnostic offset. The earlier `6dcb374a` Settings run failed a parser test that still expected JSON5 member names to be rejected. Its log is retained. [#173](https://github.com/RedSalamanders/RedXe/pull/173) merged at `8f538861e3bb1120bd2bec44f87355fa599ab2d9` and [#174](https://github.com/RedSalamanders/RedXe/pull/174) folded at `ad622cbe449fcb2ba70546087b6afc28177bfd98`. RedXe owns its native ARM64 settings and full HostPlugin replay under D21.
 
+### RedXe optional settings · 24 November 2026
+
+RedXe `d86d178f5f6159b7e72ef0efd8844d75bc4aed93` passed six zero-warning builds, three x64 Settings runs and three x64 HostSmoke runs. The isolated live reload applied a valid neighbor alongside unusable preferences and preserved the file bytes. The later guarded widget and dock writes retained additive members. The earlier `397d6bac` x64 Debug Settings run failed because the new default fixture overwrote an input that the older dock-override fixture reused. Both the failed run and the independent fixture correction are retained. [#175](https://github.com/RedSalamanders/RedXe/pull/175) merged at `f90625704a0eecf5bbe26aabdd3ea5219cf98068`.
+
+[#176](https://github.com/RedSalamanders/RedXe/pull/176) folded at `a702d8a0d03aef65f4bbd1dab8788519c14acc0d`. RedXe owns native ARM64 Settings and full HostPlugin replay under D21. The source-bound acceptance covers optional host and dock fields. Document-level validation and recovery stay open in H-15.
+
 ## Common harness commands · 24 November 2026
 
 RedXe `42c5e6871e19608277c025120a299cb26f156d11` passed all six zero-warning builds, executable and launcher hashes, three x64 Settings and HostSmoke runs, formatting and root validation. The shared capture switch produced a PNG. The legacy capture reached the missing-widget check. The shared and legacy crash probes produced the expected reports in isolated build directories. [#157](https://github.com/RedSalamanders/RedXe/pull/157) merged at `a083b1fe` and [#158](https://github.com/RedSalamanders/RedXe/pull/158) folded at `34baf886`. RedXe owns native ARM64 runtime replay.
@@ -429,6 +435,12 @@ RedPrism `2994c78a9d55ab85edbc8786c0ffc8c3e8f1fa8f` passed six zero-warning buil
 [RedPrism #70](https://github.com/RedSalamanders/RedPrism/pull/70) at `ab11cada9612742f30d22b51b36fa44c5b290337` passed all six zero-warning builds and required checks. The x64 Host scope passed in all three profiles. Each profile produced an MDMP with the matching marker for both the main and overlapping-worker probes. ASan Debug Stress verified real sanitizer detection. The exact x64 Debug Runtime run passed hidden WARP. The earlier development WARP attempt failed the selection-offset-large cases with exit 5. Its log retains those assertions. The feature merged at `b9289849`.
 
 [RedPrism #71](https://github.com/RedSalamanders/RedPrism/pull/71) folded at `4bd6cea6`. RedPrism owns native ARM64 Runtime, the visible restart and Explorer selection in an isolated store, and replay of the earlier ARM64 WARP teardown timeout.
+
+### RedSalamander post-restore regression · 24 November 2026
+
+The hosted Release run at `8791d975620da5c24ecfd9f7e4cfff9432b76136` passed admission and completed the x64 build with zero warnings and errors. The x64 regression finished with 2,742 passes, 3 failures and 349 skips. Commands failed its typed queue-publication and guarded transfer-admission contract. FileOperations failed its stopping-status and pending-exit cases. The runner retained the first failures and failed retries. [Exact x64 job](https://github.com/RedSalamanders/RedSalamander/actions/runs/45471248383/job/138720229031)
+
+The RedSalamander qualification operator owns the ARM64 result, regression repairs and production validation. D25 native launcher startup remains pending. [Qualification](https://github.com/RedSalamanders/RedSalamander/actions/runs/45471248383)
 
 ## Checks before the next merge
 
