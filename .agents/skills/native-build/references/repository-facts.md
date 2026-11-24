@@ -7,11 +7,14 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). The co
 | Repository | Build contract | Build | Restore | Package | Banner and log |
 | --- | --- | --- | --- | --- | --- |
 | RedSalamander | [Specs/Build/Build_Toolchain.md](../../../../../RedSalamander/Specs/Build/Build_Toolchain.md) | `build.ps1` | Pinned bootstrap and `vcpkg-install.ps1`, `Tools/Restore-DxUi.ps1` | `build.ps1 -Zip`, `Installer/zip/build-zip.ps1` (`.build\AppPackages`) | `.build\logs\msbuild-*.log` |
-| RedXe | [Specs/Build/Build_Process.md](../../../../../RedXe/Specs/Build/Build_Process.md), [Build_Packaging.md](../../../../../RedXe/Specs/Build/Build_Packaging.md) | `build.ps1` | `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1`, `winget-manifest.ps1` (`.build/packages`) | The RedXe build-signal banner; `.build/logs/` |
-| RedPrism | [Specs/Build/Build_Toolchain.md](../../../../../RedPrism/Specs/Build/Build_Toolchain.md), [Build_Packaging.md](../../../../../RedPrism/Specs/Build/Build_Packaging.md) | `build.ps1` | `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1` (`.build/packages/`) | The framed pixel-art banner of `Build/BuildPresentation.psm1` |
-| RedTilde | [Specs/Build/Build_Toolchain.md](../../../../../RedTilde/Specs/Build/Build_Toolchain.md) | `build.ps1` | `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1` (`.build/package`) | Build logs kept apart from test receipts |
+| RedXe | [Specs/Build/Build_Process.md](../../../../../RedXe/Specs/Build/Build_Process.md), [Build_Packaging.md](../../../../../RedXe/Specs/Build/Build_Packaging.md) | `build.ps1` | `restore.ps1`, `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1`, `winget-manifest.ps1` (`.build/packages`) | The RedXe build-signal banner and `.build/logs/` |
+| RedPrism | [Specs/Build/Build_Toolchain.md](../../../../../RedPrism/Specs/Build/Build_Toolchain.md), [Build_Packaging.md](../../../../../RedPrism/Specs/Build/Build_Packaging.md) | `build.ps1` | `restore.ps1`, `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1` (`.build/packages/`) | The framed pixel-art banner of `Build/BuildPresentation.psm1` |
+| RedTilde | [Specs/Build/Build_Toolchain.md](../../../../../RedTilde/Specs/Build/Build_Toolchain.md) | `build.ps1`, with `-EnableTests` for Release test builds | `restore.ps1`, `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1` (`.build/package`) | Build logs kept apart from test receipts |
 | RedMonitor | [Specs/Build/Build_Consumption.md](../../../../../RedMonitor/Specs/Build/Build_Consumption.md) | `build.ps1` | `restore.ps1`, `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1` (`.build/packages`) | |
-| DxUi | [Specs/Build/Build_ToolchainAndConsumption.md](../../../../../DxUi/Specs/Build/Build_ToolchainAndConsumption.md) | `build.ps1` (the single `DxUi.lib`) | `vcpkg-install.ps1` | None: a library with no release package | |
+| DxUi | [Specs/Build/Build_ToolchainAndConsumption.md](../../../../../DxUi/Specs/Build/Build_ToolchainAndConsumption.md) | `build.ps1` (the single `DxUi.lib`) | `restore.ps1`, `vcpkg-install.ps1` | Library qualification artifacts | |
+
+RedMonitor's `build.ps1 -Analyze` writes the MSVC diagnostic log and binaries under `.build/analysis`.
+Use the ordinary profile receipts for standard native acceptance.
 
 ## RedSalamander
 
