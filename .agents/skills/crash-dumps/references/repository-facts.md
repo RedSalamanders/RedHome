@@ -10,7 +10,7 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). Artifa
 | RedTilde | [Specs/Core/Core_SettingsAndCrashes.md](../../../../../RedTilde/Specs/Core/Core_SettingsAndCrashes.md) | `Common/CrashHandler.cpp`; the next-start check in `RedTilde/Main.cpp` | `Crashes` under the data directory; harness runs use their own `RedTilde-Harness-<pid>` data root under `%TEMP%` | `--crash-probe` |
 | RedXe | [Specs/Core/Core_CrashHandling.md](../../../../../RedXe/Specs/Core/Core_CrashHandling.md) | `RedXe/CrashHandler.cpp`; `SIGABRT` through `Common/FailureReports.h` | `%LocalAppData%\RedXe\Crashes` | `--crash-test`, `--crash-test-stack-overflow` |
 | RedSalamander | None of its own; the probe is in [Specs/Core/Core_StartupBootstrap.md](../../../../../RedSalamander/Specs/Core/Core_StartupBootstrap.md) | `RedSalamander/CrashHandler.cpp`; the next-start offer in `RedSalamander/CrashQuarantine.cpp` | `%LOCALAPPDATA%\RedSalamander\Crashes` | `--crash-test` |
-| RedMonitor | None | None | None | None |
+| RedMonitor | [Core_CrashHandling.md](https://github.com/RedSalamanders/RedMonitor/blob/5555ff99b63a65bdceaabddd483b3a23b8641403/Specs/Core/Core_CrashHandling.md) | src/CrashReports.cpp | %LOCALAPPDATA%\RedMonitor\Crashes | --crash-probe and --crash-probe-worker |
 | DxUi | [Specs/Core/Core_FailureHandling.md](../../../../../DxUi/Specs/Core/Core_FailureHandling.md): the library routes an unexpected failure to the host, which owns the dump | `src/Foundation/Failure.cpp`; the sample host `Samples/Shared/FailureHost.cpp`; `RedTilde`'s host adapter is `Common/DxUiFailureHost.cpp` | The host's | The host's |
 
 ## RedPrism
@@ -35,6 +35,11 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). Artifa
 - Its contract forbids uploading, transmitting, or automatically deleting dumps, and asks for `SetThreadStackGuarantee` so a real stack overflow keeps room for a bounded capture.
 - The next start removes the marker before a one-shot prompt that identifies the saved dump. The titled and fullscreen windows own the prompt; a dock does not.
 - `test.ps1 -Full` validates crash capture by launching an isolated child process; it requires no desktop automation and must not write to the user's normal crash directory.
+
+## RedMonitor
+
+- The viewer preloads system DbgHelp before UI and starts one local writer for all fatal paths. The producer SDK stays independent.
+- Each successful dump records a UTF-16 pending filename. The next ordinary launch claims the marker once and shows the local report path. Retention keeps the newest ten owned dumps. Crash probes use an isolated repository-local store excluded from CI artifact uploads. [RedMonitor #123](https://github.com/RedSalamanders/RedMonitor/pull/123)
 
 ## RedSalamander
 
