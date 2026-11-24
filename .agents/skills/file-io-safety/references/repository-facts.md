@@ -25,6 +25,7 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). The re
 - Open streams on an owned cancellable worker; a failed or cancelled open never replaces the document. Export writes strict UTF-8 with a BOM through a sibling temporary and an atomic replace.
 - File workers publish by request identity. Cancel/failure preserves the current document or destination.
 - Settings commits hold a write-denying guard for the accepted version, recheck before primary replacement and classic fallback, and use non-replacing publication for a new file. [RedMonitor #125](https://github.com/RedSalamanders/RedMonitor/pull/125)
+- Text export observes the destination before the overwrite prompt and sends the accepted identity to the worker. The worker denies writes while replacing and preserves competing creations. [RedMonitor #135](https://github.com/RedSalamanders/RedMonitor/pull/135)
 - Exercise invalid encoding, boundary sizes, cancellation and write/replace faults. `support/LocalFileTransaction.h` has the fault hooks (for example `FailNextLocalFileTransactionFlush`).
 
 ## RedXe
