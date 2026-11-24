@@ -3,12 +3,7 @@
 This page summarizes shared engineering policies and current repository exceptions. Each repository's `AGENTS.md`, domain specs, and build manifests own its active requirements.
 
 ## 1. Native Compiler & Warning Policy (`2026-10-28`)
-- **Compiler**: Visual Studio 2026 (`v145`, default MSVC `14.52.x`), Windows 11 SDK `10.0.26100`, `/std:c++latest`, `/permissive-`, `/sdl`, `/utf-8`, Unicode Win32 APIs.
-- All six native repositories use `/Wall` with `/WX` disabled. Build admission requires zero warnings and errors. Keep reviewed exceptions scoped to the affected inputs. [RedMonitor #107](https://github.com/RedSalamanders/RedMonitor/pull/107)
-- The common symbol and ICF profile applies across RedSalamander, RedXe, RedPrism, RedTilde and DxUi. RedMonitor still uses `/Zi` in Debug and tracks its Release optimization and Debug symbol alignment under C-10.
-  - `Debug`: `/ZI` (Edit and Continue PDB), `/OPT:NOICF`, `/MDd`.
-  - `ASan Debug`: `/Zi`, real AddressSanitizer instrumentation, `/OPT:NOICF`, `/MDd`.
-  - `Release`: `/Gy /GL` + `/OPT:REF /OPT:ICF /LTCG`, `/MD`.
+The shared compiler, linker, CRT and PDB settings apply across all six native repositories. The profile records the reviewed toolchain and product exceptions. [Native build profiles](https://github.com/RedSalamanders/.github/blob/e513a50b3aea60d86f41054188537fb7b418bac6/Specs/NativeBuildProfiles.md)
 - RedSalamander's `RedLauncher.exe` uses the static CRT for its portable WinGet bootstrap. Verify a clean extraction and alias startup on x64 and native ARM64. [WinGet integration](../../RedSalamander/Specs/Installer/WingetIntegration.md)
 - **Private MSVC Metadata Endpoints**: Local `build.ps1` launchers invoke `.ci-engine/Tools/Modules/Ci.Policy.psm1` (`Invoke-CiNativeCommand` / `Set-CiNativeProcessEnvironment`) so each MSBuild child tree receives a private `_MSPDBSRV_ENDPOINT_` without mutating the parent shell.
 
