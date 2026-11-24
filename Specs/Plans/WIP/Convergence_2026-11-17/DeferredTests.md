@@ -133,6 +133,24 @@ Engine `33dfa7ae` includes the module shim, guidance validator and shared change
 - The first RedXe checkout fixture using engine `2a94799c` reported `$GIT_DIR too big` inside the new clone staging path. [Engine #106](https://github.com/RedSalamanders/.github/pull/106) shortened staging and launched Git from a short directory. Both pinned roles passed in the original failed fixture. RedXe's full vcpkg suite then passed with the merged correction `68c4eac4`. The original transcript is retained.
 - The first fresh RedMonitor x64 restore reached yyjson's CMake compiler probe, then reported C1083 and LNK1104 at the nested output root. A fresh restore at a shorter owned physical output root installed the exact pinned dependencies, including yyjson. The failed logs and the successful retry are retained.
 
+## Hosted toolchain and guidance replays · 24 November 2026
+
+| Published source | Observed outcome | Follow-up |
+| --- | --- | --- |
+| RedMonitor `63b7e2db` | Hosted ARM64 regression passed. x64 compiled with zero warnings and errors, then `Tooling.Tests.Vcpkg.ps1` failed on its inline-clone assertion. The production jobs skipped. [x64 log](https://github.com/RedSalamanders/RedMonitor/actions/runs/45322959423/job/138205795472) | [#103](https://github.com/RedSalamanders/RedMonitor/pull/103) exercises the pinned engine checkout against the same offline registry and preserves the separate compatibility controls. All 15 focused controls passed. Requalify the repaired published source. |
+| RedTilde `fed580a9` | Hosted ARM64 regression passed. x64 failed the evidence-retention fixture because it called the removed private `TestRunEvidenceV2.Native` type. The production jobs skipped. [x64 log](https://github.com/RedSalamanders/RedTilde/actions/runs/45323330994/job/138207036923) | [#176](https://github.com/RedSalamanders/RedTilde/pull/176) uses two public receipts to prove the same object's identity. All 48 focused controls and the complete local validator passed. The repair merged at `fbf91501`. [#177](https://github.com/RedSalamanders/RedTilde/pull/177) folded at `23707ee1`. Requalify the repaired published source. |
+| RedPrism `4ce16c1b` | Hosted x64 regression passed. The ARM64 WARP self-test logged body result 0 at 1,846,203 ms and completed application-lifetime logging. The process had not exited at the 5,400-second limit, so ARM64 regression failed and both production jobs skipped. The failure log and ARM64 evidence artifact `14889846285` are retained. [ARM64 log](https://github.com/RedSalamanders/RedPrism/actions/runs/45308740096/job/138159087463) | RedPrism owns ARM64 process-exit investigation and source-bound replay. |
+| RedXe `6f722aad` | Both hosted native Release regressions, the test gate, both production jobs and completion passed. [Hosted qualification](https://github.com/RedSalamanders/RedXe/actions/runs/45317999005) | Native Debug and ASan Debug runtime remain in the original D21 inventory. |
+
+## Source-built DxUi package notices · 24 November 2026
+
+| Product and source | Evidence | Remaining |
+| --- | --- | --- |
+| RedMonitor `432b0a27` | All six exact builds passed with zero warnings and errors. Clean x64 and ARM64 ZIPs matched the Unicode and WHATWG bytes from DxUi `f2e328a0`. The x64 extracted viewer passed its runtime contract. [#101](https://github.com/RedSalamanders/RedMonitor/pull/101) merged at `5c8e0fe` and [#102](https://github.com/RedSalamanders/RedMonitor/pull/102) folded at `3101026c`. | Native ARM64 package execution. |
+| RedXe `df58c23c` | All six exact builds passed with zero warnings and errors. The x64 packaging controls and production smoke passed. Both Release ZIPs contain all eight byte-identical source notice files. [#131](https://github.com/RedSalamanders/RedXe/pull/131) merged at `27b1984b` and [#132](https://github.com/RedSalamanders/RedXe/pull/132) folded at `90e90e99`. | Native ARM64 package execution. |
+
+- RedPrism's first source-notice candidate `14838c2e` compiled all six profiles. Its x64 production package failed after the nested build reloaded the Visual Studio discovery module. [#60](https://github.com/RedSalamanders/RedPrism/pull/60) moves the package import after the build and adds an ordering control. The failed packaging transcript is retained.
+
 ## RedXe settings schema · 24 November 2026
 
 - [RedXe #129](https://github.com/RedSalamanders/RedXe/pull/129) reviewed `c42d3d70` and merged at `e6b560ae`. All six builds passed with zero warnings. Settings suites passed on x64 Debug, Release and ASan Debug. A clean setup and an upgrade from a released document passed. The upgrade kept the settings bytes and both schema paths resolved to the current schema.
