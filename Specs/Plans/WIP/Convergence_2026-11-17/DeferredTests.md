@@ -197,6 +197,14 @@ DxUi `3ffccdaa92dd8e52ac8e6f0d853a81c054969fea` passed hosted Release compilatio
 
 The engine's seven PR checks passed on `72416bc0ba2c4e6c03137ae580d5890887257be7`. The isolated installer controls verified the two-second timeout, owned process termination, retained logs and a verified MSBuild export. [Engine #113](https://github.com/RedSalamanders/.github/pull/113) merged at `dd0ab778`.
 
+## RedMonitor crash reporting · 24 November 2026
+
+[RedMonitor #123](https://github.com/RedSalamanders/RedMonitor/pull/123) at `5ff5d2a56546e665ea23e078e0319a96dc3c6580` passed six zero-warning builds and all 211 artifact hashes. Debug, Release and ASan Debug x64 passed the local store controls and both isolated crash probes. Each child recorded one MDMP dump and the matching pending marker. A headless startup preserved both markers, and the console test verified retention and a single interactive claim. ASan detection passed separately. The final twelve scope controls passed in a short physical checkout. The earlier path-limited tooling logs are retained.
+
+The feature merged at `270938b8`, and [#124](https://github.com/RedSalamanders/RedMonitor/pull/124) folded at `5555ff99`. RedMonitor owns both native Release replays and the interactive restart prompt with a controlled local data directory. [Hosted Release run](https://github.com/RedSalamanders/RedMonitor/actions/runs/45358185890)
+
+[RedXe #141](https://github.com/RedSalamanders/RedXe/pull/141) at `a9a9824abc7e9f58fd7b1e56e34b37c917dfbc60` passed the fifteen synthetic installer tests, the actual read-only setup checks and six zero-warning native builds. The legacy entry point delegates to the engine and retains its wait-budget override. The merge `970ec819` and [fold #142](https://github.com/RedSalamanders/RedXe/pull/142) `745be9ad` retain separate qualification at their published sources.
+
 ## Checks before the next merge
 
 - RedSalamander CV-4-07 pre-merge evidence. The two clean dependency restores succeeded with tool and baseline `aeb162b7`. At `1add64b9`, the full x64 Release build passed with zero warnings and errors (receipt `dc01ec9ea71a5e7924ac6c9b5c655d091ff81d30f7a032ebf2e6dc3cbdd2137f`). The clean ZIP passed application startup, the native Ghostty load and the package checks for all built-in plugins. Both packaged launcher names started the extracted application from a separate working directory. The ARM64 Release launcher cross-build passed with zero warnings and errors (receipt `c69843cbd14aecf7a9bb9950135fcd1ed45fbd08c896c7ee27460441bb06f2ff`). The launcher imported the same four Windows system DLLs on both architectures. The hosted cache recovery change passed 114 tooling checks at `e394c07d`. [RedSalamander #240](https://github.com/RedSalamanders/RedSalamander/pull/240)
