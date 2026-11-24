@@ -393,7 +393,13 @@ An isolated process per side ran `HostPluginTests.exe --matrix-soak --seconds=60
 
 RedMonitor `be73fc0b9539519ddbf84769915d214aee1b4ead` passed six zero-warning builds and 15 x64 Debug, 15 x64 Release and 17 x64 ASan Debug regression scenarios. The selected failure probes returned exit 3 with a stderr marker in diagnostic builds and exit 0 in test-enabled Release. The ASan regression exercised the sanitizer detector as well. The earlier `d4d55028` run retained successful individual probe results and failed the aggregate because its expected scenario count omitted the new cases. [#161](https://github.com/RedSalamanders/RedMonitor/pull/161) merged at `b19d722c61a9db632679987bcfcfc9f4e312e3ae`. [#162](https://github.com/RedSalamanders/RedMonitor/pull/162) folded at `1e880d01e41e3b1fe8fe70d3ef5bf2dc2699ca69`.
 
-The automatic hosted run stopped at admission and skipped native execution. RedMonitor owns the exact folded-source native Release replay on both architectures. [Hosted replay](https://github.com/RedSalamanders/RedMonitor/actions/runs/45482286473)
+The automatic hosted run stopped at admission and skipped native execution. A manual run at the exact folded source passed the native x64 and ARM64 Release regressions and aggregate test gate. RedMonitor owns the separate production result. [Hosted replay](https://github.com/RedSalamanders/RedMonitor/actions/runs/45482286473)
+
+### JSON5 settings and resource helpers · 24 November 2026
+
+RedTilde `79411c58c33e386823e7d3a9c271a4a08cf4a56b` passed all six zero-warning builds, 3,227 resource gate checks and the isolated crash marker and headless restart in all three x64 profiles. [#219](https://github.com/RedSalamanders/RedTilde/pull/219) merged at `8aed5f28ef22c544a63bc5b0ec5e3b5c16112d12` and [#220](https://github.com/RedSalamanders/RedTilde/pull/220) folded at `f4217a21a0679f9c3371579f2a75285a078d4f43`. RedTilde owns the visible crash notice and native ARM64 replay.
+
+RedXe `f2ad98eb8f8fe92c58aad5fb7153bfbec2c29ac6` passed six zero-warning builds and selected Settings and HostSmoke in all three x64 profiles. The settings checks exercised JSON5 dock source bytes, the BOM-preserving widget write, duplicate decoded keys and a non-finite value's diagnostic offset. The earlier `6dcb374a` Settings run failed a parser test that still expected JSON5 member names to be rejected. Its log is retained. [#173](https://github.com/RedSalamanders/RedXe/pull/173) merged at `8f538861e3bb1120bd2bec44f87355fa599ab2d9` and [#174](https://github.com/RedSalamanders/RedXe/pull/174) folded at `ad622cbe449fcb2ba70546087b6afc28177bfd98`. RedXe owns its native ARM64 settings and full HostPlugin replay under D21.
 
 ## Common harness commands · 24 November 2026
 
