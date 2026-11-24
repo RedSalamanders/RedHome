@@ -10,7 +10,7 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). A fact
 | RedPrism | [Specs/Core/Core_Settings.md](../../../../../RedPrism/Specs/Core/Core_Settings.md) | `Common/SettingsStore.*`; the application side `RedPrism/ApplicationSettings.cpp`; the startup load `RedPrism/Main.cpp` | In `RedPrism/ApplicationSettings.cpp` | `settings.json`, `settings.debug.json` under `%LocalAppData%\RedPrism` |
 | RedTilde | [Specs/Core/Core_Settings.md](../../../../../RedTilde/Specs/Core/Core_Settings.md), [SettingsStore.schema.json](../../../../../RedTilde/SettingsStore.schema.json) | `Common/Settings.cpp` | `SettingsWatcher` in `Common/Settings.cpp` | `RedTilde.settings.json` and `RedTilde-debug.settings.json` |
 | RedSalamander | [Specs/Core/Core_SettingsStore.md](../../../../../RedSalamander/Specs/Core/Core_SettingsStore.md), [Specs/SettingsStore.schema.json](../../../../../RedSalamander/Specs/SettingsStore.schema.json) | `Common/Common/SettingsStore.cpp` | `RedSalamander/SettingsHotReload.cpp` | `<App>.settings.json`, `<App>-debug.settings.json` |
-| RedMonitor | [Specs/Core/Core_Settings.md](../../../../../RedMonitor/Specs/Core/Core_Settings.md), [Specs/SettingsStore.schema.json](../../../../../RedMonitor/Specs/SettingsStore.schema.json) | `support/SettingsStore.cpp`, imported from RedSalamander's store (its contract calls the broad settings and theme types migration debt) | None | `RedSalamanderMonitor-7.0.settings.json` (Release), `RedSalamanderMonitor-debug.settings.json` (Debug), with fallbacks to the legacy `RedSalamanderMonitor.settings.json` |
+| RedMonitor | [Specs/Core/Core_Settings.md](../../../../../RedMonitor/Specs/Core/Core_Settings.md), [Specs/SettingsStore.schema.json](../../../../../RedMonitor/Specs/SettingsStore.schema.json) | `support/SettingsStore.cpp`, imported from RedSalamander's store (its contract calls the broad settings and theme types migration debt) | `src/SettingsWatcher.cpp` | `RedSalamanderMonitor-7.0.settings.json` (Release), `RedSalamanderMonitor-debug.settings.json` (Debug), with fallbacks to the legacy `RedSalamanderMonitor.settings.json` |
 | DxUi | None: settings are consumer-owned | None | None | None |
 
 Preferences pages in RedSalamander (dirty tracking, Apply/OK persistence, Cancel semantics, schema metadata): the repository-local [build-preferences-pages](../../../../../RedSalamander/AGENTS.md#skills-reference) skill.
@@ -49,3 +49,8 @@ Read the settings contract, the performance contract, and the canonical schema b
 ## RedSalamander
 
 - The watcher thread waits on the directory change and its stop event, coalesces, and posts the change to the window with `PostMessagePayload` (`WndMsg::kSettingsFileChanged`); the UI thread parses and applies.
+
+## RedMonitor
+
+- The worker watches the canonical profile's directory and its parent, then posts a coalesced notification. The UI thread reads the changed file with the no-recovery loader. Stop and join the watcher before shutdown saves or window destruction.
+- Accepted edits apply to viewer preferences. Language and saved window placement take effect on the next start. Legacy fallback discovery belongs to startup.

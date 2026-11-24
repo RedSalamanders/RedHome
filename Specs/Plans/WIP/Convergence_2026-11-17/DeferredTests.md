@@ -393,7 +393,13 @@ An isolated process per side ran `HostPluginTests.exe --matrix-soak --seconds=60
 
 RedMonitor `be73fc0b9539519ddbf84769915d214aee1b4ead` passed six zero-warning builds and 15 x64 Debug, 15 x64 Release and 17 x64 ASan Debug regression scenarios. The selected failure probes returned exit 3 with a stderr marker in diagnostic builds and exit 0 in test-enabled Release. The ASan regression exercised the sanitizer detector as well. The earlier `d4d55028` run retained successful individual probe results and failed the aggregate because its expected scenario count omitted the new cases. [#161](https://github.com/RedSalamanders/RedMonitor/pull/161) merged at `b19d722c61a9db632679987bcfcfc9f4e312e3ae`. [#162](https://github.com/RedSalamanders/RedMonitor/pull/162) folded at `1e880d01e41e3b1fe8fe70d3ef5bf2dc2699ca69`.
 
-The automatic hosted run stopped at admission and skipped native execution. A manual run at the exact folded source passed the native x64 and ARM64 Release regressions and aggregate test gate. RedMonitor owns the separate production result. [Hosted replay](https://github.com/RedSalamanders/RedMonitor/actions/runs/45482286473)
+The automatic hosted run reached admission. A manual run at the exact folded source passed native x64 and ARM64 Release regression, the aggregate test gate, both production jobs and completion. [Hosted replay](https://github.com/RedSalamanders/RedMonitor/actions/runs/45482286473)
+
+### RedMonitor live settings · 24 November 2026
+
+RedMonitor `bb653ceda2cda12d03b993a2db1cb208d26ec9ee` passed six zero-warning builds and x64 Regression in Debug, Release and ASan Debug. The watcher fixture used a message-only window to verify startup, directory creation, file changes and stop. Three separate hidden WARP chrome runs passed using isolated settings. The earlier `6a7280d` x64 build produced a C4464 include warning in the test target. The subsequent review corrected its include path. [#163](https://github.com/RedSalamanders/RedMonitor/pull/163) merged at `f259134d0cb4a1ab50b83438a666f58e586793a6`. [#164](https://github.com/RedSalamanders/RedMonitor/pull/164) folded at `a3795028c7e6e71b664ea8f0b340035f7563fc56`.
+
+The [manual Release replay](https://github.com/RedSalamanders/RedMonitor/actions/runs/45488926725) was dispatched at the folded source. RedMonitor owns the isolated live viewer edit and native ARM64 diagnostic replays. The Release filename migration remains under the product's S4 settings work (H-26).
 
 ### JSON5 settings and resource helpers · 24 November 2026
 
