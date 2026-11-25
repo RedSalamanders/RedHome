@@ -34,10 +34,10 @@ Read the settings contract, the performance contract, and the canonical schema b
 
 - One JSON object; `schema` (integer ≥ 1) carries compatibility, the file name only tells Debug (`settings.debug.json`) from Release (`settings.json`). Never encode a version in the name.
 - Adding a setting: a field in `AppSettings` with its default, a `Parse` branch that validates or clamps it (an unusable value takes the default, never the whole document), a `Serialize` `put`, a row in the spec's field table, an `IoTests` `settings.*` case for the field and its fallback, and the application side (`ApplySettings` for a live setting, the start-only path for the rest). Unknown fields must keep surviving a save.
-- Cold invalid: back up the bytes (`<path>.invalid-<stamp>`) and write the template. Live invalid: keep the file, keep the last-good settings, say so on the debugger output, write nothing. A live load must never write the watched file.
-- H-15: watching is one `FindFirstChangeNotification` on the directory waited beside the message queue (`MsgWaitForMultipleObjectsEx`), coalesced by a 250 ms timer; parse and apply only on the UI thread. No polling, no worker thread.
-- The app's own save calls `NoteSettingsFileState` so it does not reload itself; saves are atomic (temporary file, `MoveFileExW` replace, write-through).
-- `--self-test`, `--screenshot`, `--demo`, `--bench` and `--crash-probe` never read or write the user's file; the self-test proves the live reload from a file under `%TEMP%`.
+- Cold load backs up malformed JSON before guarded template replacement. Readable incompatible settings stay at their path, use defaults in memory and withhold save authority. A live load keeps the file and last-good settings on malformed, incompatible or missing input.
+- The settings worker waits on directory changes and its stop event. It coalesces changes over a 250 ms quiet interval and posts to the owning window. The UI thread checks the file version, parses and applies. Shutdown joins the worker before closing the window.
+- A guarded save records its published version so the worker's notification does not trigger a redundant reload. `SettingsStore::SaveAccepted` stages and flushes an owned sibling, then checks the accepted destination version before publishing.
+- `--self-test`, `--screenshot`, `--demo`, `--bench` and `--crash-probe` isolate the user's settings. The WARP self-test edits its own profile. `IoTests.exe --guarded-settings-output` directly exercises the guarded settings cases.
 - Use `yyjson` with WIL document ownership (`yyjson_mut_obj_put` replaces a key; `yyjson_doc_mut_copy` keeps the rest).
 
 ## RedTilde

@@ -9,6 +9,7 @@ Windows-native GPU/CPU raster image editor built with Win32, Direct3D 11, DXGI, 
 
 - **`Application` & `Renderer`**: Single HWND, single D3D11 device + flip-model swap chain, idle-loop `Present` (chrome layout -> canvas -> chrome). Settled documents execute **zero** composition passes per frame. Visibility, minimize, DWM cloak and power signals govern production frame scheduling. [Windowing contract](../../RedPrism/Specs/UI/UI_Windowing.md)
 - Healthy startup claims the pending crash marker once, offers to select the local dump in Explorer and retains the newest ten owned reports alongside legacy files. [Crash contract](../../RedPrism/Specs/Core/Core_CrashHandling.md)
+- The settings worker coalesces file changes and posts to the window owner. The UI thread applies live theme, layers width, sample ring, JPEG quality and shortcut changes. Cold recovery preserves readable incompatible profiles and backs up malformed JSON before guarded replacement. [Settings contract](../../RedPrism/Specs/Core/Core_Settings.md)
 - **`CanvasRenderer` & `GpuBrushCoverage`**: Document-space HLSL layer passes, coverage textures, clipping stacks, sparse-raster residency, and `BrushCoverage.hlsl` compute kernel.
 - **GPU & CPU Execution**:
   - `JobScheduler` (`Common/Jobs.*`): Bounded class/priority job scheduler (`std::bad_alloc` in worker runner translates to `E_OUTOFMEMORY`).
