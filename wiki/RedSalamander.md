@@ -1,6 +1,6 @@
 # RedSalamander (`../RedSalamander`)
 
-- **Repository**: `RedSalamanders/RedSalamander` (`versionBase: 7.0`, Winget: `RedSalamanders.RedSalamander`, aliases `RedSalamander.exe` / `red.exe`)
+- **Repository**: `RedSalamanders/RedSalamander` (`versionBase: 7.0`, Winget: `RedSalamanders.RedSalamander`, command aliases `RedSalamander` and `red`)
 - **Authoritative sibling docs**: [AGENTS.md](../../RedSalamander/AGENTS.md), [Specs/README.md](../../RedSalamander/Specs/README.md), [README.md](../../RedSalamander/README.md), [Active WIP](../../RedSalamander/Specs/Plans/WIP/README.md)
 
 ## Overview & Architecture
@@ -14,6 +14,8 @@ Dual-pane DirectX/Direct2D/DirectWrite Windows file manager inspired by Open Sal
   - **Terminal**: `Terminal` (embedded & floating sessions).
   - **Viewers**: `ViewerText`, `ViewerSqlite`, `ViewerSpace`, `ViewerImgRaw`, `ViewerVLC`, `ViewerPE`, `ViewerWeb` (WebView2).
 - **Companion Executables**: `RedSalamanderSearchService` (SQLite + named-pipe indexing service), `RedConfigure`, `RedLauncher`.
+- Both portable command aliases use the static-CRT launcher. It resolves the package executable and starts it with the package directory as its working directory. [WinGet contract](../../RedSalamander/Specs/Installer/WingetIntegration.md)
+- The build and test maintainer owns adoption of the compatible DxUi API 6 pin and matching consumer qualification. [H5 receiving plan](https://github.com/RedSalamanders/RedSalamander/blob/main/Specs/Plans/WIP/DxUiApi6Adoption_2026-11-25.md)
 
 ## Repository-Specific Rules & Skills
 
