@@ -512,7 +512,7 @@ The rich-image allocation correction at `352979f24670dda1de36b1b82ff9a58767b67ce
 
 [#330](https://github.com/RedSalamanders/DxUi/pull/330) adopted the shared benchmark routing pin after 34 scoped tooling controls and the three required checks passed. It merged at `81092fd5a6db019916b1cab988fe60857d57101d`. The current-pin request carries the combined graphics and image changes forward. DxUi owns the leased x64 and native ARM64 Release results. [Current-pin replay](https://github.com/RedSalamanders/DxUi/actions/runs/45536421590)
 
-The admitted x64 Release job passed the native build and the leased Menu and NativeTextInput suites. Animation failed in `TestNativeTransitionStartsOnTheDispatcherTimelineAfterAStall` at the next-tick thumb assertion. WindowHost retained one hardware adapter capability skip. Artifact `14992423006` retains the original x64 evidence. DxUi owns the Animation replay under D21 and the separate ARM64 outcome. [x64 regression job](https://github.com/RedSalamanders/DxUi/actions/runs/45536421590/job/138963705629)
+The admitted x64 Release job passed the native build and the leased Menu and NativeTextInput suites. Animation failed in `TestNativeTransitionStartsOnTheDispatcherTimelineAfterAStall` at the next-tick thumb assertion. WindowHost retained one hardware adapter capability skip. Artifact `14992423006` retains the original x64 evidence. The native ARM64 regression at the same source passed, including leased Menu. Artifacts `14994531914` and `14993728921` retain the ARM64 evidence and regression receipt. The x64 failure left the aggregate test gate and production skipped. DxUi owns the x64 Animation replay under D21. The separate #286 benchmark review remains open. [x64 regression job](https://github.com/RedSalamanders/DxUi/actions/runs/45536421590/job/138963705629) · [ARM64 regression job](https://github.com/RedSalamanders/DxUi/actions/runs/45536421590/job/138963705541)
 
 ### RedPrism device-loss recovery · 25 November 2026
 
@@ -538,9 +538,19 @@ The admitted x64 and ARM64 runs passed the adjustment archive fixture and reache
 
 At `7b4023ffde52acc1a3b68c36880fe4be18b625b4`, all six profiles built with zero warnings. Host and hidden Captures passed in x64 Debug, Release and ASan Debug. Host exercised resource view lookup and missing string identifiers. [#102](https://github.com/RedSalamanders/RedPrism/pull/102) merged at `a1bc80fced0a475454137314e7a47cb0aadad7f5`. [#103](https://github.com/RedSalamanders/RedPrism/pull/103) folded at `aac4f361ccbf05aee96e964091eb1e84f56a7b4c`. RedPrism owns the native Runtime and interactive notice replay under D21.
 
+The hosted x64 Release regression at `aac4f361ccbf05aee96e964091eb1e84f56a7b4c` compiled with zero warnings and reached the same brush-lifetime save assertion as the previous run. Hidden WARP exited 5 in `close-save-held.saved-file-holds-only-acknowledged-prefix`. Artifacts `14993584155` and `14994642457` retain the evidence. The lifecycle fixture correction in #104 follows this source. [x64 regression job](https://github.com/RedSalamanders/RedPrism/actions/runs/45546766939/job/138978364636)
+
+### RedPrism translation satellites · 25 November 2026
+
+RedPrism `262adbcdcf9a07860a71b6cab128fc4ad92760ff` passed all six zero-warning builds and all three x64 Host and Captures profiles. Host verified canonical `Lang/RedPrism-<culture>.dll` lookup, legacy layout fallback, canonical priority and malformed culture rejection. The package contract reserves the canonical location for the first shipped satellite. [#106](https://github.com/RedSalamanders/RedPrism/pull/106) merged at `669247cb18c1d0622f1f65935ef2538e44771a0a`. [#107](https://github.com/RedSalamanders/RedPrism/pull/107) folded at `ce7bbc5bdd763a73023d6d87d1446dc6da471ea0`. RedPrism owns both native Release and localized package replays under D21.
+
 ### DxUi swap-chain Alt+Enter policy · 25 November 2026
 
 At `04004b9d967bba90dda02c92137276cbd5f360f3`, all six profiles built with zero warnings. The hidden WARP `TestAttachedHostRecoversAfterSimulatedDeviceLoss` passed in each x64 profile. [#331](https://github.com/RedSalamanders/DxUi/pull/331) merged at `2b7b72014ebbd12b9255255015356401756e22d2`. [#332](https://github.com/RedSalamanders/DxUi/pull/332) folded at `4b656c0beab7bf41833fd122e4b97dfb12bf68e1`. DxUi owns the native ARM64 and leased Alt+Enter replays. RedTilde and RedMonitor own verification of the library's HWND hosts when they adopt API 6. [Microsoft DXGI window association](https://learn.microsoft.com/en-us/windows/desktop/api/dxgi/nf-dxgi-idxgifactory-makewindowassociation)
+
+### DxUi driver-internal device recovery · 25 November 2026
+
+At `e110b9d72a1460846aaa2c32d95453458994d92b`, all six profiles built with zero warnings. Debug and ASan Debug x64 passed injected `DXGI_ERROR_DRIVER_INTERNAL_ERROR` with context disposal and fresh device quota. The x64 Release attached-host recovery check also passed. [#333](https://github.com/RedSalamanders/DxUi/pull/333) merged at `37be5fc2e49e36911c63bf6d8a25dbea63d1bcf2`. DxUi owns native ARM64 and hardware recovery replays. API 6 receiving products verify their deployed hosts at their own pins.
 
 ### RedPrism guarded writes · 24 November 2026
 
