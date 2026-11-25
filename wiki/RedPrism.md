@@ -41,6 +41,8 @@ The shared scoped runner reads `Tests/test-scopes.json` and uses the engine sele
 The root `test.ps1` defaults to affected selection. Use `-Full` for a full profile or `-Suites` for explicit suites.
 PrePush plans x64 Debug, Release and ASan Debug runtime tests and the matching ARM64 cross-builds. IO and Runtime
 use the session clipboard. Run them with RedPrism's direct test entry point after desktop admission.
+The root `performance-paired.ps1` and manual benchmark workflow collect paired x64 Release WARP timing for
+the fixed 10,000-layer workload. Record both source commits and review the retained evidence under the product contract.
 [Validation contract](../../RedPrism/Specs/Testing/Testing_Validation.md)
 
 Return to [Index.md](Index.md).
