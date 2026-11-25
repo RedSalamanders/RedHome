@@ -24,6 +24,7 @@ Per-monitor-v2 DPI Win32 + Direct3D 11 dashboard foundation for **XENEON EDGE** 
   - Adding/removing bundled widgets/services requires updating `RedXe/BundledPlugins.h`, `Specs/SettingsStore.schema.json`, Debug & Release `Settings/*.json` templates, plugin contract, and `docs/plugins/<widget>.md`.
   - Unusable optional host and dock preferences take their defaults. Additive members in those objects survive guarded widget and dock writes. The product contract owns version, layout and plugin validation. [Settings contract](../../RedXe/Specs/Core/Core_Settings.md)
   - Startup recovery backs up the invalid file version it read and preserves a competing edit or creation. [Cold load and recovery](../../RedXe/Specs/Core/Core_Settings.md#cold-load-and-recovery)
+  - Native notice labels use the UTF-8 resource table. Live settings errors pass their authored location and diagnostic detail to the resource-backed layout. [Windowing contract](../../RedXe/Specs/UI/UI_Windowing.md)
 - **Deterministic Captures**: Use `RedXe.exe --capture <png> --page <id> --widget <ordinal>` on Debug builds.
 
 ## Key Commands
