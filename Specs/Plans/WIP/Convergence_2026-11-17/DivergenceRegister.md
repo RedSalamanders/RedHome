@@ -82,11 +82,11 @@ Companion to [the convergence plan](../Convergence_2026-11-17.md). It lists ever
 
 | Id | Option | Today | Target | Changes | In | Choice |
 | --- | --- | --- | --- | --- | --- | --- |
-| D-01 | `.clang-format` | All six product mains use the 155-line style blob `ecd376e4`. Ti adopted it in #146. | One style with whole-tree format evidence | Verify product format results and blame references | 6 | |
+| D-01 | `.clang-format` | All six current product mains use the 155-line style blob `ecd376e4`. Ti adopted it in #146. [Formatting and blame audit](DeferredTests.md#formatting-and-blame-audit--25-november-2026) | One style with whole-tree format evidence | RS owns its remaining whole-tree check. Keep mixed Prism and Tilde commits visible in blame. | 6 | |
 | D-02 | Formatter source | All six products use `Install-CiFormatter` from the pinned engine. Ti adopted it in #146. | Use the repository's pinned formatter | None | Merged | |
 | D-03 | `.gitattributes` and `.gitignore` | All six share the common attributes and build-ignore lines. Pr #41 joined Dx, Xe, Ti and Mo on the extended personal harness ignore block. | Identical common blocks with reviewed repository suffixes | RS for the extended ignore block | 6 |  |
 | D-04 | Script line endings | All six carry the common attributes block. PowerShell files check out with CRLF. RS's Terminal Engine rules and vendored byte-preservation rules remain explicit. | One common rule with owned suffixes | None | Done |  |
-| D-05 | Formatting scope | All six use the pinned format roots, exclusions and eight source extensions. Whole-tree check passed for Ti, Mo, Xe, Dx and Pr at the recorded sources. | Verify the same local and CI file selection | RedSalamander whole-tree check and final blame verification | 6 | |
+| D-05 | Formatting scope | All six use the pinned format roots, exclusions and eight source extensions. Whole-tree check passed for Ti, Mo, Xe, Dx and Pr at the recorded sources. | Verify the same local and CI file selection | RedSalamander whole-tree check | 6 | |
 | D-06 | Formatting instructions | All six document the pinned command. Ti's toolchain contract and command help name the check mode and manifest scope. | Document the command, check mode, formatter source and scope | Include Ti in the CV-6-05 command verification | 6 | |
 
 ## E. Script entry points
@@ -126,7 +126,7 @@ The plan's inventory table lists the copies. Each row converges by giving the to
 
 | Id | Option | Today | Target | Changes | In | Choice |
 | --- | --- | --- | --- | --- | --- | --- |
-| G-01 | Engine pin | On 24 November RedXe, RedMonitor, RedTilde, RedPrism, RedHome and [DxUi #323](https://github.com/RedSalamanders/DxUi/pull/323) use `4bcae89e`. RedSalamander uses `f965c794`. | Align every consumer on the reviewed shared engine pin after source-bound validation. | The RedSalamander operator owns final pin adoption. Each product owns native qualification at the admitted source. | 5 | |
+| G-01 | Engine pin | On 25 November the published RedXe, RedMonitor, RedTilde, RedPrism, RedHome and [DxUi #330](https://github.com/RedSalamanders/DxUi/pull/330) manifests use `a6fbe82d`. RedSalamander at `86ea831b` uses `f965c794`. | Align every consumer on the reviewed shared engine pin after source-bound validation. | The RedSalamander operator owns final pin adoption. Each product owns native qualification at the admitted source. | 5 | |
 | G-02 | Dependabot engine `ignore` | All six add `RedSalamanders/.github/*`. RedSalamander #229 adds the matching HistoricalTerminalProfile assertion. The 20 obsolete notices were closed in CV-4-03. | Keep the common ignore entry. | None | Merged | |
 | G-03 | `dependabot.yml` | Engine #115 supplies the four identical policies in Xe, Pr, Mo and Dx. Ti's pin update published the same file. RS retains its terminal exclusion and port review. | One engine-managed file with reviewed product exceptions | Managed pin adoption and RS operator | 6 | |
 | G-04 | `.ci/project.json` lists | Pr has `legacy/**` since 2026-11-19 (#40). `Plugins/**/README.md` only in Xe, and RS has a plugin README too. `Tools` is a format root only in RS and Dx, the only two with C++ under `Tools/`: a real content difference | Same lists apart from real content differences | RS (`Plugins/**/README.md`) | 6 | |
