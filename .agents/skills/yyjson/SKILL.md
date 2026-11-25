@@ -57,5 +57,4 @@ Product-specific formats and test gates are in [references/repository-facts.md](
 
 | Topic | Today (per repository) | Common target |
 | --- | --- | --- |
-| Read flags for user-facing configuration | RedSalamander, RedMonitor, RedTilde and RedXe read authored settings as JSON5 with BOM. RedPrism uses `YYJSON_READ_ALLOW_BOM` in `Common/SettingsStore.cpp`. | RedPrism adds `YYJSON_READ_JSON5` and verifies finite numeric validation and round trips. |
 | JSON library and settings format | All five application stores use JSON through `yyjson`. RedTilde's cold loader migrates its legacy text document. DxUi settings are consumer-owned. | Apply [app-settings](../app-settings/SKILL.md) for storage behavior. |
