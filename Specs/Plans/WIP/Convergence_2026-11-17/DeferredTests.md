@@ -528,6 +528,8 @@ The updated head of [#93](https://github.com/RedSalamanders/RedPrism/pull/93) fa
 
 The Release run at `38a3bd4189873450f188369fb0b8b75504c76aa4` confirmed the adjustment-save failure on x64 and native ARM64 before the fixture repair. Evidence artifacts `14985663729` and `14986073996` retain the run. The later runs on `ad3592cc` and `e8339431` completed admission and skipped regression and production after main advanced. Run `45535390551` admitted `bf88d9a8f28b126e0bd5828d3ee7a586e26c161f` with the fixture repair and engine routing pin. RedPrism owns the regression and production outcomes at that admitted source. [Earlier failure](https://github.com/RedSalamanders/RedPrism/actions/runs/45525937435) · [Merge dispatch](https://github.com/RedSalamanders/RedPrism/actions/runs/45534206344) · [Fold dispatch](https://github.com/RedSalamanders/RedPrism/actions/runs/45534270557) · [Admitted replay](https://github.com/RedSalamanders/RedPrism/actions/runs/45535390551)
 
+The admitted x64 run passed the adjustment archive fixture and reached the later brush-lifetime case `close-save-held.saved-file-holds-only-acknowledged-prefix`. Hidden WARP exited 5. The affected lifecycle fixtures selected a project path without an accepted archive version. RedPrism owns the fixture repair, the complete Runtime replay and the source-bound ARM64 result. The original log and artifact `14987868752` are retained. [x64 regression job](https://github.com/RedSalamanders/RedPrism/actions/runs/45535390551/job/138942270356)
+
 ### RedPrism guarded writes · 24 November 2026
 
 RedPrism `d1ea611827e99593ce6549722c232dd12f18035e` passed six standard zero-warning builds. Host and the isolated image, settings and project publication controls passed in x64 Debug, Release and ASan Debug. They cover accepted destination versions, competing edits and new names, and archive and project-folder recovery. The earlier x64 Release verifier could not attribute one MSVC CRT routine to its runtime ISA guard. The final candidate verified that wide-character search contribution against its PDB and retained the guarded control flow reference.
@@ -539,6 +541,18 @@ The next hosted replay admitted `70293c3b117a19ed8dd02da9ebffbf32fc7ab2ff`. The 
 ### RedXe live settings diagnostic resources · 25 November 2026
 
 At `758bdbf2584431ab8f18fe7bfb8c58368c100922`, all six profiles built with zero warnings. Settings and HostSmoke passed in x64 Debug, Release and ASan Debug. The Settings check verified the resource-backed location and authored JSON path with the diagnostic detail, and checked the invalid file bytes. Static verified all 47 base resource entries. The source audit also followed the host's action notices to their resource format strings. [#189](https://github.com/RedSalamanders/RedXe/pull/189) merged at `7ca7bc5df07f58af835f7f937d9226ffac642cf4`. [#190](https://github.com/RedSalamanders/RedXe/pull/190) folded at `06cf69e9462ccf4cbf8ca3d1ca1735b2c82746d3`. RedXe owns the leased tray replay and the native Release results at the admitted source. [Folded Release replay](https://github.com/RedSalamanders/RedXe/actions/runs/45539696031)
+
+### RedXe paired offscreen AV benchmark · 25 November 2026
+
+[Engine #120](https://github.com/RedSalamanders/.github/pull/120) published the manual classification at `0e3df074376c28d25cb829ceead493a628084236`. The old pin refused the workflow and the new classification refused a push trigger. Both behavior lanes, both hosted WinGet lanes and the security checks passed. [RedXe #191](https://github.com/RedSalamanders/RedXe/pull/191) adopted the reviewed engine at `987df88ee20e19f1154e261b0cfe43ba7f8a8162`.
+
+The local x64 Release offscreen probe at `758bdbf2584431ab8f18fe7bfb8c58368c100922` retained six scenarios, five rounds per scenario and 600 frames per round. Its SHA-256 is `803A1483B6F5470D12D5652342A0A82961465A1BB4DA4129781EC8B84DED8639`. The reader accepted that receipt and refused a different source, hidden work, missing rounds and a missing metric. The root command refused an incompatible engine, equal source revisions without calibration and an output outside its owned build directory.
+
+[#192](https://github.com/RedSalamanders/RedXe/pull/192) merged at `af7d9205c085caafe146e8d74ba216f4a29dcbe4`. [#193](https://github.com/RedSalamanders/RedXe/pull/193) folded at `f1366596162d5f65b3d836447d7030c40f3f869d`. RedXe dispatched the same-pin comparison from the #191 baseline against the folded source. RedXe owns collector acceptance at those exact revisions and the hardware XENEON and physical AV replays. [Hosted collector pilot](https://github.com/RedSalamanders/RedXe/actions/runs/45542153703)
+
+### Compiler definition audit · 25 November 2026
+
+The root props on DxUi `81092fd5`, RedPrism `bf88d9a8`, RedXe `06cf69e9`, RedTilde `c23e01f1` and RedMonitor `4efeddd4` centralize `/Zc:preprocessor`, `WIN32_LEAN_AND_MEAN` and `NOMINMAX`. RedMonitor's two adoptions already qualified under their recorded sources. RedSalamander `86ea831b` and RedMonitor explicitly declare the target macros. The selected SDK header in 10.0.26100.0 supplies equivalent version values when its defaults apply. The source audit leaves the evaluated profile checks and explicit declaration alignment with their product owners. [RedMonitor #117](https://github.com/RedSalamanders/RedMonitor/pull/117) · [RedMonitor #119](https://github.com/RedSalamanders/RedMonitor/pull/119)
 
 ### Formatting and blame audit · 25 November 2026
 

@@ -26,6 +26,7 @@ Per-monitor-v2 DPI Win32 + Direct3D 11 dashboard foundation for **XENEON EDGE** 
   - Startup recovery backs up the invalid file version it read and preserves a competing edit or creation. [Cold load and recovery](../../RedXe/Specs/Core/Core_Settings.md#cold-load-and-recovery)
   - Native notice labels use the UTF-8 resource table. Live settings errors pass their authored location and diagnostic detail to the resource-backed layout. [Windowing contract](../../RedXe/Specs/UI/UI_Windowing.md)
 - **Deterministic Captures**: Use `RedXe.exe --capture <png> --page <id> --widget <ordinal>` on Debug builds.
+- Use `performance-paired.ps1` or the manual benchmark workflow for native x64 Release offscreen WARP AV evidence. The physical XENEON runtime collector keeps its display requirements. [Performance contract](../../RedXe/Specs/Core/Core_PerformanceAndResources.md)
 
 ## Key Commands
 
