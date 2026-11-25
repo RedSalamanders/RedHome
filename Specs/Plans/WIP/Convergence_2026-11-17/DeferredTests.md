@@ -512,6 +512,8 @@ The rich-image allocation correction at `352979f24670dda1de36b1b82ff9a58767b67ce
 
 [#330](https://github.com/RedSalamanders/DxUi/pull/330) adopted the shared benchmark routing pin after 34 scoped tooling controls and the three required checks passed. It merged at `81092fd5a6db019916b1cab988fe60857d57101d`. The current-pin request carries the combined graphics and image changes forward. DxUi owns the leased x64 and native ARM64 Release results. [Current-pin replay](https://github.com/RedSalamanders/DxUi/actions/runs/45536421590)
 
+The admitted x64 Release job passed the native build and the leased Menu and NativeTextInput suites. Animation failed in `TestNativeTransitionStartsOnTheDispatcherTimelineAfterAStall` at the next-tick thumb assertion. WindowHost retained one hardware adapter capability skip. Artifact `14992423006` retains the original x64 evidence. DxUi owns the Animation replay under D21 and the separate ARM64 outcome. [x64 regression job](https://github.com/RedSalamanders/DxUi/actions/runs/45536421590/job/138963705629)
+
 ### RedPrism device-loss recovery · 25 November 2026
 
 RedPrism `b74cba5bc87f0085490ae5ffcef6788c17f5a6a2` passed all six warning-free builds with test hooks, the required PR checks, and x64 Host and Captures in Debug, Release and ASan Debug. The retained interrupted Debug capture and the Release test admission refusal were followed by fresh builds with the correct test hooks. [#91](https://github.com/RedSalamanders/RedPrism/pull/91) merged at `55a5e2d8114b5b856d15c62db9f2176030c2f92d`. [#92](https://github.com/RedSalamanders/RedPrism/pull/92) folded at `055b76f34a6f3d99027ecb223c6971c697da740e`.

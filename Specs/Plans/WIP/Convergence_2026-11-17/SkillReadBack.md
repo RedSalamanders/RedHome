@@ -39,6 +39,20 @@ At RedXe `550cc8ed25fd7d5ccd9f20d770231f72b98517b5`, the App found all 16 shared
 
 ## Guidance validation
 
-All six published product root guidance files fit the 24,000-byte limit. These sizes are Git blob sizes. A manual run of the pinned common validator found no root `AGENTS.md` G2 problems in the six product checkouts. Repeat the product guidance check after adoption in CV-5-05 to finish CV-3-08. The pinned engine's baseline G4 audit found only RedPrism's `consumer-dxui` and `hlsl-composition` descriptions. After [RedPrism #47](https://github.com/RedSalamanders/RedPrism/pull/47) merged as `0feaa4630bf194ca239d46ee18f514f9697162b1`, all 44 packages passed. RedPrism's root guidance blob stayed the same. [Pinned engine](https://github.com/RedSalamanders/.github/blob/3b19eade3b1228d0d5f05bcfce89f4b7c66ef1da/Tools/Modules/Ci.AgentGuidance.psm1)
+All six published product root guidance files fit the 24,000-byte limit at the initial read-back. A manual run of the pinned common validator found no root `AGENTS.md` G2 problems in the six product checkouts. The baseline G4 audit found only RedPrism's `consumer-dxui` and `hlsl-composition` descriptions. After [RedPrism #47](https://github.com/RedSalamanders/RedPrism/pull/47) merged as `0feaa4630bf194ca239d46ee18f514f9697162b1`, all 44 packages passed. RedPrism's root guidance blob stayed the same. [Pinned engine at the initial read-back](https://github.com/RedSalamanders/.github/blob/3b19eade3b1228d0d5f05bcfce89f4b7c66ef1da/Tools/Modules/Ci.AgentGuidance.psm1)
+
+On 25 November the root guidance at these published sources fit the limit. The measured value is the committed Git blob size.
+
+| Repository | Published source | Root guidance bytes |
+| --- | --- | ---: |
+| RedHome | `faeb11f5e272f103e165c214d34e523a04b96b1b` | 8,459 |
+| DxUi | `4b656c0beab7bf41833fd122e4b97dfb12bf68e1` | 13,974 |
+| RedMonitor | `c2f1622d1fe3d27cf24616390a5db0bd0ed85429` | 8,289 |
+| RedPrism | `f04f9f783b0922e179df5ebc689a461f8c6b36b2` | 15,716 |
+| RedSalamander | `86ea831b2ea981713293bcf0ae063a95583c8026` | 22,276 |
+| RedTilde | `3550d50d8eb3dbdac930f12d68f2dbc415b05a8d` | 13,198 |
+| RedXe | `f1366596162d5f65b3d836447d7030c40f3f869d` | 21,913 |
+
+[Engine #123](https://github.com/RedSalamanders/.github/pull/123) merged at `74673c5ef71e880ece602709949d3b614c903d57` after the required engine checks passed. The shared validator counts on-disk bytes and the fixture verified the 24,000-byte boundary with multibyte UTF-8 text. RedSalamander repeats product guidance validation when it adopts the shared validator under CV-5-05.
 
 RedPrism's full local affected validation stopped in `SkillPackageIntegrity.Tests.ps1`. The same fixture failed on base `55f1064f` and candidate `860cb354` with engine `f965c794`. The only difference in an instrumented failure was the modification timestamp of the fixture clone's `.ci-engine/.git/index`. Its SHA-256 was identical before and after. All 57 applicable controls passed on both sources when Git optional locks were disabled for the isolated test process. Three symbolic-link controls needed unavailable privileges. Repeat the read-only package check with the shared validator and pinned shims during CV-5-05. The hosted tooling, format and security checks passed for [RedPrism #47](https://github.com/RedSalamanders/RedPrism/pull/47). The entry is in the published changelog. [RedPrism #48](https://github.com/RedSalamanders/RedPrism/pull/48)
