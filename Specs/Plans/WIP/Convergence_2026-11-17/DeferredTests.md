@@ -534,6 +534,8 @@ The admitted x64 and ARM64 runs passed the adjustment archive fixture and reache
 
 [RedPrism #104](https://github.com/RedSalamanders/RedPrism/pull/104) seeds six lifecycle fixtures with real archived versions and checks accepted publication and guarded refusal. Diagnostic-only x64 Debug instrumentation at `c6814a69f7d459476dee9ef38783274a755a2062` bypassed standalone system tests and finished all six hidden cases with exit 0. The exact PR source `7f278a6d0e9f6838ca911bcbed403df93e3a135e` passed all six builds with zero warnings, the required PR checks and Host and Captures in all three x64 profiles. It merged at `9c53cbaedd8fb7c325d1252218e57c090866ab1a`. [#105](https://github.com/RedSalamanders/RedPrism/pull/105) folded at `f04f9f783b0922e179df5ebc689a461f8c6b36b2`. RedPrism owns complete Runtime and production smoke qualification on both native architectures at the admitted source. [Folded Release replay](https://github.com/RedSalamanders/RedPrism/actions/runs/45549409982)
 
+The initial private fixture attempt reached a real clipboard fixture before selection. Its log records clipboard restoration. The corrected instrumentation selected the six tests before standalone startup fixtures. The combined Release request at `9d0867e6d1731980ec4e08d2f62be1eb4ec1c351` carries the correction, satellite layout and reviewed engine pin. It awaited admission at this review. [Combined replay](https://github.com/RedSalamanders/RedPrism/actions/runs/45554679716)
+
 ### RedPrism resource helpers · 25 November 2026
 
 At `7b4023ffde52acc1a3b68c36880fe4be18b625b4`, all six profiles built with zero warnings. Host and hidden Captures passed in x64 Debug, Release and ASan Debug. Host exercised resource view lookup and missing string identifiers. [#102](https://github.com/RedSalamanders/RedPrism/pull/102) merged at `a1bc80fced0a475454137314e7a47cb0aadad7f5`. [#103](https://github.com/RedSalamanders/RedPrism/pull/103) folded at `aac4f361ccbf05aee96e964091eb1e84f56a7b4c`. RedPrism owns the native Runtime and interactive notice replay under D21.
@@ -550,7 +552,7 @@ At `04004b9d967bba90dda02c92137276cbd5f360f3`, all six profiles built with zero 
 
 ### DxUi driver-internal device recovery · 25 November 2026
 
-At `e110b9d72a1460846aaa2c32d95453458994d92b`, all six profiles built with zero warnings. Debug and ASan Debug x64 passed injected `DXGI_ERROR_DRIVER_INTERNAL_ERROR` with context disposal and fresh device quota. The x64 Release attached-host recovery check also passed. [#333](https://github.com/RedSalamanders/DxUi/pull/333) merged at `37be5fc2e49e36911c63bf6d8a25dbea63d1bcf2`. DxUi owns native ARM64 and hardware recovery replays. API 6 receiving products verify their deployed hosts at their own pins.
+At `e110b9d72a1460846aaa2c32d95453458994d92b`, all six profiles built with zero warnings. Debug and ASan Debug x64 passed injected `DXGI_ERROR_DRIVER_INTERNAL_ERROR` with context disposal and fresh device quota. The x64 Release attached-host recovery check also passed. [#333](https://github.com/RedSalamanders/DxUi/pull/333) merged at `37be5fc2e49e36911c63bf6d8a25dbea63d1bcf2`. [#334](https://github.com/RedSalamanders/DxUi/pull/334) folded at `49901c13aac34f3b4801e96e1849dbad8e38fe84`. DxUi owns native ARM64 and hardware recovery replays. API 6 receiving products verify their deployed hosts at their own pins.
 
 ### RedPrism guarded writes · 24 November 2026
 
@@ -583,6 +585,20 @@ The root props on DxUi `81092fd5`, RedPrism `bf88d9a8`, RedXe `06cf69e9`, RedTil
 The committed `.clang-format` and `.editorconfig` blobs matched on all six main trees. Each `format.ps1` uses `Install-CiFormatter`. The audit used DxUi `94edc843`, RedMonitor `4efeddd4`, RedPrism `bf88d9a8`, RedSalamander `86ea831b`, RedTilde `c23e01f1` and RedXe `011abfd2`. It verified the committed file and its command. The earlier whole-tree results stay tied to their own sources under CV-6-05.
 
 RedXe's two blame-ignore revisions `f48bc975` and `f8d57dc5` are ancestors of its main, and each accounts for 247 native paths. RedPrism's formatting revision includes warning fixes in `Common/BoundedClipper`. RedTilde's includes settings, member naming and write-policy changes. Both products preserve blame for the mixed revisions. [RedXe blame follow-up](https://github.com/RedSalamanders/RedXe/pull/109) · [RedPrism #33](https://github.com/RedSalamanders/RedPrism/pull/33) · [RedTilde #146](https://github.com/RedSalamanders/RedTilde/pull/146)
+
+### RedXe test hooks · 25 November 2026
+
+At `7870b45999a454feb1efc06a62e9ddaee1116295`, all six profiles built with zero warnings. Settings and HostSmoke passed in all three x64 profiles. The 18 recorded compiler commands show `ENABLE_TESTS` in the app's Debug and ASan Debug profiles and in both independent test targets for all profiles. Ordinary Release app compilation omitted it. [#195](https://github.com/RedSalamanders/RedXe/pull/195) merged at `6d23f347702d0435fca1f6c2961064ceee58e77d`. [#196](https://github.com/RedSalamanders/RedXe/pull/196) folded at `a5924880ee0899d5e940fe4a2bfa51c574a70c3c`. RedXe owns native ARM64 execution and both production smoke replays at the admitted source.
+
+DxUi's independent `ControlTests.vcxproj` at `49901c13aac34f3b4801e96e1849dbad8e38fe84` uses `ENABLE_TESTS`. The reviewed RedSalamander `86ea831b` root props enable it in Debug and ASan Debug by default and guard Release with `RSBuildEnableTests`. The detailed native outcomes for that source stay in the [RedSalamander record](#redsalamander-post-restore-regression--24-november-2026).
+
+### RedPrism JSON5 settings · 25 November 2026
+
+At `c9ea48ecffc99fb8d60e328ba18b77bed6990fed`, all six profiles built with zero warnings. The isolated `IoTests --guarded-settings-output` passed in x64 Debug, Release and ASan Debug. Each log verifies typed fallback, retained additive values, refusal of non-finite typed saves and removal of owned temporary files. The initial log matcher used a different identifier for the cleanup assertion. The read-back used its exact name and matched each executable hash against the initial matrix. [#109](https://github.com/RedSalamanders/RedPrism/pull/109) merged at `83edfee7661dfea20fba7d1ad2be84f69bfa4703`. [#110](https://github.com/RedSalamanders/RedPrism/pull/110) folded at `c6fe4caf463018fa44816a03ac7898f979ef38b1`. RedPrism owns both native Release runtime and production replays under D21.
+
+### Shared engine pin native qualification · 25 November 2026
+
+RedTilde `f8ebc8afa71fc5a6ffabc3348178e7ecd473b7e8`, RedMonitor `51465520a5198374d3b6ea58d0607adc2c6f63b1` and RedXe `da11257caebe5f9dceb45b298ed66f4c8cd727f1` passed admission, native x64 and ARM64 Release regression, both production builds and clean package smoke checks, and aggregate completion at pin `74673c5e`. They retain the separate installed-alias and applicable interactive replays. [RedTilde run](https://github.com/RedSalamanders/RedTilde/actions/runs/45552691551) · [RedMonitor run](https://github.com/RedSalamanders/RedMonitor/actions/runs/45552689818) · [RedXe run](https://github.com/RedSalamanders/RedXe/actions/runs/45552648618)
 
 ## Checks before the next merge
 
