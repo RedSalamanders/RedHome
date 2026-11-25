@@ -12,7 +12,8 @@ Canonical home of shared DirectX UI controls and rich Markdown/text layout for R
   - `Embedded.h`: Borrowed-device `GraphicsDevice` pool and `EmbeddedHost` (`Prepare` / `PrepareInteraction` / `Composite` / `UpdateAccessibility`).
   - `RichDocument.h`, `RichMarkdown.h`, `RichTextLayout.h`, `MarkdownSyntax.h`: Lossless Unicode GFM block/inline parser, `RichTextEditor` with TSF/IME (`TextStoreACP`) and UIA providers, bounded HTML/math/Mermaid rendering, and `FileDrop` / `RichImage` SVG & bitmap support.
 - **Consumer Interface (`capabilities.json`)**:
-  - Consumers import only `Build/DxUi.Consumer.props`, `Build/DxUi.Consumer.targets`, `Build/DxUi.AddressSanitizer.targets`, and `src/DxUi.vcxproj`, and call only exported helpers in `Tools/ConsumerBuild.psm1`, `Tools/ConsumerUpdate.psm1`, `Tools/VisualStudio.psm1`, `Tools/VcpkgTriplet.psm1`, `Tools/validate_consumer.ps1`, and `vcpkg-install.ps1`.
+  - The manifest lists every supported source import, script and exported module function. Import `Build/NativeBuildPolicy.props` through `Directory.Build.props` before MSVC selects its tools. That default preserves an explicit compiler-host choice.
+  - Source consumers opt in to shared Release optimization by setting `NativeBuildReleaseOptimization` before importing `Build/NativeBuildPolicy.targets`. SDK consumers set it before importing `DxUi.Sdk.props`. The repository's build spec owns the import order and exact requirements. [Build and consumption contract](../../DxUi/Specs/Build/Build_ToolchainAndConsumption.md)
   - API 5 introduced the requirement to install the application-owned failure host before constructing controls or entering `DxUi` scopes.
 
 The [source import archive](../../DxUi/Specs/SourceImport/README.md) records attribution, test disposition and migration history. DxUi's validation tools read those records.
