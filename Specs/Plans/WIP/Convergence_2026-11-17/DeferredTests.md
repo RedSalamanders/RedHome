@@ -496,7 +496,11 @@ RedPrism `b74cba5bc87f0085490ae5ffcef6788c17f5a6a2` passed all six warning-free 
 
 The full hidden Runtime fixture exercises the injected `DXGI_ERROR_DEVICE_HUNG` Present. RedPrism owns the x64 and native ARM64 runs under the hosted clipboard and desktop boundary. The manual replay targets the folded source. [Native replay](https://github.com/RedSalamanders/RedPrism/actions/runs/45507323069)
 
-The manual replay built x64 Release at `055b76f34a6f3d99027ecb223c6971c697da740e` without warnings. Hidden WARP encountered the adjustment-save fixture failure from the guarded-write replay below. The x64 evidence artifact is `14977464675`. [Failed x64 job](https://github.com/RedSalamanders/RedPrism/actions/runs/45507323069/job/138861495759) · [Fixture repair #93](https://github.com/RedSalamanders/RedPrism/pull/93)
+The manual replay built Release at `055b76f34a6f3d99027ecb223c6971c697da740e` without warnings on x64 and ARM64. Hidden WARP exited 5 during the adjustment-save fixture on both architectures. The retained ARM64 log reports apply false, file white value -1, document white value 128 and modified state true. Both production lanes skipped. The evidence artifacts are `14977464675` and `14980454967`. RedPrism owns the leased replay after the fixture repair. [x64 job](https://github.com/RedSalamanders/RedPrism/actions/runs/45507323069/job/138861495759) · [ARM64 job](https://github.com/RedSalamanders/RedPrism/actions/runs/45507323069/job/138861496225) · [Fixture repair #93](https://github.com/RedSalamanders/RedPrism/pull/93)
+
+### RedPrism window scheduling · 25 November 2026
+
+RedPrism `82a7fc41600f3663fddaaf2e83699cbacd007b3e` passed six zero-warning builds and all three x64 Host and Captures runs. It uses application-owned visibility, minimize, cloak and power signals with an explicit hidden-capture path. DXGI present results are still recorded for diagnostics and benchmark presentation checks. The reviewed merge tree integrated the earlier benchmark and CI routing changes without a changed native input from those commits. [#94](https://github.com/RedSalamanders/RedPrism/pull/94) merged at `38a3bd4189873450f188369fb0b8b75504c76aa4` and passed compiler-free validation at the updated engine pin. [#98](https://github.com/RedSalamanders/RedPrism/pull/98) folded at `f1be9237c09adf6c6493f4167d3b73010a15d9c4`. RedPrism owns the physical minimize, cloak and power-transition replay and the native ARM64 and full leased x64 runtime replays under D21.
 
 ### RedPrism guarded writes · 24 November 2026
 
