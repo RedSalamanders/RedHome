@@ -26,6 +26,7 @@ The [source import archive](../../DxUi/Specs/SourceImport/README.md) records att
 - **No Hosted Public Release**: `DxUi` has no public GitHub Release or Winget workflow; qualified SDK ZIPs (verified with clean extracted-SDK consumer builds, license closure, and LNK4099 PDB-isolation negative controls) remain internal CI artifacts.
 
 - Scoped testing uses the pinned shared runner. DxUi owns direct native build receipts, SDK attestation and paired benchmark evidence. [Validation](../../DxUi/Specs/Testing/Testing_Validation.md)
+- The root `.clang-tidy` checks `_camelCase` for private and protected non-static fields and diagnoses reserved identifiers with the target's compile options. Public data fields use `camelCase`. [DxUi coding rules](../../DxUi/AGENTS.md)
 
 ## Key Commands
 

@@ -682,11 +682,21 @@ All six exact builds completed with zero warnings. The named hidden wheel case p
 
 At `2aafe558da8a45149ea47713f7963acbc418c5b5`, the Menu fixture attributes pointer-hit work to the delivered coordinates and revisions. The stalled Animation fixture measures from the first advancing frame on the dispatcher timeline. All six exact profiles built with zero warnings. The named hidden Animation case passed x64 Debug, Release and ASan Debug with no capability skips. Matrix SHA-256 is `54F96306E39633E1C16A6D8D536A68D0DB64F8F46A3FF63A0D7C2CEDAE1C37AE`. Compiler-free validation and all required PR checks passed. DxUi owns the leased Menu W2.9, FX4 and full Animation replays under D21. The separate #286 benchmark review remains open. [DxUi #352](https://github.com/RedSalamanders/DxUi/pull/352) merged at `2dc6143a88bf989e9d30c801b821aff3f0019b46`. [#353](https://github.com/RedSalamanders/DxUi/pull/353) folded at `1d9c91449a7e8380faece435b244d4a71b961cab`. Both native regression jobs were admitted at the folded source. [Fixture replay](https://github.com/RedSalamanders/DxUi/actions/runs/45643807740)
 
+At `1d9c91449a7e8380faece435b244d4a71b961cab`, native x64 Release built with zero warnings and passed the hosted Menu and NativeTextInput lease, full Animation suite, relocated exact-pin consumer and rendering, ten rejection controls and Release assertion probe. The source-bound receipt reports 23 suites executed with zero failures or skips. The named FX4 replay retains its owner. The ARM64 regression and SDK production had no completed result at this checkpoint. [Native x64 job](https://github.com/RedSalamanders/DxUi/actions/runs/45643807740/job/139322045463)
+
+The raw x64 job log SHA-256 is `B18D1572C302439966ABD73FBD281541DD275642E1B638112AE1E68F855F77DA`. Workspace archive `15041414978` has SHA-256 `1F93C925B36B91226913EA2D60CB7E980083D9E66C0C175A281E580F675DFB66`. Regression receipt archive `15041554652` has SHA-256 `8B7607645A0A11BBF26F36849796E1485FEA03697E94CD9C281BC85C14D91A9E`.
+
 ### DxUi member naming ARM64 compile repair · 25 November 2026
 
 The initial naming head `5e4c14f8e8706973bee9417ae25fc637e2d5828c` passed the three x64 builds and targeted hidden Animation cases. All three ARM64 configurations reported the two unresolved `record_` references in the context output in `Samples/Shared/FailureHost.cpp`. The initial matrix SHA-256 is `CEFD82E3BA73994A159C15602BDAD32AA483E16783F2E7593C5C264CD19439CA`. The raw ARM64 Debug build log SHA-256 is `B6C7C68EDCCB186D3105405D39A83DA68785EC345245D0DCB2B3F7C39D213F9C`.
 
-At `7d4d822aaf7e93b20bd529a127d171dc44d564a5` the two ARM64 references use the renamed recorder field. The configured ARM64 MSVC compiler reproduced both diagnostics on the old source and passed syntax checking on the repair with zero diagnostics. Pinned formatting passed. The focused receipt SHA-256 is `60B1875FDD850E530627B052789CB05668EA760B2D0862B86D0B3B9789A9A2A2`. The six-profile build and targeted x64 regression are bound to the corrected source. [DxUi #354](https://github.com/RedSalamanders/DxUi/pull/354)
+At `7d4d822aaf7e93b20bd529a127d171dc44d564a5` the two ARM64 references use the renamed recorder field. The configured ARM64 MSVC compiler reproduced both diagnostics on the old source and passed syntax checking on the repair with zero diagnostics. Pinned formatting passed. The focused receipt SHA-256 is `60B1875FDD850E530627B052789CB05668EA760B2D0862B86D0B3B9789A9A2A2`.
+
+The corrected source passed all six builds with zero warnings and the named hidden Animation case in x64 Debug, Release and ASan Debug. Matrix SHA-256 is `7F1FEF25209A1CAF1D7C87653F08A70C301A671ADC5C43B8F706A8BC265EDA63`. The corrected compiler-free validation log SHA-256 is `50DE5ED895A383CCBBDBB195632BE398010129EA0BC56E35741B17891439B8B9`. The configured x64 Clang audit covered 115 translation units at `22130fceb0da133f07bca58a3c25fe82ed2d0e03` and five affected units at `ba85742db8dc905441a6555b1a2559c513bc6c7b` after the Menu and Animation changes. DxUi owns the native Release and SDK replay under D21.
+
+GitHub continued to show the original head in #354 after the corrected commit reached its branch. The required checks passed on that corrected commit in #355, which merged at `422bd55aae7363135fcd50aae1d8d1f11a598e76`. GitHub then marked #354 merged at the same commit. The separate #286 benchmark review remains open. [DxUi #355](https://github.com/RedSalamanders/DxUi/pull/355) · [DxUi #354](https://github.com/RedSalamanders/DxUi/pull/354)
+
+The changelog fold merged at `2433349926cb2b955da6fd1f05b8a83f05709e0a` and passed folded validation. DxUi requested the native x64 and ARM64 Release and production SDK replay at that exact source. The request was pending before native admission. [DxUi #356](https://github.com/RedSalamanders/DxUi/pull/356) · [Folded-source replay](https://github.com/RedSalamanders/DxUi/actions/runs/45656272141)
 
 ### RedPrism Release test inventory · 25 November 2026
 
@@ -727,6 +737,15 @@ At `3fa2e58da2d22ae0bca0dc624126a1ce3bec5f5c` the project-save fixture binds its
 ### RedPrism member naming · 25 November 2026
 
 At `5f83fee430baf3cd1e89f8a587d4942dba83665b`, RedPrism adopted the H-27 root naming policy and renamed the diagnosed private fields. The exact branch passed pinned formatting, product specification checks and compiler-free validation. All six local builds completed with zero warnings. GuardedSettings, Host and Captures passed on x64 Debug, Release and ASan Debug. Matrix SHA-256 is `262F6745112BDFF7A00BF9F2CA841475A2E85EFC7EE0119CC38B6AB64E89C291`. The earlier Clang readback covered 723 configured inputs at `f81c343e92eb747ba49eb016b248a18c99159801`. Its inventory SHA-256 is `543A0553B7D95200D57EE4B3480B9E035F26828B7812C922E7ECE949B3943EE2`. All required PR checks passed. RedPrism owns the complete hosted Runtime and production replay. [RedPrism #122](https://github.com/RedSalamanders/RedPrism/pull/122) merged at `1d26fc7c2f0e2066db8c4fe26c3e0dd374ae1029`. [#123](https://github.com/RedSalamanders/RedPrism/pull/123) folded at `d6be58306f52c50bcb42e6d905a61a687caf1635`.
+
+At folded source `d6be58306f52c50bcb42e6d905a61a687caf1635`, both native Release builds had zero warnings and errors and the application self-tests ended with result 0. Both then failed the direct UI smoke at `project-save` warmup trial 0 with `command-result-or-clock`. The workflow failed and skipped production. RedPrism owns the D21 replay on the later fixture repair. [Naming fold qualification](https://github.com/RedSalamanders/RedPrism/actions/runs/45632889546) · [Fixture repair](https://github.com/RedSalamanders/RedPrism/pull/124)
+
+| Architecture | Retained archive and SHA-256 | Raw job log SHA-256 |
+| --- | --- | --- |
+| x64 | `15034114986` · `5F07F5241AAB44A08DA903FD6DC551077A926BF86A2BBB33E7346AD4E34CA43E` | `C906A4D6F9514F779057929386DC84675EDD63680FCF8BFA73A6F82B58C07F8B` |
+| ARM64 | `15039878399` · `A1838B94AD726C3291D557C86217ADF3182CA07A68922162A65C62D7B38623B0` | `4DF5CAB6C0FF3DB1D278B8129612BC609EFB3EB141C0AC252CAA2A6D084D324F` |
+
+RedPrism's request at `954038600b4e97de8fc8a2afdc834b512fac8213` was superseded before native admission. The subsequent request at `bffd2ef5ef29398eb43ce72b6a279c25bff3b715` admitted both native regression jobs. [Superseded request](https://github.com/RedSalamanders/RedPrism/actions/runs/45648209564) · [Folded-source replay](https://github.com/RedSalamanders/RedPrism/actions/runs/45649734012)
 
 ### RedPrism settings filenames · 25 November 2026
 
