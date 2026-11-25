@@ -656,6 +656,8 @@ The accepted-project fixture at `ef793b81129ee842a9a367d57bcbc7f76d64fd36` passe
 
 The folded x64 Release execution built with zero warnings and passed all 85 host-flow cases. Hidden Runtime then failed at the later session-end settings fixture, which supplied a filename without an accepted save target. The retained workspace artifact is `15012351761` and the raw job log SHA-256 is `430363688398A0740DA77A7AA8CAEA0AEAD4D57EB757151CFE0AFEB6BAA0FF53`. RedPrism owns the accepted-target fixture repair and the hosted replay. [x64 job](https://github.com/RedSalamanders/RedPrism/actions/runs/45584114192/job/139110577701)
 
+The ARM64 Release job at the same folded source also built with zero warnings, passed all 85 host-flow cases and failed at the same later session-end settings check. The aggregate test gate failed and production was skipped. Workspace artifact `15015447751` has SHA-256 `7A4CD90D54BF38A467E3F73DE7EFBAC4C9EB634A4618257DABDFE15D5120F8A8`. The raw ARM64 job log SHA-256 is `942532F5770461EF59D5F5C38D974D93227A7E7DA6A0591C32C80198CA6B7402`. [ARM64 job](https://github.com/RedSalamanders/RedPrism/actions/runs/45584114192/job/139110577726)
+
 The fixture review at `4a04b16f2639d3a2b5cea687b42bb393eb715415` accepts a vacant destination in a unique repository-owned build directory and verifies the published file identity. Its neighboring session scenarios disable settings persistence within their own scopes. The review needs the six native profile results and the required PR checks before merge. RedPrism owns the full native replay at the corrected source. [Session fixture review](https://github.com/RedSalamanders/RedPrism/pull/120)
 
 ### RedPrism settings filenames · 25 November 2026
@@ -676,6 +678,12 @@ MSBuild evaluated the principal C++ project in all six profiles for DxUi `c38678
 
 An MSVC preprocess-only control used the exact SDK header for x64 and ARM64. Both the SDK defaults and RedMonitor's explicit declarations resolved `WINVER` and `_WIN32_WINNT` to `0x0A00` and `NTDDI_VERSION` to `0x0A000010`. The explicit declarations also make those names available before SDK inclusion. All evaluated RedPrism, RedTilde and RedXe items enable `/MP`, which enables `/FS` by default. The audited DxUi principal project leaves both switches unset. The probe receipt SHA-256 is `A9D4F6C28E9E6BA6026DD55DAB2161B91EBDF3E6E55F5941F31D2CAF16F01BA5`. [MSVC PDB writes](https://learn.microsoft.com/en-us/cpp/build/reference/fs-force-synchronous-pdb-writes?view=msvc-170)
 
+### ASan dependency read-back · 25 November 2026
+
+The x64 and ARM64 RedPrism builds at `078b67587b9b28a3763aafb1dd5fb7ce512b544e` selected the instrumented dynamic triplets. Both link commands used the sanitizer Clipper2 archive. The staged `yyjson.dll`, `zd.dll` and `zip.dll` matched their restored bytes and imported sanitizer symbols. The x64 and ARM64 RedTilde builds at `8fe3fb34df1801978d0b11bb5fa6a9e7ee4b9983` selected the instrumented static-md triplets and linked the instrumented yyjson archive. Ordinary dependency controls had no matching sanitizer symbols.
+
+The 784 captured main-project compiler commands all enabled AddressSanitizer and left STL annotations enabled. Application hashes and the pinned DxUi provenance matched on both architectures for both products. The folded commits `62649192d33a95e10cafcbdef941ba13cbe47945` and `3fc3cb596b2e7c75ac44acd2129ae8c54a9adf2d` differ from their respective reviewed sources only in changelog inputs. RedHome's `.build/asan-dependency-readback-20261125/receipt.json` has SHA-256 `13E772C9E528F348FFDDBFC82F31E23605F804FD22D62AAD62C1F0DF17532741`. This read-back establishes build and artifact selection. Runtime replays remain in the product entries above. [RedPrism review](https://github.com/RedSalamanders/RedPrism/pull/118) · [RedTilde review](https://github.com/RedSalamanders/RedTilde/pull/233)
+
 ### RedSalamander qualification handoff · 25 November 2026
 
 Published main advanced to `ccdab5fe5ef7b4ad6cf86a5408cc376175be1bbf` through the File Operations PRs [#255](https://github.com/RedSalamanders/RedSalamander/pull/255), [#249](https://github.com/RedSalamanders/RedSalamander/pull/249) and [#252](https://github.com/RedSalamanders/RedSalamander/pull/252). It still pins `f965c794`. The native operator owns the current qualification and the D25 launcher acceptance. [Current run](https://github.com/RedSalamanders/RedSalamander/actions/runs/45566947991)
@@ -689,6 +697,8 @@ The ARM64 regression job at `ccdab5fe5ef7b4ad6cf86a5408cc376175be1bbf` built wit
 The x64 Release build at the same source also had zero warnings. Commands and FileOperations failed during the regression step. The raw x64 job log SHA-256 is `F1B49BC31E93A6C932F632B3580ACFD416FB970E9F984A8D3DBAAFDD9090F852`. Both actual regression jobs failed and both the test gate and production were skipped. The RedSalamander operator owns the replay. [x64 job](https://github.com/RedSalamanders/RedSalamander/actions/runs/45566947991/job/139044335804)
 
 The operator's next admitted source is `4fe871577c4971e3559a5f7030a230b4af3926bd`, which includes the File Operations changes from [#256](https://github.com/RedSalamanders/RedSalamander/pull/256), [#259](https://github.com/RedSalamanders/RedSalamander/pull/259) and [#260](https://github.com/RedSalamanders/RedSalamander/pull/260). Both native Release lanes are running. [Operator qualification](https://github.com/RedSalamanders/RedSalamander/actions/runs/45588264577)
+
+The operator's File Operations validation record [#269](https://github.com/RedSalamanders/RedSalamander/pull/269) advanced main to `14738081e5eb6ba223a8693c15554ed90d406efb`, still on engine `f965c7945aff98dbab352623a0cfbe333e7f282f`. Its queued qualification is separate from the admitted `4fe87157` jobs. Both [#241](https://github.com/RedSalamanders/RedSalamander/pull/241) and [#244](https://github.com/RedSalamanders/RedSalamander/pull/244) passed the required GitHub checks at their current heads. #241 remains conflicted. Neither head had an approval when checked. [Queued qualification](https://github.com/RedSalamanders/RedSalamander/actions/runs/45603079155)
 
 ## Checks before the next merge
 
