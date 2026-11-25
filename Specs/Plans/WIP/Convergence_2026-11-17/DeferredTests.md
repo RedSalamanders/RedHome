@@ -762,6 +762,13 @@ The native x64 Release job at `bffd2ef5ef29398eb43ce72b6a279c25bff3b715` built w
 
 At the same source, native ARM64 Release built with zero warnings and passed all seven registered suites without skips. The direct UI smoke ran both measured `project-save` trials and all 27 operations successfully. Prepared and size-prepared smoke and the Release assertion probe passed. Both native receipts passed the aggregate test gate and admitted production. Raw ARM64 log SHA-256 is `97FCC2395EB5A2A749AB8E0C263DF47556C0B78F43D45836786006BFE59220B8`. Workspace archive `15049993885` has SHA-256 `2B88FAB14820DBF44FF38F85F97AFE43AC60112ACA272DF1CD9487FFACF68F79`. Regression receipt archive `15051530099` has SHA-256 `C5A7687D6D6CCB5F2CC9CE1E412418125E1AD96B4E6574D8AF6F37550C5538F7`. [Native ARM64 job](https://github.com/RedSalamanders/RedPrism/actions/runs/45649734012/job/139340737302) · [Aggregate test gate](https://github.com/RedSalamanders/RedPrism/actions/runs/45649734012/job/139415812662)
 
+RedPrism qualification completed successfully at `bffd2ef5ef29398eb43ce72b6a279c25bff3b715`. Both native production jobs built with zero warnings, disabled test mode and passed clean-extraction smoke covering help, test-mode refusal, hidden WARP capture, version and identity. The application version was `0.1.885`. [Completed qualification](https://github.com/RedSalamanders/RedPrism/actions/runs/45649734012)
+
+| Architecture | Production archive and SHA-256 | Portable ZIP SHA-256 |
+| --- | --- | --- |
+| x64 | `15052747510` · `DEF5F60C2E47785F918A0A982A69D03B2E61D5279CC6D6A298DB3AE76B65A437` | `9FE6B9E6D03ADBEEAF2F7B09E02C7395D956C6D0A19FFBDDDCB7B4E4CBD1444A` |
+| ARM64 | `15052562746` · `F6E950B178B0C75C453422885F44F9F759AC7100B61ACBFD9FDF977100726FDA` | `EA39DDDF14EFECD91F4BDA22E4578DA6AB59302FC76F55404F24B76656E7286D` |
+
 ### RedPrism settings filenames · 25 November 2026
 
 At `078b67587b9b28a3763aafb1dd5fb7ce512b544e`, all six profiles built with zero warnings. GuardedSettings, Host and Captures passed in all three x64 profiles. The migration cases verified byte-for-byte copy, existing canonical precedence, independent Debug and Release profiles and preservation of malformed legacy bytes. All required PR checks passed. [#118](https://github.com/RedSalamanders/RedPrism/pull/118) merged at `8e7f459b460f96b272038b8bc24df19faa263f1f` and [#119](https://github.com/RedSalamanders/RedPrism/pull/119) folded at `62649192d33a95e10cafcbdef941ba13cbe47945`. RedPrism owns full native Release Runtime and production packaging after the session fixture repair.
