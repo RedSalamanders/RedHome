@@ -433,6 +433,16 @@ RedMonitor `b4a98368a03477143c096c4a81f981f794a7cbb7` passed six zero-warning bu
 
 RedTilde implemented the naming configuration and renamed fields in `7a7a888bc40690690bfb76d6bdcd6eb337c764b7`. The root naming check at `815201d9bbb4718db0d4f78b8f19158c14e09be9` passed 97 controls across 76 C++ sources and headers. The same control and compiler-free validation passed at the guidance PR head `0ebab9834126a75df779433d4dfb1c1e34cb6ec0`. [Configuration and migration](https://github.com/RedSalamanders/RedTilde/commit/7a7a888bc40690690bfb76d6bdcd6eb337c764b7) · [Validation hook](https://github.com/RedSalamanders/RedTilde/pull/151) · [Guidance #226](https://github.com/RedSalamanders/RedTilde/pull/226)
 
+### RedXe member naming · 25 November 2026
+
+RedXe `5a5fb62ece077e3ed383634841af22fcd639b818` passed six zero-warning builds, all three x64 Settings, HostSmoke and AVControl runs, and the required PR checks. Both renamed translation units passed the final Clang replay. The earlier audit retained its incomplete include-path attempt. The corrected trace-based audit at `01ceaa7c` passed 115 of 126 records. The fixture reference failure was corrected and replayed. Ten remaining records hit the pinned DxUi header, and four tracked sources had no matching compiler trace in the audit. RedXe owns those Clang replays plus full HostPlugin and native ARM64 runtime. [#184](https://github.com/RedSalamanders/RedXe/pull/184) merged at `debf59f582f570ff410a762715ef3263dc49e068`. [#185](https://github.com/RedSalamanders/RedXe/pull/185) folded at `09fb059da2cc530c35b238c01b59de6109938b23`.
+
+### RedPrism paired layer-row benchmark · 25 November 2026
+
+[Engine #118](https://github.com/RedSalamanders/.github/pull/118) published manual routing at `4881ecbb2e4fdc69c4fcdb264d77890f71ef9351` after all five required checks passed. The old registry refused the unclassified workflow. The updated route accepted explicit dispatch and refused an automatic PR trigger. [RedPrism #95](https://github.com/RedSalamanders/RedPrism/pull/95) established the same-pin main baseline at `4358790b4c0c7857cc7b732792c72972f1b3aa0b` after compiler-free validation and the required checks passed.
+
+The RedPrism driver at `a928a988d007f97c80063ecefe66c4633cc303b7` passed compiler-free validation against that route. Its parser accepted the full 10,000-layer WARP workload and refused incomplete timing, a clock failure and a smoke-mode substitution. A local driver replay reused an attested x64 Release build from `82a7fc41600f3663fddaaf2e83699cbacd007b3e` for both roles. The replay recorded the order of all 48 native runs in 12 blocks and verified 120 paired time differences. RedPrism owns the first hosted comparison with two independently built sources at the new pin and review of the measured effects. G1 and the separate DxUi #286 benchmark review retain their existing gates.
+
 ### RedXe optional settings · 24 November 2026
 
 RedXe `d86d178f5f6159b7e72ef0efd8844d75bc4aed93` passed six zero-warning builds, three x64 Settings runs and three x64 HostSmoke runs. The isolated live reload applied a valid neighbor alongside unusable preferences and preserved the file bytes. The later guarded widget and dock writes retained additive members. The earlier `397d6bac` x64 Debug Settings run failed because the new default fixture overwrote an input that the older dock-override fixture reused. Both the failed run and the independent fixture correction are retained. [#175](https://github.com/RedSalamanders/RedXe/pull/175) merged at `f90625704a0eecf5bbe26aabdd3ea5219cf98068`.
@@ -481,6 +491,8 @@ The pilot built and measured the baseline and [#223](https://github.com/RedSalam
 RedPrism `b74cba5bc87f0085490ae5ffcef6788c17f5a6a2` passed all six warning-free builds with test hooks, the required PR checks, and x64 Host and Captures in Debug, Release and ASan Debug. The retained interrupted Debug capture and the Release test admission refusal were followed by fresh builds with the correct test hooks. [#91](https://github.com/RedSalamanders/RedPrism/pull/91) merged at `55a5e2d8114b5b856d15c62db9f2176030c2f92d`. [#92](https://github.com/RedSalamanders/RedPrism/pull/92) folded at `055b76f34a6f3d99027ecb223c6971c697da740e`.
 
 The full hidden Runtime fixture exercises the injected `DXGI_ERROR_DEVICE_HUNG` Present. RedPrism owns the x64 and native ARM64 runs under the hosted clipboard and desktop boundary. The manual replay targets the folded source. [Native replay](https://github.com/RedSalamanders/RedPrism/actions/runs/45507323069)
+
+The manual replay built x64 Release at `055b76f34a6f3d99027ecb223c6971c697da740e` without warnings. Hidden WARP encountered the adjustment-save fixture failure from the guarded-write replay below. The x64 evidence artifact is `14977464675`. [Failed x64 job](https://github.com/RedSalamanders/RedPrism/actions/runs/45507323069/job/138861495759) · [Fixture repair #93](https://github.com/RedSalamanders/RedPrism/pull/93)
 
 ### RedPrism guarded writes · 24 November 2026
 
