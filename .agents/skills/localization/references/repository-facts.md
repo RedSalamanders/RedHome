@@ -6,7 +6,7 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md); exampl
 | --- | --- | --- | --- |
 | `RedPrism` | Read `Specs/UI/UI_ApplicationChrome.md` (Strings) before adding chrome text. | `Specs/UI/UI_ApplicationChrome.md` | The spec owns the chrome string contract. |
 | `RedPrism` | Declare the `IDS_*` id in `RedPrism/resource.h`, define the text in `RedPrism/RedPrism.rc` (`#pragma code_page(65001)`, UTF-8 source), and add the id to the `kIds` table so the string-table gate proves it resolves. | `RedPrism/resource.h`, `RedPrism/RedPrism.rc`, `Tests/HostTests/Host.Tests.Runner.cpp` | The `kIds` gate exists only here. |
-| `RedPrism` | Helpers are called as `LoadStringResource(nullptr, IDS_X)` and `FormatStringResource(nullptr, IDS_X, args...)`. | `Common/Resources.h` | Signature takes `HMODULE`. |
+| `RedPrism` | Use `LoadStringResource`, `FormatStringResource`, `LoadEmbeddedStringResource`, `FormatEmbeddedStringResource` and `MessageBoxResource` from `Common/Resources.h`. Use `nullptr` as the module for strings linked into the application. | `Common/Resources.h` | The helpers take an `HMODULE` and use the application satellite where applicable. |
 | `RedPrism` | `HostTests` fails on bare `{}` and printf specs (`%s`) in resource strings. | `Tests/HostTests/Host.Tests.Runner.cpp` | This is the `RedPrism` resource-string gate. |
 | `RedPrism` | `CaptionWithoutChord` drops the `\t` column of a menu caption; `PlainCommandName` yields the plain name. | `Common/Resources.h` | Menu chord captions are `RedPrism`-specific. |
 | `RedPrism` | Tool names come from `EditorToolNameId(tool)`; tooltips use `IDS_TOOL_TOOLTIP` with the name and the effective chord. | `RedPrism` chrome code | Tool set is `RedPrism`-specific. |
