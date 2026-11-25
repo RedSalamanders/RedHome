@@ -27,6 +27,10 @@ Independent Windows-native diagnostics viewer and single-header TraceLogging pro
 - **Scoped testing**: The pinned engine reads `Tests/test-scopes.json`. Live ETW is explicit. Release PrePush adds the contained installation smoke. PrePush runs tests on x64 and builds the three ARM64 profiles for native qualification on their own runner. [RedMonitor validation contract](../../RedMonitor/Specs/Testing/Testing_Validation.md)
 - Five native projects live in suite folders under `Tests/`. The solution targets and test executable names are stable. [Suite layout change](https://github.com/RedSalamanders/RedMonitor/pull/147)
 
+The root `performance-paired.ps1` and manual benchmark collect x64 Release WARP timing for the chrome, synthetic
+burst and scrollback fixture. Review the retained observations under the product's performance contract.
+[Validation contract](../../RedMonitor/Specs/Testing/Testing_Validation.md)
+
 ## Key Commands
 
 ```powershell
