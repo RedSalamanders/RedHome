@@ -891,6 +891,12 @@ RedSalamander #324 combines the changelog shims from `23f13aadd562b3f23f855032a6
 
 The operator owns one combined qualification for CV-4-07 and D25, the CV-5-02 changelog cutover and the D26 Preferences acceptance. Record the actual native, packaging and named scenario evidence on the final reviewed source. [Batch scope](../Convergence_2026-11-17.md#shared-qualification-batches)
 
+### RedSalamander tooling batch · 26 November 2026
+
+Draft #326 starts at head `1501ce1bf7037c3ddc365d2f9374528055278d2d` with tree `4d3f7cba169c5abeef68b0af9112ab8a580eb320`, on #324 head `d6e9314b53a297bb747fa3e5478898ea89f6a3a1`. The candidate pins engine `74673c5ef71e880ece602709949d3b614c903d57` and the SDK commands from RedMonitor `93fdb0a19acbd48ed59182f4aa42d214cacda6b1`. [Draft #326](https://github.com/RedSalamanders/RedSalamander/pull/326) · [Producer SDK tooling](https://github.com/RedSalamanders/RedMonitor/pull/93)
+
+Compiler-free checks passed for shared guidance (10 skills and 35 references), workflow syntax, changelog fragments and the console fixture. Both SDK command hashes matched the producer manifest. The offline verifier and compatibility restore passed, and a modified command was refused. Ten triplet inputs covering both newline conventions and escaped paths produced byte-identical overlays. Scoped planner and evidence migration, shared hosted setup and the remaining installer work are open. Record the final source and native receipts after the updated candidate is reviewed. [Batch scope](../Convergence_2026-11-17.md#shared-qualification-batches)
+
 ## Checks before the next merge
 
 - RedSalamander CV-4-07 pre-merge evidence. The two clean dependency restores succeeded with tool and baseline `aeb162b7`. At `1add64b9`, the full x64 Release build passed with zero warnings and errors (receipt `dc01ec9ea71a5e7924ac6c9b5c655d091ff81d30f7a032ebf2e6dc3cbdd2137f`). The clean ZIP passed application startup, the native Ghostty load and the package checks for all built-in plugins. Both packaged launcher names started the extracted application from a separate working directory. The ARM64 Release launcher cross-build passed with zero warnings and errors (receipt `c69843cbd14aecf7a9bb9950135fcd1ed45fbd08c896c7ee27460441bb06f2ff`). The launcher imported the same four Windows system DLLs on both architectures. The hosted cache recovery change passed 114 tooling checks at `e394c07d`. [RedSalamander #240](https://github.com/RedSalamanders/RedSalamander/pull/240)
