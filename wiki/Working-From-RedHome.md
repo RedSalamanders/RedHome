@@ -17,14 +17,16 @@ Run every command from the target repository's root, not from `RedHome`. All six
 ```powershell
 .\Test-Changes.ps1 -Explain        # which suites the current diff selects, and why
 .\Test-Changes.ps1                 # run the affected suites while iterating
-.\Test-Changes.ps1 -Mode PrePush   # before pushing; -Mode Full for complete local qualification
+.\Test-Changes.ps1 -Mode PrePush   # before pushing. -Mode Full selects all applicable unattended scopes
 ```
 
-The entry points that still differ between repositories:
+For RedSalamander, use `test.ps1` for normal iteration and the unattended Full and PrePush commands. The root `Test-Changes.ps1` also accepts the legacy single-profile and focused arguments.
+
+Guidance, specification and formatting commands by repository.
 
 | Repository | Guidance and spec validation | Formatting | Full commands |
 | --- | --- | --- | --- |
-| `RedSalamander` | `.\Tools\Get-SpecInventory.ps1 -FailOnFindings`, `.\Tools\Get-ToolInventory.ps1 -Validate` | `.\format.ps1 -Check` | [RedSalamander.md](RedSalamander.md) |
+| `RedSalamander` | `.\validate-skills.ps1`, `.\Tools\Get-SpecInventory.ps1 -FailOnFindings`, `.\Tools\Get-ToolInventory.ps1 -Validate` | `.\format.ps1 -Check` | [RedSalamander.md](RedSalamander.md) |
 | `RedXe` | `.\validate-skills.ps1` | `.\format.ps1 -Check` | [RedXe.md](RedXe.md) |
 | `RedPrism` | `.\validate.ps1` (runs `validate-skills.ps1`, the native test-name inventory, a PowerShell syntax check, and the tooling tests) | `.\format.ps1 -Check` | [RedPrism.md](RedPrism.md) |
 | `RedTilde` | `.\validate.ps1` or `.\validate-skills.ps1` for guidance | `.\format.ps1 -Check` | [RedTilde.md](RedTilde.md) |

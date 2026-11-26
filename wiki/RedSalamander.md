@@ -32,11 +32,16 @@ $vcpkg = Initialize-RSVcpkgToolContext -RepoRoot $PWD.Path
 .\vcpkg-install.ps1 -Platform x64 -VcpkgExe $vcpkg.Executable -VcpkgRoot $vcpkg.RegistryRoot
 .\format.ps1 -Check
 .\build.ps1 -Configuration Debug
-.\Test-Changes.ps1 -Explain
-.\Test-Changes.ps1
+.\test.ps1 -Explain
+.\test.ps1
+.\test.ps1 -Mode PrePush -Explain
+.\validate-skills.ps1
+.\Verify-RedMonitorClient.ps1
 .\Tools\Get-SpecInventory.ps1 -FailOnFindings
 .\Tools\Get-ToolInventory.ps1 -Validate
 .\Tools\Run-AllTests.ps1 -Suite Full -ValidationMode Fresh
 ```
+
+`test.ps1 -Full` runs one unattended native profile. `-Mode PrePush` runs the host profiles and cross-builds the other architecture. `Test-Changes.ps1` retains the single-profile compatibility arguments. Use the [validation contract](../../RedSalamander/Specs/Testing/Testing_ValidationEvidence.md) for canonical evidence, explicit Resume and desktop admission.
 
 Return to [Index.md](Index.md).
