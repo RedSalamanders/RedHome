@@ -42,6 +42,6 @@ $vcpkg = Initialize-RSVcpkgToolContext -RepoRoot $PWD.Path
 .\Tools\Run-AllTests.ps1 -Suite Full -ValidationMode Fresh
 ```
 
-`test.ps1 -Full` runs one unattended native profile. `-Mode PrePush` runs the host profiles and cross-builds the other architecture. `Test-Changes.ps1` retains the single-profile compatibility arguments. Use the [validation contract](../../RedSalamander/Specs/Testing/Testing_ValidationEvidence.md) for canonical evidence, explicit Resume and desktop admission.
+`test.ps1 -Full` runs one unattended native profile. `-Mode PrePush` runs the host profiles and cross-builds the other architecture. `Test-Changes.ps1` retains the single-profile compatibility arguments. Use the [validation contract](../../RedSalamander/Specs/Testing/Testing_ValidationEvidence.md) for canonical evidence, explicit Resume and desktop admission. The [Core performance contract](https://github.com/RedSalamanders/RedSalamander/blob/main/Specs/Core/Core_PerformanceAndResources.md) routes measured scenarios and budgets to their owners.
 
 Return to [Index.md](Index.md).
