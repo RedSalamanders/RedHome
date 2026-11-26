@@ -891,11 +891,17 @@ RedSalamander #324 combines the changelog shims from `23f13aadd562b3f23f855032a6
 
 The operator owns one combined qualification for CV-4-07 and D25, the CV-5-02 changelog cutover and the D26 Preferences acceptance. Record the actual native, packaging and named scenario evidence on the final reviewed source. [Batch scope](../Convergence_2026-11-17.md#shared-qualification-batches)
 
+RedSalamander #325 advanced main to `143689e97f6e7989ee242ac60def6838b70a9efb` and changed the native Change Case command and gallery test. #324 still projected a clean merge at tree `df707de1c90ee68301cf8ed64016408f35347442`. The previously recorded tree and this projection have different native inputs. Bind qualification to the final reviewed merge source and include the repaired Change Case scenario. [RedSalamander #325](https://github.com/RedSalamanders/RedSalamander/pull/325)
+
+The reviewed #323 changelog fold projects cleanly onto that main with the same path and blob changes. The qualification run at `143689e9` was queued when the fold was checked. Let that source reach admission before publishing the fold, then verify the fold preserves the later Change Case fragment. [Fold #323](https://github.com/RedSalamanders/RedSalamander/pull/323) · [Current-main qualification](https://github.com/RedSalamanders/RedSalamander/actions/runs/45838841036)
+
 ### RedSalamander tooling batch · 26 November 2026
 
 Draft #326 starts at head `1501ce1bf7037c3ddc365d2f9374528055278d2d` with tree `4d3f7cba169c5abeef68b0af9112ab8a580eb320`, on #324 head `d6e9314b53a297bb747fa3e5478898ea89f6a3a1`. The candidate pins engine `74673c5ef71e880ece602709949d3b614c903d57` and the SDK commands from RedMonitor `93fdb0a19acbd48ed59182f4aa42d214cacda6b1`. [Draft #326](https://github.com/RedSalamanders/RedSalamander/pull/326) · [Producer SDK tooling](https://github.com/RedSalamanders/RedMonitor/pull/93)
 
 Compiler-free checks passed for shared guidance (10 skills and 35 references), workflow syntax, changelog fragments and the console fixture. Both SDK command hashes matched the producer manifest. The offline verifier and compatibility restore passed, and a modified command was refused. Ten triplet inputs covering both newline conventions and escaped paths produced byte-identical overlays. Scoped planner and evidence migration, shared hosted setup and the remaining installer work are open. Record the final source and native receipts after the updated candidate is reviewed. [Batch scope](../Convergence_2026-11-17.md#shared-qualification-batches)
+
+The draft advanced to `898115e949b63faa4aaf16264000d33fe024c27d` at tree `8f1d096af058d5de2f111f56e8b292ca9bd104c0` with the product's scope migration design, capability record, portable editor settings and root RedMonitor commands. Guidance passed for 10 skills and 36 references. The root verifier passed in PowerShell 7 and Windows PowerShell 5.1, and the default toolset reader accepted valid metadata and refused an invalid version. Whole-checkout inventory and required PR checks remain pending after retargeting. [Updated draft](https://github.com/RedSalamanders/RedSalamander/pull/326)
 
 ## Checks before the next merge
 
