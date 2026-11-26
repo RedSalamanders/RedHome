@@ -58,7 +58,7 @@ Shared skills with `references/repository-facts.md` collect product-specific pat
 
 Open the named skill from [RedSalamander's skill index](../../RedSalamander/AGENTS.md#skills-reference).
 
-The shared [native-build](../.agents/skills/native-build/SKILL.md) and [test-evidence](../.agents/skills/test-evidence/SKILL.md) packages cover the former `cpp-build` and `perf-validation` routes. CV-2-12 tracks removal of the two local copies. [Convergence plan](../Specs/Plans/WIP/Convergence_2026-11-17.md#phase-2-one-rule-set-per-shared-skill)
+RedSalamander retired its local `cpp-build` and `perf-validation` packages. Use the shared [native-build](../.agents/skills/native-build/SKILL.md) and [test-evidence](../.agents/skills/test-evidence/SKILL.md) packages for those workflows. [RedSalamander #244](https://github.com/RedSalamanders/RedSalamander/pull/244)
 
 | Skill | Use it for |
 | --- | --- |
