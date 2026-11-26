@@ -26,7 +26,7 @@ Read the target repository's performance contract (`Specs/Core/Core_PerformanceA
 
 ## Repository Facts
 
-Product-specific paths, scripts, and gates live in [references/repository-facts.md](references/repository-facts.md). Use [test-evidence](../test-evidence/SKILL.md#performance-evidence) to measure, archive, and report a change. RedSalamander's mandatory performance requirements are in its [repository guidance](../../../../RedSalamander/AGENTS.md#performance-validation-is-mandatory) and [performance validation contract](../../../../RedSalamander/Specs/Testing/Testing_PerformanceValidation.md).
+Product-specific paths, scripts, and gates live in [references/repository-facts.md](references/repository-facts.md). Use [test-evidence](../test-evidence/SKILL.md#performance-evidence) to measure, archive, and report a change. RedSalamander routes its budget owners through the [Core performance and resource contract](https://github.com/RedSalamanders/RedSalamander/blob/main/Specs/Core/Core_PerformanceAndResources.md). Use its [performance validation procedures](../../../../RedSalamander/Specs/Testing/Testing_PerformanceValidation.md) for scenario execution and evidence.
 
 ## Differences To Converge
 
@@ -34,7 +34,6 @@ All repositories converge on one rule set. Each difference below has one common 
 
 | Topic | Today (per repository) | Common target |
 | --- | --- | --- |
-| Performance contract (B-06) | DxUi, RedXe, RedPrism, RedTilde and RedMonitor have `Specs/Core/Core_PerformanceAndResources.md`. RedSalamander uses `Specs/Testing/Testing_PerformanceValidation.md`. | Add the RedSalamander Core contract with its normative inventory entry. Test procedures stay under `Specs/Testing/`. |
 | Paired-measurement entry point | DxUi, RedTilde, RedPrism and RedMonitor use `performance-paired.ps1`. DxUi also has `performance.ps1`, `performance-forms.ps1` and `performance-profile.ps1`. RedTilde also has `performance-observed.ps1`. RedXe uses `measure-runtime.ps1` and `measure-av-views.ps1`. RedSalamander uses selftests and `Specs/TestRuns/`. | Root `performance-paired.ps1` in every repository. RedXe and RedSalamander retain adoption work. |
 | Hosted paired gate | DxUi, RedTilde, RedPrism and RedMonitor ship manual `.github/workflows/benchmark.yml` workflows. Each product owns its measurement and review. | Each repository with `performance-paired.ps1` has a manual `.github/workflows/benchmark.yml`. RedXe and RedSalamander retain their product adoption work. |
 | Per-phase measurement | DxUi: dirty preparation separate from composition. RedTilde: source transaction, preparation/submission, and GPU completion recorded separately (`Testing_Performance.md`). Others: not stated. | One rule in the contract: record each phase separately. Name the phases per repository in its contract. |
