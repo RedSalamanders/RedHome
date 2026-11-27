@@ -1037,11 +1037,13 @@ The six generated folds passed their exact-base and required PR checks. All six 
 
 ## RedSalamander guarded settings and crash retention · 27 November 2026
 
-[RedSalamander #374](https://github.com/RedSalamanders/RedSalamander/pull/374) is a successor draft on #368. Head `90e579f22c971f72be44633b9c2895915a666b61` has native input digest `70e1f15f9fc33295cbd49762bdad7eeda499dba92060c255fcb9f220a6300393`. All seven affected C++ files passed pinned Clang-format 22.1.3 and the grouped fragment passed changelog validation.
+[RedSalamander #374](https://github.com/RedSalamanders/RedSalamander/pull/374) is a successor draft on #368. The prepared head `c1dfbebbe4ae09084545675d80852b0caed38f9b` has native input digest `9507f92463df86eaf8d33c6b56004b62116b6b7e3007c1e2fe219f10f1991e81`. All twelve affected C++ files passed pinned Clang-format 22.1.3. All twelve resource-localization controls, CI project configuration, eighteen workflow definitions and grouped changelog validation passed.
 
 The settings changes guard a missing destination with create-only publication and recheck an accepted existing revision before both handle rename paths. The test fixtures cover a competing creation, an outside writer, retry and a refused classic fallback after a competing edit. The crash changes keep the newest ten owned dump and sidecar pairs on a healthy local startup, preserve legacy and pending reports, and exclude self-tests from restart prompts. The crash fixtures cover zero, ten and eleven owned reports, an older pending dump and legacy or unrelated files.
 
-Complete the single restart prompt and allocation-free fault writer while preserving plugin recovery. Keep the draft stacked on #368 until that prerequisite merges. Reuse one grouped warning-free matrix and run the settings and crash acceptance from the resulting source. Native tests for this draft remain open.
+The fault paths now share one fixed-buffer writer and publish the marker atomically. Healthy interactive startup claims the marker once and offers the dump folder and implicated-plugin recovery in one localized dialog. Stack and exception context are in the new minidumps, and prior sidecars remain available. The governed probes cover an unhandled exception, overlapping workers and CRT abort. The retained Compare case and standalone fixtures exercise a headless start followed by two claims without writing the product crash store.
+
+Keep the prepared draft stacked on #368 until that prerequisite merges. On the retargeted source use one warning-free six-profile matrix, SettingsSchemaTests, CrashHandlingTests, the Compare crash-recovery case and the governed interactive restart. Record each child exit code and its one nonempty dump and marker. Native execution and the interactive dialog have yet to be verified. [Crash contract](https://github.com/RedSalamanders/RedSalamander/blob/c1dfbebbe4ae09084545675d80852b0caed38f9b/Specs/Core/Core_CrashHandling.md)
 
 ## Checks before the next merge
 
