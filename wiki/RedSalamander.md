@@ -27,21 +27,17 @@ Dual-pane DirectX/Direct2D/DirectWrite Windows file manager inspired by Open Sal
 
 ```powershell
 Set-Location ..\RedSalamander
-Import-Module .\Tools\Modules\Build\VcpkgInstallSafety.psm1
-$vcpkg = Initialize-RSVcpkgToolContext -RepoRoot $PWD.Path
-.\vcpkg-install.ps1 -Platform x64 -VcpkgExe $vcpkg.Executable -VcpkgRoot $vcpkg.RegistryRoot
+.\restore.ps1 -Platform x64
 .\format.ps1 -Check
 .\build.ps1 -Configuration Debug
 .\test.ps1 -Explain
 .\test.ps1
 .\test.ps1 -Mode PrePush -Explain
-.\validate-skills.ps1
+.\validate.ps1
 .\Verify-RedMonitorClient.ps1
-.\Tools\Get-SpecInventory.ps1 -FailOnFindings
-.\Tools\Get-ToolInventory.ps1 -Validate
 .\Tools\Run-AllTests.ps1 -Suite Full -ValidationMode Fresh
 ```
 
-`test.ps1 -Full` runs one unattended native profile. `-Mode PrePush` runs the host profiles and cross-builds the other architecture. `Test-Changes.ps1` retains the single-profile compatibility arguments. Use the [validation contract](../../RedSalamander/Specs/Testing/Testing_ValidationEvidence.md) for canonical evidence, explicit Resume and desktop admission. The [Core performance contract](https://github.com/RedSalamanders/RedSalamander/blob/main/Specs/Core/Core_PerformanceAndResources.md) routes measured scenarios and budgets to their owners.
+`test.ps1 -Full` runs one unattended native profile. `-Mode PrePush` runs the host profiles and cross-builds the other architecture. `Test-Changes.ps1` retains the single-profile compatibility arguments. For canonical evidence, explicit Resume and desktop admission, see the [run-evidence contract](https://github.com/RedSalamanders/RedSalamander/blob/17dfa92fecf09a52fcfb4627b5b8dcfcf9d3e089/Specs/Testing/Testing_RunEvidence.md). The root `package.ps1` command writes a clean-extraction checked Release ZIP to `.build/packages`. After both architecture ZIPs are available, `winget-manifest.ps1 -Version <package-version>` validates the generated manifests with installed WinGet. The [Core performance contract](https://github.com/RedSalamanders/RedSalamander/blob/main/Specs/Core/Core_PerformanceAndResources.md) routes measured scenarios and budgets to their owners.
 
 Return to [Index.md](Index.md).

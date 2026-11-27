@@ -6,10 +6,10 @@ Product-specific facts only. Common rules are in [SKILL.md](../SKILL.md). The co
 
 | Repository | Build contract | Build | Restore | Package | Banner and log |
 | --- | --- | --- | --- | --- | --- |
-| RedSalamander | [Specs/Build/Build_Toolchain.md](../../../../../RedSalamander/Specs/Build/Build_Toolchain.md) | `build.ps1` | Pinned bootstrap and `vcpkg-install.ps1`, `Tools/Restore-DxUi.ps1` | `build.ps1 -Zip`, `Installer/zip/build-zip.ps1` (`.build\AppPackages`) | `.build\logs\msbuild-*.log` |
+| RedSalamander | [Specs/Build/Build_Toolchain.md](../../../../../RedSalamander/Specs/Build/Build_Toolchain.md) | `build.ps1` | `restore.ps1`, `vcpkg-install.ps1`, `Tools/Restore-DxUi.ps1` | `package.ps1`, `winget-manifest.ps1` (`.build/packages`) | `.build\logs\msbuild-*.log` |
 | RedXe | [Specs/Build/Build_Process.md](../../../../../RedXe/Specs/Build/Build_Process.md), [Build_Packaging.md](../../../../../RedXe/Specs/Build/Build_Packaging.md) | `build.ps1` | `restore.ps1`, `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1`, `winget-manifest.ps1` (`.build/packages`) | The RedXe build-signal banner and `.build/logs/` |
 | RedPrism | [Specs/Build/Build_Toolchain.md](../../../../../RedPrism/Specs/Build/Build_Toolchain.md), [Build_Packaging.md](../../../../../RedPrism/Specs/Build/Build_Packaging.md) | `build.ps1` | `restore.ps1`, `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1` (`.build/packages/`) | The framed pixel-art banner of `Build/BuildPresentation.psm1` |
-| RedTilde | [Specs/Build/Build_Toolchain.md](../../../../../RedTilde/Specs/Build/Build_Toolchain.md) | `build.ps1`, with `-EnableTests` for Release test builds | `restore.ps1`, `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1` (`.build/package`) | Build logs kept apart from test receipts |
+| RedTilde | [Specs/Build/Build_Toolchain.md](../../../../../RedTilde/Specs/Build/Build_Toolchain.md) | `build.ps1`, with `-EnableTests` for Release test builds | `restore.ps1`, `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1` (`.build/packages`) | Build logs kept apart from test receipts |
 | RedMonitor | [Specs/Build/Build_Consumption.md](../../../../../RedMonitor/Specs/Build/Build_Consumption.md) | `build.ps1` | `restore.ps1`, `vcpkg-install.ps1`, `restore-dxui.ps1` | `package.ps1` (`.build/packages`) | |
 | DxUi | [Specs/Build/Build_ToolchainAndConsumption.md](../../../../../DxUi/Specs/Build/Build_ToolchainAndConsumption.md) | `build.ps1` (the single `DxUi.lib`) | `restore.ps1`, `vcpkg-install.ps1` | Library qualification artifacts | |
 
@@ -22,15 +22,16 @@ Quick build commands:
 
 ```powershell
 # Prepare the selected platform before the first build
-Import-Module .\Tools\Modules\Build\VcpkgInstallSafety.psm1
-$vcpkg = Initialize-RSVcpkgToolContext -RepoRoot $PWD.Path
-.\vcpkg-install.ps1 -Platform x64 -VcpkgExe $vcpkg.Executable -VcpkgRoot $vcpkg.RegistryRoot
+.\restore.ps1 -Platform x64
 
 # Build entire solution (default)
 .\build.ps1
 
 # Build in Release configuration
 .\build.ps1 -Configuration Release
+
+# Create a Release ZIP and run the clean-extraction check
+.\package.ps1 -Platform x64
 
 # Build specific project
 .\build.ps1 -ProjectName RedSalamander
@@ -176,7 +177,7 @@ The executable build summary is printed exactly once after all selected build/pa
 - `Run-AllTests.ps1` may execute only the canonical `RedSalamander.exe` beneath its selected repository/platform/configuration output. Its `-ExePath` parameter is compatibility syntax for explicitly naming that same normalized path, not permission to run a foreign or differently scoped artifact; mismatches fail before lock acquisition.
 - MSBuild and direct vcpkg installation also hold the narrower repository+platform `shared-dependency` lock because Debug, Release, and ASan share `.build\vcpkg_installed\<triplet>`. It covers only dependency-capable phases, matches residual tools regardless of configuration, and never blocks the other platform or ordinary test execution. Multi-triplet installation acquires scopes in stable x64-then-ARM64 order. Explicit custom triplets must begin with `x64-` or `arm64-`; reject every architecture without a reviewed platform-lock mapping before mutating staging or install state. Apply the same mapping to path-qualified residual `vcpkg`, compiler, and linker evidence for custom installed/staging paths; a process name, foreign checkout, or opposite platform never suffices.
 - The Ghostty runtime's `.build\TerminalEngine` state is shared across configurations and platforms within one repository, so its state mutex is derived only from normalized repository root; same-repository x64/ARM64 operations serialize, while different worktrees do not. A validated cache hit never takes the session-wide `R:` lease. Only an actual rebuild holds that lease, narrowly around mapping, contained overlay/build work, cleanup, and unmapping; a pre-existing mapping fails with inspection/removal guidance and is never cleared automatically.
-- Portable ZIP and Winget generation uses a repository-wide `packaging` scope only after compilation because platforms share package inputs and `.build\AppPackages`. Standalone packagers that read compiled output acquire the artifact profile first and packaging second. Nested calls under `build.ps1` are balanced same-thread leases. Packaging abandonment fails closed for reviewed restoration rather than being cleared by a profile rebuild.
+- Portable ZIP and WinGet generation use a repository-wide `packaging` scope after compilation. Platforms share the package inputs and output directory. The root package command uses `.build/packages`. The legacy `build.ps1 -Zip` path still uses `.build/AppPackages`. Standalone packagers that read compiled output acquire the artifact profile first and packaging second. Nested calls under `build.ps1` are balanced same-thread leases. Packaging abandonment fails closed for reviewed restoration rather than being cleared by a profile rebuild.
 - ZIP and Winget packaging require the explicit positive build number or complete version they consume; Winget also requires both exact-version x64/ARM64 archive names. Never infer completed-artifact provenance from saved repository context or allocate a new number during packaging. Caller-selected package paths must remain beneath their guarded repository roots with every existing path component proven non-reparse before and after directory creation.
 - Per-profile owner records authenticate PID, process start time, executable path, lock path, and token. Distinct same-thread nested scopes release LIFO. Only a same-thread nested call or an immediate child admitted by the one-use delegation handshake inside the owner's kill-on-close Job Object may reuse ownership; that child may reenter locally but cannot delegate a second generation. Never treat inherited environment variables alone as proof.
 - Residual-tool checks require boundary-aware evidence for this repository and the same profile. A process name, an ambiguous substring, another configuration/platform, or another worktree is not enough to block or terminate anything.
