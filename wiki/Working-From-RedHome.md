@@ -20,13 +20,13 @@ Run every command from the target repository's root, not from `RedHome`. All six
 .\Test-Changes.ps1 -Mode PrePush   # before pushing. -Mode Full selects all applicable unattended scopes
 ```
 
-For RedSalamander, use `test.ps1` for normal iteration and the unattended Full and PrePush commands. The root `Test-Changes.ps1` also accepts the legacy single-profile and focused arguments.
+For RedSalamander, use `test.ps1` for ordinary Affected, Full and PrePush. Both root test commands accept explicit `-Scopes`. `Test-Changes.ps1` also accepts the legacy single-profile and focused arguments.
 
 Guidance, specification and formatting commands by repository.
 
 | Repository | Guidance and spec validation | Formatting | Full commands |
 | --- | --- | --- | --- |
-| `RedSalamander` | `.\validate-skills.ps1`, `.\Tools\Get-SpecInventory.ps1 -FailOnFindings`, `.\Tools\Get-ToolInventory.ps1 -Validate` | `.\format.ps1 -Check` | [RedSalamander.md](RedSalamander.md) |
+| `RedSalamander` | `.\validate.ps1` (guidance, tool inventory, and specifications) | `.\format.ps1 -Check` | [RedSalamander.md](RedSalamander.md) |
 | `RedXe` | `.\validate-skills.ps1` | `.\format.ps1 -Check` | [RedXe.md](RedXe.md) |
 | `RedPrism` | `.\validate.ps1` (runs `validate-skills.ps1`, the native test-name inventory, a PowerShell syntax check, and the tooling tests) | `.\format.ps1 -Check` | [RedPrism.md](RedPrism.md) |
 | `RedTilde` | `.\validate.ps1` or `.\validate-skills.ps1` for guidance | `.\format.ps1 -Check` | [RedTilde.md](RedTilde.md) |
