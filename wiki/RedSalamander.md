@@ -34,9 +34,12 @@ Set-Location ..\RedSalamander
 .\test.ps1
 .\test.ps1 -Mode PrePush -Explain
 .\validate.ps1
+.\validate-specs.ps1
 .\Verify-RedMonitorClient.ps1
 .\Tools\Run-AllTests.ps1 -Suite Full -ValidationMode Fresh
 ```
+
+`validate-specs.ps1` checks the product specification inventory. `build.ps1` accepts `-Clean`, `-Rebuild` and `-MaxCpuCount` for explicit native profiles.
 
 `test.ps1 -Full` runs one unattended native profile. `-Mode PrePush` runs the host profiles and cross-builds the other architecture. `Test-Changes.ps1` retains the single-profile compatibility arguments. For canonical evidence, explicit Resume and desktop admission, see the [run-evidence contract](https://github.com/RedSalamanders/RedSalamander/blob/17dfa92fecf09a52fcfb4627b5b8dcfcf9d3e089/Specs/Testing/Testing_RunEvidence.md). The root `package.ps1` command writes a clean-extraction checked Release ZIP to `.build/packages`. After both architecture ZIPs are available, `winget-manifest.ps1 -Version <package-version>` validates the generated manifests with installed WinGet. The [Core performance contract](https://github.com/RedSalamanders/RedSalamander/blob/main/Specs/Core/Core_PerformanceAndResources.md) routes measured scenarios and budgets to their owners.
 
