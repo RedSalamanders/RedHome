@@ -1112,15 +1112,19 @@ A live read-back found `9eec002df1cd109f8f104cd966a763daf9751489` in the five ot
 
 Shared CI [#131](https://github.com/RedSalamanders/.github/pull/131) admitted the manual RedSalamander benchmark at `80d643b039f80bae41220b77fa90ccc278b9b5dd`. Shared CI [#132](https://github.com/RedSalamanders/.github/pull/132) accepted the MSBuild file logger's current-path announcement at `a5c9579018d21fbdec1fcdee5f613f1c868ace5a`. Windows and Linux behavior, WinGet and security checks passed for both. Five real message-only MSBuild logs passed the repaired strict parser, and four malformed-footer controls failed as expected.
 
-Each product candidate combines the agreed registry and tool with `a5c9579018d21fbdec1fcdee5f613f1c868ace5a`. Exact pinned project configuration, changelog checks and required GitHub checks passed at all five heads. Each candidate remains in draft for its D21 compilation evidence. Shared candidate admission requires the same engine on main and the candidate. The separate native Release compile started on RedMonitor's exact candidate.
+Each product candidate combines the agreed registry and tool with `a5c9579018d21fbdec1fcdee5f613f1c868ace5a`. Exact pinned project configuration, changelog checks and required GitHub checks passed at all five heads. The pin changes used local Release compilation since shared candidate admission requires the same engine on main and the candidate.
 
-| Product | Source |
-| --- | --- |
-| [DxUi #359](https://github.com/RedSalamanders/DxUi/pull/359) | `c3cc3ef06f403ccbad98919ff9d5d431b1e2c18f` |
-| [RedMonitor #189](https://github.com/RedSalamanders/RedMonitor/pull/189) | `8d15d05d258707e7ef3a47b5cb84259d8dfab209` |
-| [RedXe #203](https://github.com/RedSalamanders/RedXe/pull/203) | `4419b54d7772c915e0102f2c45ae09e04675f34b` |
-| [RedPrism #128](https://github.com/RedSalamanders/RedPrism/pull/128) | `4027ddfc76bca87309129bc7ff16b20266516e72` |
-| [RedTilde #240](https://github.com/RedSalamanders/RedTilde/pull/240) | `5b678c9e938b3f7d59c3ff7c7035dcb7669db4b6` |
+| Product | Candidate source | Release compilation and publication |
+| --- | --- | --- |
+| [DxUi #359](https://github.com/RedSalamanders/DxUi/pull/359) | `c3cc3ef06f403ccbad98919ff9d5d431b1e2c18f` | x64 and ARM64 passed with zero warnings and errors. Candidate tree verified at merge `0d44316e74745c931fa4adc0616c1f57d654b3de`. [Changelog fold #360](https://github.com/RedSalamanders/DxUi/pull/360) · [Main Release replay](https://github.com/RedSalamanders/DxUi/actions/runs/46093874966) |
+| [RedMonitor #189](https://github.com/RedSalamanders/RedMonitor/pull/189) | `8d15d05d258707e7ef3a47b5cb84259d8dfab209` | x64 and ARM64 passed with zero warnings and errors. Candidate tree verified at merge `c4811f5349ac75c6538a01d6c60fadb4298c5523`. [Changelog fold #190](https://github.com/RedSalamanders/RedMonitor/pull/190) · [Both native regressions and production package smokes passed](https://github.com/RedSalamanders/RedMonitor/actions/runs/46092887552) |
+| [RedXe #203](https://github.com/RedSalamanders/RedXe/pull/203) | `4419b54d7772c915e0102f2c45ae09e04675f34b` | x64 and ARM64 passed with zero warnings and errors. Candidate tree verified at merge `76f7ed27e28c8c50872cd9bfe52327c74f497a9b`. [Changelog fold #204](https://github.com/RedSalamanders/RedXe/pull/204) · [Main Release replay](https://github.com/RedSalamanders/RedXe/actions/runs/46095064080) |
+| [RedPrism #128](https://github.com/RedSalamanders/RedPrism/pull/128) | `4027ddfc76bca87309129bc7ff16b20266516e72` | x64 and ARM64 passed with zero warnings and errors. Candidate tree verified at merge `a3188826f6cc8213408d73a77ed06b097ab328be`. [Changelog fold #129](https://github.com/RedSalamanders/RedPrism/pull/129) |
+| [RedTilde #240](https://github.com/RedSalamanders/RedTilde/pull/240) | `5b678c9e938b3f7d59c3ff7c7035dcb7669db4b6` | x64 and ARM64 passed with zero warnings and errors. Candidate tree verified at merge `6464793ba2f76f5ca61616710ca042b3c9a5a92d`. [Changelog fold #241](https://github.com/RedSalamanders/RedTilde/pull/241) · [Both native regressions and production package smokes passed](https://github.com/RedSalamanders/RedTilde/actions/runs/46093076674) |
+
+RedMonitor and RedTilde report both build-receipt hashes. DxUi reports both build log and static library hashes. RedXe and RedPrism report both build log, executable and DxUi provenance hashes. ARM64 was cross-compiled. Each product's native Release regression and package or SDK replay is tracked under D21 until source-bound hosted results are linked above. RedMonitor's first ARM64 dependency restore failed in a deep vcpkg worktree. The exact candidate compiled after moving the retry to a shorter physical checkout. The failed restore log remains available locally.
+
+Read-back from all six published `main` sources confirmed `aeb162b71d47950344248a4ebcac733e12f8a992` as both their registry baseline and tool commit. DxUi, RedMonitor, RedXe, RedPrism and RedTilde published engine `a5c9579018d21fbdec1fcdee5f613f1c868ace5a`. RedSalamander's engine update remains in the later batch below.
 
 RedSalamander [#391](https://github.com/RedSalamanders/RedSalamander/pull/391) at `a84dfc312e0eec7b48b758e754f268e65ed52cdc` groups the isolated analyzer and the explicit MSBuild success footer. Its direct, replayed and background probes passed, including both modes with two parallel message-only projects. Its six-profile compile and actual analyzer run remain with the operator.
 
@@ -1131,6 +1135,12 @@ RedSalamander [#394](https://github.com/RedSalamanders/RedSalamander/pull/394) a
 RedSalamander main `73c70e33037273b3727835d9b61a265883f15470` includes [#395](https://github.com/RedSalamanders/RedSalamander/pull/395). The unchanged #374 head projects to tree `c3c6d7b77deea36b56c35cbb826f72ae8eed2f68` with native input digest `efe61c5cf0a1c8285874456f87f11cf3d331665a655cbb85ee11016f8c9cd9bc`. The new scoped source assertions and consistency manifest participate in the digest. The PR's handoff carries this current identity for the operator.
 
 Local #383 preview `696048cb03b6e306623587dd54ee6e3c473584c7` reconciles the Pack source test conflict with the 26-path guarded-write scope. It preserves the exact cleanup checks and both accepted-version arguments. Fifty assertions in the Pack, local transaction and Make File List source contracts passed. Its tree is `eadcd1e65bd7a1e8909d9bb5da1df69083e07b09` with native input digest `7b9a86c91a14c62a0d1a9c431ac661abb83ed0f467fd908937c1941c29364c19`. Retarget #383 after #374 merges and use the resulting source for grouped qualification.
+
+### Later RedSalamander compiler and tooling batch
+
+RedSalamander [#397](https://github.com/RedSalamanders/RedSalamander/pull/397) at `a7bb7f49ec9b11ebf96ac4ace3f2f9364f4b1658` implements the C-13 candidate. The local restore and CI select instrumented vcpkg triplets for ASan Debug. The application and pinned DxUi share enabled STL annotations, with separate DxUi props and identity files for ASan. Six MSBuild profile evaluations, both generated CMake overlay checks, eight runtime-routing checks and compiler-free validation passed. The operator owns x64 and ARM64 clean sanitizer restores, zero-warning builds, dependency and DxUi instrumentation verification, and the existing native detection probe.
+
+A local merge preview combined [#387](https://github.com/RedSalamanders/RedSalamander/pull/387), [#388](https://github.com/RedSalamanders/RedSalamander/pull/388), [#391](https://github.com/RedSalamanders/RedSalamander/pull/391), [#394](https://github.com/RedSalamanders/RedSalamander/pull/394) and [#397](https://github.com/RedSalamanders/RedSalamander/pull/397) on the prepared #383 source without conflicts. The projected tree is `374fff6c10b30fad40e771c459d816b0f523664e` with native input digest `a3b1f6abec726490668f4f47692cd5b964635a2865c2b394d4eea96ff20eb6b2`. Use the actual published merge source for the later grouped compilation and qualification after #383. The preview leaves the #374 and #383 qualification scopes intact.
 
 ## Checks before the next merge
 
