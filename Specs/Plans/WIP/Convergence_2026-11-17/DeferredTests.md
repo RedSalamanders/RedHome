@@ -1106,6 +1106,32 @@ The RedSalamander operator owns both regression replays under D21. The current [
 - PowerShell parsed the published `build.ps1`, `validate-specs.ps1`, `restore.ps1`, `package.ps1` and `test.ps1` at `05252ae38332641222c55ba1fb11a9f1abf264ae`. The root build exposes `-Clean`, `-Rebuild` and `-MaxCpuCount`. This records command availability. Command behavior and applicable native evidence remain with the operator.
 - RedSalamander's hosted R0e driver already checks paired source, fixture and build identities. E-10 retains the common entry point, explicit manual workflow routing and a reviewed fixture. The specific R0e diagnostic keeps its own meaning. [Current performance contract](https://github.com/RedSalamanders/RedSalamander/blob/05252ae38332641222c55ba1fb11a9f1abf264ae/Specs/Testing/Testing_PerformanceValidation.md)
 
+## Shared toolchain pin batch · 28 November 2026
+
+A live read-back found `9eec002df1cd109f8f104cd966a763daf9751489` in the five other published registries. RedTilde had also moved its tool to that commit. The existing RedSalamander source uses `aeb162b71d47950344248a4ebcac733e12f8a992` for both. The latter contains the required 7-Zip 26.5 and SQLite 3.54.1 version entries. The older registry lacks both entries. WIL, yyjson, curl, libzip and Clipper2 have matching direct baseline versions across the two snapshots and the five candidates' declared floors remain available. [Older registry](https://github.com/microsoft/vcpkg/blob/9eec002df1cd109f8f104cd966a763daf9751489/versions/baseline.json) · [Agreed registry](https://github.com/microsoft/vcpkg/blob/aeb162b71d47950344248a4ebcac733e12f8a992/versions/baseline.json)
+
+Shared CI [#131](https://github.com/RedSalamanders/.github/pull/131) admitted the manual RedSalamander benchmark at `80d643b039f80bae41220b77fa90ccc278b9b5dd`. Shared CI [#132](https://github.com/RedSalamanders/.github/pull/132) accepted the MSBuild file logger's current-path announcement at `a5c9579018d21fbdec1fcdee5f613f1c868ace5a`. Windows and Linux behavior, WinGet and security checks passed for both. Five real message-only MSBuild logs passed the repaired strict parser, and four malformed-footer controls failed as expected.
+
+Each product candidate combines the agreed registry and tool with `a5c9579018d21fbdec1fcdee5f613f1c868ace5a`. Exact pinned project configuration, changelog checks and required GitHub checks passed at all five heads. Each candidate remains in draft for its D21 compilation evidence. Shared candidate admission requires the same engine on main and the candidate. The separate native Release compile started on RedMonitor's exact candidate.
+
+| Product | Source |
+| --- | --- |
+| [DxUi #359](https://github.com/RedSalamanders/DxUi/pull/359) | `c3cc3ef06f403ccbad98919ff9d5d431b1e2c18f` |
+| [RedMonitor #189](https://github.com/RedSalamanders/RedMonitor/pull/189) | `8d15d05d258707e7ef3a47b5cb84259d8dfab209` |
+| [RedXe #203](https://github.com/RedSalamanders/RedXe/pull/203) | `4419b54d7772c915e0102f2c45ae09e04675f34b` |
+| [RedPrism #128](https://github.com/RedSalamanders/RedPrism/pull/128) | `4027ddfc76bca87309129bc7ff16b20266516e72` |
+| [RedTilde #240](https://github.com/RedSalamanders/RedTilde/pull/240) | `5b678c9e938b3f7d59c3ff7c7035dcb7669db4b6` |
+
+RedSalamander [#391](https://github.com/RedSalamanders/RedSalamander/pull/391) at `a84dfc312e0eec7b48b758e754f268e65ed52cdc` groups the isolated analyzer and the explicit MSBuild success footer. Its direct, replayed and background probes passed, including both modes with two parallel message-only projects. Its six-profile compile and actual analyzer run remain with the operator.
+
+RedSalamander [#394](https://github.com/RedSalamanders/RedSalamander/pull/394) at `18c63c8231c17da418d156ccd5df4c10edd84cf5` uses the same engine. It adds the benchmark and trusted-main manual dispatch for the existing noninteractive small-file Copy fixture. At the preceding authored patch, compiler-free workflow, source, observation and A/A preview checks passed. The pin update passed exact project configuration and changelog validation. The operator owns native A/A calibration and the measurement review.
+
+### Guarded-write preview after the Pack source-contract merge
+
+RedSalamander main `73c70e33037273b3727835d9b61a265883f15470` includes [#395](https://github.com/RedSalamanders/RedSalamander/pull/395). The unchanged #374 head projects to tree `c3c6d7b77deea36b56c35cbb826f72ae8eed2f68` with native input digest `efe61c5cf0a1c8285874456f87f11cf3d331665a655cbb85ee11016f8c9cd9bc`. The new scoped source assertions and consistency manifest participate in the digest. The PR's handoff carries this current identity for the operator.
+
+Local #383 preview `696048cb03b6e306623587dd54ee6e3c473584c7` reconciles the Pack source test conflict with the 26-path guarded-write scope. It preserves the exact cleanup checks and both accepted-version arguments. Fifty assertions in the Pack, local transaction and Make File List source contracts passed. Its tree is `eadcd1e65bd7a1e8909d9bb5da1df69083e07b09` with native input digest `7b9a86c91a14c62a0d1a9c431ac661abb83ed0f467fd908937c1941c29364c19`. Retarget #383 after #374 merges and use the resulting source for grouped qualification.
+
 ## Checks before the next merge
 
 - RedSalamander CV-4-07 pre-merge evidence. The two clean dependency restores succeeded with tool and baseline `aeb162b7`. At `1add64b9`, the full x64 Release build passed with zero warnings and errors (receipt `dc01ec9ea71a5e7924ac6c9b5c655d091ff81d30f7a032ebf2e6dc3cbdd2137f`). The clean ZIP passed application startup, the native Ghostty load and the package checks for all built-in plugins. Both packaged launcher names started the extracted application from a separate working directory. The ARM64 Release launcher cross-build passed with zero warnings and errors (receipt `c69843cbd14aecf7a9bb9950135fcd1ed45fbd08c896c7ee27460441bb06f2ff`). The launcher imported the same four Windows system DLLs on both architectures. The hosted cache recovery change passed 114 tooling checks at `e394c07d`. [RedSalamander #240](https://github.com/RedSalamanders/RedSalamander/pull/240)
